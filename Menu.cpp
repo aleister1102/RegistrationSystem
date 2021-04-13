@@ -13,6 +13,7 @@ int Main_Menu_Disp()
 	cout << "\t\t Your choice is (choose from 1 to 4): ";
 	return Valid_Data();
 }
+
 bool Main_Menu_Proc(int n)
 {
 	if (n == 1)//Login
@@ -42,22 +43,26 @@ void Login_Proc(int n)
 {
 
 }
+
 int Login_Disp()
 {
 	cout << "Login" << endl;
 	system("pause");
 	return 0;
 }
+
 void ForgotPass_Proc(int n)
 {
 
 }
+
 int ForgotPass_Disp()
 {
 	cout << "Forgot Pass" << endl;
 	system("pause");
 	return 0;
 }
+
 void AboutUs()
 {
 	cout << "About Us" << endl;
