@@ -1,0 +1,3 @@
+﻿  Menu.cpp
+B:\Projects\Main Source KTLT\Menu.cpp(38): warning C4715: 'Main_Menu_Proc': not all control paths return a value
+  Main Source.vcxproj -> B:\Projects\Main Source KTLT\Debug\Main Source.exe
