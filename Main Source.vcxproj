@@ -139,8 +139,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Class.cpp" />
     <ClCompile Include="MainSource.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Semester.cpp" />
+    <ClCompile Include="Year.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Menu.h" />
