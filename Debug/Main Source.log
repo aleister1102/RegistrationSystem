@@ -1,5 +1,3 @@
-﻿  Menu.cpp
-  Year.cpp
-  Generating Code...
-B:\Projects\Main Source KTLT\Menu.cpp(42): warning C4715: 'Main_Menu_Proc': not all control paths return a value
-  Main Source.vcxproj -> B:\Projects\Main Source KTLT\Debug\Main Source.exe
+﻿  Year.cpp
+B:\Projects\Git Repo\registration_system\Year.cpp(19,12): warning C4834: discarding return value of function with 'nodiscard' attribute
+  Main Source.vcxproj -> B:\Projects\Git Repo\registration_system\Debug\Main Source.exe
