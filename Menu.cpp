@@ -130,8 +130,10 @@ int Year_Menu_Disp()
 	cout << "\t\t YEAR SECTION" << endl;
 	cout << "\t\t Choose your option: " << endl;
 	cout << "\t\t 1. Add new year" << endl;
-	cout << "\t\t 2. Select year" << endl;
-	cout << "\t\t 3. Exit" << endl;
+	cout << "\t\t 2. View year" << endl;
+	cout << "\t\t 3. Delete year" << endl;
+	cout << "\t\t 4. Delete all years" << endl;
+	cout << "\t\t 5. Exit" << endl;
 	cout << "\t\t Select option: ";
 	return Valid_Data(3);
 }

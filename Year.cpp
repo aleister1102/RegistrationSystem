@@ -1,5 +1,6 @@
 #include "Menu.h"
 #include "Year.h"
+#include "Node Process.h"
 
 ////Check the existence of file//
 //Input: path of file in string type
@@ -58,7 +59,7 @@ string Create_Year(int time)
 	return path;
 }
 
-////Class option orientation//
+////Class option //
 void Class_Orientation(string classes)
 {
 	bool run = true;
@@ -67,8 +68,11 @@ void Class_Orientation(string classes)
 	} while (run);
 }
 ////Year orientation
-void Year_Orientation(string years, int choice)
+void Year_Orientation(string years,int quanti)
 {
+	cout << "\t\t Choose year: ";
+	int choice = Valid_Data(quanti);
+
 	string classes; int i = 1;
 	fstream f(years, ios::in);
 
@@ -109,15 +113,83 @@ int Classes_Display(string classes)
 	return 1;
 }
 
+////Input Year from node to file after delete//
+void ReInput_Year(string years,yrs list)
+{
+	yr* move = list.head;
+	fstream f(years,ios::in|ios::out);
+	while (move->next != nullptr)
+	{
+		f << move->path << endl;
+		move = move->next;
+	}
+	f.close();
+}
+////Year_Delete////
+void Year_Delete(string years,int quanti)
+{
+	cout << "\t\t Choose year: ";
+	int choice = Valid_Data(quanti);
+
+	int i = 1;
+	fstream f(years, ios::in|ios::out);
+	stringstream ss;
+	yrs list = Init_List();
+
+	while (!f.eof()) {
+
+		string read;
+		f >> read;
+
+		yr* node = Init_Node(read);
+		Add_Last(list, node);
+
+		if (i++==choice)
+		{
+			remove(read.c_str());
+			Remove_Info(list, read);
+			//Just deleted file in directory, not in Years.csv
+		}
+	}
+	f.close();
+	remove(years.c_str());
+	f.open(years.c_str(), ios::out);
+	f.close();
+	ReInput_Year(years, list);
+}
+////Delete all years//
+void Year_Clear(string years) {
+	cout << "\t\t All years will be deleted !!!!" << endl;
+	cout << "\t\t Are you sure ???" << endl;
+	cout << "\t\t Press 0 for accepting, 1 for not" << endl;
+	int n; cin >> n;
+	if (n == 0)
+	{
+		fstream f(years, ios::in | ios::out);
+		int i = 1;
+
+		while (!f.eof()) {
+
+			string read;
+			f >> read;
+			remove(read.c_str());
+		}
+		f.close();
+		remove(years.c_str());
+		f.open(years.c_str(), ios::out);
+		f.close();
+	}
+}
+
 ////Year displaying//
-void Years_Display(string years)
+int Years_Display(string years)
 {
 	system("cls");
 	cout  << "\t\t CREATED YEARS: " << endl;
 	fstream f(years,ios::in);
 	int i = 1;
 
-	cout << "\t\t 0. Back: " << endl;
+	cout << "\t\t 0. Back " << endl;
 	while (!f.eof()) {
 		string read;
 		f >> read;
@@ -126,13 +198,7 @@ void Years_Display(string years)
 		}
 	}
 	f.close();
-
-	cout << "\t\t Choose year: ";
-	int choice = Valid_Data(i);
-	if (choice != 0)
-	{
-		Year_Orientation(years, choice);
-	}
+	return i;
 }
 ////Process year task//
 bool Year_Proc_Active(int option)
@@ -146,7 +212,21 @@ bool Year_Proc_Active(int option)
 	}
 	else if (option == 2)
 	{
-		Years_Display("Years.csv");
+		int quanti = Years_Display("Years.csv");
+		Year_Orientation("Years.csv", quanti);
+		system("cls");
+		return true;
+	}
+	else if (option == 3)
+	{
+		int quanti = Years_Display("Years.csv");
+		Year_Delete("Years.csv",quanti);
+		system("cls");
+		return true;
+	}
+	if (option == 4)
+	{
+		Year_Clear("Years.csv");
 		system("cls");
 		return true;
 	}
