@@ -172,7 +172,7 @@ int Student_Menu_Disp()
 int Valid_Data(int limit)
 {
 	int n = 0; cin >> n;
-	while (n<=limit && n>0)
+	do 
 	{
 		if (cin.fail())
 		{
@@ -183,7 +183,7 @@ int Valid_Data(int limit)
 		}
 		if (!cin.fail())
 			break;
-	}
+	} while (n > limit && n < 0);
 	cout << endl;
 	return n;
 }

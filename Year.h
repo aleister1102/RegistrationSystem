@@ -4,3 +4,9 @@
 #include "Menu.h"
 #include <sstream>
 #include <fstream>
+
+bool File_Exist(string path);
+//Create year section
+void Input_Year(string store, string path);
+string Create_Year(int time);
+
