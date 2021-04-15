@@ -142,6 +142,7 @@
     <ClCompile Include="Class.cpp" />
     <ClCompile Include="MainSource.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Node Process.cpp" />
     <ClCompile Include="Semester.cpp" />
     <ClCompile Include="Year.cpp" />
   </ItemGroup>

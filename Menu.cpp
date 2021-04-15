@@ -143,7 +143,7 @@ int Class_Menu_Disp()
 	cout << "\t\t 2. Delete class" << endl;
 	cout << "\t\t 3. Select class" << endl;
 	cout << "\t\t 4. Exit" << endl;
-	cout << "Select option: ";
+	cout << "\t\t Select option: ";
 	return Valid_Data(4);
 }
 //Semester Menu
@@ -153,7 +153,7 @@ int Semester_Menu_Disp()
 	cout << "\t\t 1. Add new semester" << endl;
 	cout << "\t\t 2. Select semester" << endl;
 	cout << "\t\t 3. Exit" << endl;
-	cout << "Select option: ";
+	cout << "\t\t Select option: ";
 	return Valid_Data(3);
 }
 //Student Menu
