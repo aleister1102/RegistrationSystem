@@ -2,6 +2,12 @@
 #include "Year.h"
 #include "Node Process.h"
 
+////Parse path of string//
+string ParsePath(string s)
+{
+	int pos = s.find_last_of("\\", strlen(s.c_str()));
+	return s.substr(pos + 1);
+}
 ////Check the existence of file//
 //Input: path of file in string type
 //Return: True if file is exist and false if not
@@ -22,6 +28,7 @@ bool File_Exist(string path)
 //Input: path of store file and path of year file
 void Input_Year(string store,string path)
 {
+	path = ParsePath(path);
 	fstream f(store,ios::app|ios::out);
 	f << path << endl;
 	f.close();
@@ -45,19 +52,19 @@ string Create_Year(int time)
 		//Transform name into file path
 		ss1 << begin; ss1 >> name1;
 		ss2 << end; ss2 >> name2;
-		path_temp = name1 + "-" + name2 + ".csv";
+		path_temp = ".\\Years\\" + name1 + "-" + name2 + ".csv";
 	} while (File_Exist(path_temp));
 
-	const char* path = path_temp.c_str();//Convert to const char *
 	//Create new file
-	fileInput= fopen(path,"a+");
+	fileInput= fopen(path_temp.c_str(),"a+");
 	fclose(fileInput);
 	//Put file into store file
-	Input_Year("Years.csv", path);
+	Input_Year("Years.csv", path_temp.c_str());
 	cout << "\t\t School year created successfully" << endl;
 	cout << "\t\t "; system("pause");
-	return path;
+	return path_temp;
 }
+
 
 ////Class option //
 void Class_Orientation(string classes)
@@ -81,7 +88,7 @@ void Year_Orientation(string years,int quanti)
 		f >> read;
 		if (i++ == choice)
 		{
-			classes = read;
+			classes = ".\\Years\\" + read;
 			Classes_Display(classes);
 			Class_Orientation(classes);
 			break;
@@ -120,7 +127,7 @@ void ReInput_Year(string years,yrs list)
 	fstream f(years,ios::in|ios::out);
 	while (move->next != nullptr)
 	{
-		f << move->path << endl;
+		f << ParsePath(move->path) << endl;
 		move = move->next;
 	}
 	f.close();
@@ -140,7 +147,7 @@ void Year_Delete(string years,int quanti)
 
 		string read;
 		f >> read;
-
+		read = ".\\Years\\" + read;
 		yr* node = Init_Node(read);
 		Add_Last(list, node);
 
@@ -161,7 +168,7 @@ void Year_Delete(string years,int quanti)
 void Year_Clear(string years) {
 	cout << "\t\t All years will be deleted !!!!" << endl;
 	cout << "\t\t Are you sure ???" << endl;
-	cout << "\t\t Press 0 for accepting, 1 for not" << endl;
+	cout << "\t\t Press 0 for accepting, 1 for not:  ";
 	int n; cin >> n;
 	if (n == 0)
 	{
@@ -172,6 +179,7 @@ void Year_Clear(string years) {
 
 			string read;
 			f >> read;
+			read = ".\\Years\\" + read;
 			remove(read.c_str());
 		}
 		f.close();
@@ -224,7 +232,7 @@ bool Year_Proc_Active(int option)
 		system("cls");
 		return true;
 	}
-	if (option == 4)
+	else if (option == 4)
 	{
 		Year_Clear("Years.csv");
 		system("cls");

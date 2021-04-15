@@ -135,7 +135,7 @@ int Year_Menu_Disp()
 	cout << "\t\t 4. Delete all years" << endl;
 	cout << "\t\t 5. Exit" << endl;
 	cout << "\t\t Select option: ";
-	return Valid_Data(3);
+	return Valid_Data(5);
 }
 //Class Menu
 int Class_Menu_Disp()
@@ -170,10 +170,9 @@ int Student_Menu_Disp()
 	return Valid_Data(3);
 }
 
-
 int Valid_Data(int limit)
 {
-	int n = 0; cin >> n;
+	int n = 0; 
 	do 
 	{
 		if (cin.fail())
@@ -183,9 +182,10 @@ int Valid_Data(int limit)
 			cout << "\t\t Invalid Input !!!!!!!!" << endl;
 			cout << "\t\t Type input again: "; cin >> n;
 		}
-		if (!cin.fail())
-			break;
-	} while (n > limit && n < 0);
+		else {
+			cin >> n;
+		}
+	} while (n > limit || n < 0);
 	cout << endl;
 	return n;
 }
