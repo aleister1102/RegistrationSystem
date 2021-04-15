@@ -16,3 +16,4 @@ yr* Init_Node(string path);
 void Add_Last(yrs& list, yr* node);
 bool Output_List(yrs l);
 void Remove_Info(yrs& list, string path);
+void SortAscen_List(yrs& list);

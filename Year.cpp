@@ -189,10 +189,34 @@ void Year_Clear(string years) {
 	}
 }
 
+//Year sorting
+void Year_Sort(string years)
+{
+	int i = 1;
+	fstream f(years, ios::in | ios::out);
+	stringstream ss;
+	yrs list = Init_List();
+
+	while (!f.eof()) 
+	{
+		string read;
+		f >> read;
+		yr* node = Init_Node(read);
+		Add_Last(list, node);
+	}
+	f.close();
+	SortAscen_List(list);
+	remove(years.c_str());
+	f.open(years.c_str(), ios::out);
+	f.close();
+	ReInput_Year(years, list);
+}
+
 ////Year displaying//
 int Years_Display(string years)
 {
 	system("cls");
+	Year_Sort(years);
 	cout  << "\t\t CREATED YEARS: " << endl;
 	fstream f(years,ios::in);
 	int i = 1;
