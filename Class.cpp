@@ -1,6 +1,7 @@
 ﻿#include"Menu.h"
 #include"Year.h"
 
+<<<<<<< Updated upstream
 string Create_Class(string classes,int time)
 {
 	cout << "\t\t CREATE CLASS SECTION " << endl;
@@ -31,6 +32,11 @@ string Create_Class(string classes,int time)
 	cout << "\t\t Class created successfully" << endl;
 	cout << "\t\t "; system("pause");
 	return name;
+=======
+void Create_Class(string classes)
+{
+
+>>>>>>> Stashed changes
 }
 void Delete_Class()
 {
@@ -45,7 +51,11 @@ bool Class_Proc_Active(int option,string classes)
 {
 	if (option == 1)
 	{
+<<<<<<< Updated upstream
 		Create_Class(classes,2021);
+=======
+		Create_Class(classes);
+>>>>>>> Stashed changes
 		return true;
 	}
 	else if (option == 2)

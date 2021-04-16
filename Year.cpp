@@ -1,6 +1,28 @@
 #include "Menu.h"
 #include "Year.h"
 #include "Node Process.h"
+#include <direct.h>
+#include <filesystem>
+
+//Delete directory
+void Delete_Directory(string dir)
+{
+	dir = "rmdir /s /q " + dir;
+	system(dir.c_str());
+}
+////Create new directory contain classes//
+string Create_Directory(string classes)
+{
+	string dir = ".\\Classes\\" + ParsePath(classes).substr(0, 9) + "\\";
+	cout << "\t\t Directory path: " << dir << endl;
+	// Creating a directory
+	if (_mkdir(dir.c_str()) == -1)
+		cerr << "\t\t Error :  " << strerror(errno) << endl;
+
+	else
+		cout << "\t\t Directory created" << endl;
+	return dir;
+}
 
 
 ////Parse path of string//
@@ -27,23 +49,25 @@ bool File_Exist(string path)
 
 ////Add year into year list//
 //Input: path of store file and path of year file
-void Input_Year(string store,string path)
+void Input_Year(string store, string path)
 {
+
 	path = ParsePath(path);
-	fstream f(store,ios::app|ios::out);
+	fstream f(store, ios::app | ios::out);
 	f << path << endl;
 	f.close();
+
 }
 ////Create new year file with limited time//
 //Input: limit of time that can be used to create
 //Return: path of year file that have been created
 string Create_Year(int time)
 {
-	int begin = 0 , end = 0;
+	int begin = 0, end = 0;
 	string name1, name2, path_temp;
 	FILE* fileInput;
 
-	cout << "\t\t CREATE YEAR SECTION "<<endl;
+	cout << "\t\t CREATE YEAR SECTION " << endl;
 	do {
 		stringstream ss1, ss2;
 		cout << "\t\t Created school year from: ";
@@ -56,8 +80,10 @@ string Create_Year(int time)
 		path_temp = ".\\Years\\" + name1 + "-" + name2 + ".csv";
 	} while (File_Exist(path_temp));
 
+	//Create new folder
+	string dir = Create_Directory(path_temp);
 	//Create new file
-	fileInput= fopen(path_temp.c_str(),"a+");
+	fileInput = fopen(path_temp.c_str(), "a+");
 	fclose(fileInput);
 	//Put file into store file
 	Input_Year("Years.csv", path_temp.c_str());
@@ -66,17 +92,20 @@ string Create_Year(int time)
 	return path_temp;
 }
 
-
 ////Class option //
 void Class_Orientation(string classes)
 {
 	bool run = true;
 	do {
+<<<<<<< Updated upstream
 		 run = Class_Proc_Active(Class_Menu_Disp(),classes);
+=======
+		run = Class_Proc_Active(Class_Menu_Disp(), classes);
+>>>>>>> Stashed changes
 	} while (run);
 }
 ////Year orientation
-void Year_Orientation(string years,int quanti)
+void Year_Orientation(string years, int quanti)
 {
 	cout << "\t\t Choose year: ";
 	int choice = Valid_Data(quanti);
@@ -122,10 +151,10 @@ int Classes_Display(string classes)
 }
 
 ////Input Year from node to file after delete//
-void ReInput_Year(string years,yrs list)
+void ReInput_Year(string years, yrs list)
 {
 	yr* move = list.head;
-	fstream f(years,ios::in|ios::out);
+	fstream f(years, ios::in | ios::out);
 	while (move->next != nullptr)
 	{
 		f << ParsePath(move->path) << endl;
@@ -134,13 +163,13 @@ void ReInput_Year(string years,yrs list)
 	f.close();
 }
 ////Year_Delete////
-void Year_Delete(string years,int quanti)
+void Year_Delete(string years, int quanti)
 {
 	cout << "\t\t Choose year: ";
 	int choice = Valid_Data(quanti);
 
 	int i = 1;
-	fstream f(years, ios::in|ios::out);
+	fstream f(years, ios::in | ios::out);
 	stringstream ss;
 	yrs list = Init_List();
 
@@ -152,11 +181,15 @@ void Year_Delete(string years,int quanti)
 		yr* node = Init_Node(read);
 		Add_Last(list, node);
 
-		if (i++==choice)
+		if (i++ == choice)
 		{
-			remove(read.c_str());
-			Remove_Info(list, read);
 			//Just deleted file in directory, not in Years.csv
+			remove(read.c_str());
+			//Delete in file by delete nodes
+			Remove_Info(list, read);
+			//Delete directory
+			string dir = ".\\Classes\\" + ParsePath(read).substr(0, 9) + "\\";
+			Delete_Directory(dir);
 		}
 	}
 	f.close();
@@ -164,6 +197,7 @@ void Year_Delete(string years,int quanti)
 	f.open(years.c_str(), ios::out);
 	f.close();
 	ReInput_Year(years, list);
+
 }
 ////Delete all years//
 void Year_Clear(string years) {
@@ -180,13 +214,23 @@ void Year_Clear(string years) {
 
 			string read;
 			f >> read;
+
+			//Delete directories
+			string dir = ".\\Classes\\" + read.substr(0, 9) + "\\";
+			dir = "rmdir /s /q " + dir;
+			system(dir.c_str());
+
+			//Delete files
 			read = ".\\Years\\" + read;
 			remove(read.c_str());
+
 		}
 		f.close();
 		remove(years.c_str());
 		f.open(years.c_str(), ios::out);
 		f.close();
+		string dir = ".\\Classes\\";
+		_mkdir(dir.c_str());
 	}
 }
 
@@ -198,7 +242,7 @@ void Year_Sort(string years)
 	stringstream ss;
 	yrs list = Init_List();
 
-	while (!f.eof()) 
+	while (!f.eof())
 	{
 		string read;
 		f >> read;
@@ -218,8 +262,8 @@ int Years_Display(string years)
 {
 	system("cls");
 	Year_Sort(years);
-	cout  << "\t\t CREATED YEARS: " << endl;
-	fstream f(years,ios::in);
+	cout << "\t\t CREATED YEARS: " << endl;
+	fstream f(years, ios::in);
 	int i = 1;
 
 	cout << "\t\t 0. Back " << endl;
@@ -253,7 +297,7 @@ bool Year_Proc_Active(int option)
 	else if (option == 3)
 	{
 		int quanti = Years_Display("Years.csv");
-		Year_Delete("Years.csv",quanti);
+		Year_Delete("Years.csv", quanti);
 		system("cls");
 		return true;
 	}
