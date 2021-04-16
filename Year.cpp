@@ -141,7 +141,7 @@ int Classes_Display(string classes)
 		f >> read;
 		if (read != "")
 		{
-			cout << "\t\t " << i++ << ". " << read << endl;
+			cout << "\t\t " << i++ << ". " << read.substr(0,6) << endl;
 		}
 	}
 	f.close();
