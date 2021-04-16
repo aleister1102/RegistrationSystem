@@ -24,7 +24,6 @@ string Create_Directory(string classes)
 	return dir;
 }
 
-
 ////Parse path of string//
 string ParsePath(string s)
 {
@@ -97,11 +96,10 @@ void Class_Orientation(string classes)
 {
 	bool run = true;
 	do {
-<<<<<<< Updated upstream
+
 		 run = Class_Proc_Active(Class_Menu_Disp(),classes);
-=======
-		run = Class_Proc_Active(Class_Menu_Disp(), classes);
->>>>>>> Stashed changes
+		 system("cls");
+
 	} while (run);
 }
 ////Year orientation

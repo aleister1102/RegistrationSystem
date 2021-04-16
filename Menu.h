@@ -30,6 +30,9 @@ bool Class_Proc_Active(int option,string classes);
 int Classes_Display(string year);
 //Semester menu
 int Semester_Menu_Disp();
+//Department menu
+int Department_Menu_Disp();
+
 
 
 int Valid_Data(int limit);

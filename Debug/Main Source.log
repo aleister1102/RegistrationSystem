@@ -1,9 +1,3 @@
-<<<<<<< Updated upstream
-﻿  Class.cpp
-B:\Projects\Git Repo\registration_system\Class.cpp(67): warning C4715: 'Class_Proc_Active': not all control paths return a value
-  Main Source.vcxproj -> B:\Projects\Git Repo\registration_system\Debug\Main Source.exe
-=======
 ﻿  Year.cpp
   The contents of <filesystem> are available only with C++17 or later.
-  Main Source.vcxproj -> B:\Projects\Git Repo\Đồ án\registration_system\Debug\Main Source.exe
->>>>>>> Stashed changes
+LINK : fatal error LNK1168: cannot open B:\Projects\Git Repo\Đồ án\registration_system\Debug\Main Source.exe for writing
