@@ -2,6 +2,7 @@
 #include "Year.h"
 #include "Node Process.h"
 
+
 ////Parse path of string//
 string ParsePath(string s)
 {
@@ -71,7 +72,7 @@ void Class_Orientation(string classes)
 {
 	bool run = true;
 	do {
-		 run = Class_Proc_Active(Class_Menu_Disp());
+		 run = Class_Proc_Active(Class_Menu_Disp(),classes);
 	} while (run);
 }
 ////Year orientation

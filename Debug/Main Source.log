@@ -1,2 +1,3 @@
-﻿  Year.cpp
+﻿  Class.cpp
+B:\Projects\Git Repo\registration_system\Class.cpp(67): warning C4715: 'Class_Proc_Active': not all control paths return a value
   Main Source.vcxproj -> B:\Projects\Git Repo\registration_system\Debug\Main Source.exe
