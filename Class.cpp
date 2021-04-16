@@ -1,5 +1,6 @@
 ﻿#include"Menu.h"
 #include"Year.h"
+#include "Node Process.h"
 
 //Get code name for each department
 string Department_Name(int depart)
@@ -26,6 +27,49 @@ void Input_Class(string store, string path)
 	f.close();
 
 }
+string Generate_Class(int time,string classes,string name,int n)
+{
+	stringstream ss; string period;
+	ss << time % 100; ss >> period;
+
+	stringstream ss2; string order;
+	if(n>0)
+	{
+	ss2 << n; ss2 >> order;
+	}
+	name = period + name + order + ".csv";
+
+
+	string path = ".\\Classes\\" + ParsePath(classes).substr(0, 9) + "\\";
+	path = path + name;
+	cout << path << endl;
+
+	return path;
+}
+yrs Import_Class(string classes,string file)
+{
+	fstream f(file);
+	yrs list = Init_List();
+	
+	while (!f.eof())
+	{
+		string read;
+		f >> read;
+		yr* node = Init_Node(read);
+		Add_Last(list, node);
+	}
+	f.close();
+
+	f.open(classes,ios::ate||ios::out);
+	yr* move = list.head;
+	while (move->next != nullptr)
+	{
+		f << move->path << endl;
+		move = move->next;
+	}
+	f.close();
+	return list;
+}
 string Create_Class(string classes, int time)
 {
 	cout << "\t\t CREATE CLASS SECTION " << endl;
@@ -46,22 +90,14 @@ string Create_Class(string classes, int time)
 		name = Department_Name(depart);
 	}
 	else {
-
+		cout << "\t\t Enter file's name for importing" << endl;
+		string file;
+		getline(cin, file, '_');
+		Import_Class(classes, file);
 	}
 	
-	stringstream ss; string period;
-	ss << time % 100; ss >> period;
 
-	stringstream ss2; string order;
-	ss2 << n; ss2 >> order;
-	name = period + name + order + ".csv";
-
-	
-	string path = ".\\Classes\\"+ParsePath(classes).substr(0, 9) + "\\";
-	path = path + name;
-	cout << path << endl;
-
-	fileInput = fopen(path.c_str(), "a+");
+	fileInput = fopen(Generate_Class(time, classes, name, n).c_str(), "a+");
 	fclose(fileInput);
 
 	cout << "\t\t File name: " << name << endl;
@@ -69,7 +105,6 @@ string Create_Class(string classes, int time)
 	cout << "\t\t "; system("pause");
 
 	Input_Class(classes, name);
-
 	return name;
 }
 
