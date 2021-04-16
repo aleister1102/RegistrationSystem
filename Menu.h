@@ -1,4 +1,6 @@
 #pragma once
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <iostream>
 using namespace std;
 
@@ -24,6 +26,8 @@ int Year_Menu_Disp();
 bool Year_Proc_Active(int option);
 //Class menu
 int Class_Menu_Disp();
+bool Class_Proc_Active(int option);
+int Classes_Display(string year);
 //Semester menu
 int Semester_Menu_Disp();
 

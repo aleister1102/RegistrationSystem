@@ -30,9 +30,18 @@
     <ClCompile Include="Semester.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Node Process.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Menu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Year.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Node Process.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

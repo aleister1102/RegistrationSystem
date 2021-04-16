@@ -142,11 +142,14 @@
     <ClCompile Include="Class.cpp" />
     <ClCompile Include="MainSource.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Node Process.cpp" />
     <ClCompile Include="Semester.cpp" />
     <ClCompile Include="Year.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="Node Process.h" />
+    <ClInclude Include="Year.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

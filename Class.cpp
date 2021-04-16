@@ -1,14 +1,15 @@
 #include"Menu.h"
+#include"Year.h"
 
 void Create_Class()
 {
-	cout << "Create class function" << endl;
-}
-void Class_Disp()
-{
-	cout << "Class dipslay function" << endl;
+	cout << "\t\t Create class function" << endl;
 }
 void Delete_Class()
+{
+
+}
+void Select_Class()
 {
 
 }
@@ -27,12 +28,13 @@ bool Class_Proc_Active(int option)
 	}
 	else if (option == 3)
 	{
-		Class_Disp();
+		Select_Class();
 		return true;
 	}
-	else
+	else if(option ==4)
 	{
 		cout << "EXIT" << endl;
 		return false;
 	}
+
 }
