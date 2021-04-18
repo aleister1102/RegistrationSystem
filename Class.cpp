@@ -41,16 +41,19 @@ yrs Import_Class(string classes, string file)
 	{
 		string read;
 		f >> read;
+		cout << read << endl;
 		yr* node = Init_Node(read);
 		Add_Last(list, node);
 	}
 	f.close();
 
 	cout << "\t\t Saved to node" << endl;
-
-	yr* move = list.head;
+	Output_List(list);
+	system("pause");
+	/*yr* move = list.head;
 	while (move->next != nullptr)
 	{
+		
 		Input_Class(classes, move->path);
 		
 		string path = ".\\Classes\\" + Path_To_Directory(classes) + "\\" + move->path;
@@ -58,7 +61,7 @@ yrs Import_Class(string classes, string file)
 		fclose(f);
 
 		move = move->next;
-	}
+	}*/
 	return list;
 }
 
@@ -163,9 +166,11 @@ bool Class_Proc_Active(int option,string classes)
 			string path;
 			bool check = true;
 			do {
+				
 				cout << "\t\t Enter file name for importing: "; 
 				string name;
-				getline(cin, name);
+				getline(cin, name,'\n');
+				cin.ignore(32767,'\n');
 				path = name + ".csv";
 				cout << "\t\t Import file from: " << path << endl;
 

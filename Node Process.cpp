@@ -81,7 +81,7 @@ bool Output_List(yrs l)
 	int count = 1;
 	while (move != nullptr)
 	{
-		cout << "\tThe " << count << " year" << endl;
+		cout << "\tThe " << count << " object" << endl;
 		cout << move->path << " ";
 		move = move->next;
 		count++;
