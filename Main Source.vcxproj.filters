@@ -44,5 +44,8 @@
     <ClInclude Include="Node Process.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Class.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

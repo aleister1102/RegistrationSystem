@@ -165,9 +165,25 @@ int Student_Menu_Disp()
 	cout << "\t\t 1. Add new student(s)" << endl;
 	cout << "\t\t 2. Delete student(s)" << endl;
 	cout << "\t\t 3. Watch student(s)" << endl;
-	cout << "\t\t 3. Exit" << endl;
+	cout << "\t\t 4. Exit" << endl;
 	cout << "Select option: ";
 	return Valid_Data(3);
+}
+//Department
+int Department_Menu_Disp()
+{
+	cout << "\t\t Choose your option: " << endl;
+	cout << "\t\t 1. Information Technology" << endl;
+	cout << "\t\t 2. Geology" << endl;
+	cout << "\t\t 3. Electronics & Telecommunication" << endl;
+	cout << "\t\t 4. Chemistry" << endl;
+	cout << "\t\t 5. Material Science & Technology" << endl;
+	cout << "\t\t 6. Environment" << endl;
+	cout << "\t\t 7. Biology" << endl;
+	cout << "\t\t 8. Mathematics" << endl;
+	cout << "\t\t 9. Physics" << endl;
+	cout << "\t\t Select option: ";
+	return Valid_Data(9);
 }
 
 int Valid_Data(int limit)
