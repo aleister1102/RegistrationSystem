@@ -74,17 +74,16 @@ bool Output_List(yrs l)
 		return false;
 	}
 
-	cout << "List of Years: " << endl;
+	cout << "List of Node: " << endl;
 	cout << "----------------------------------------------------------------------------" << endl;
 
 	yr* move = l.head;
 	int count = 1;
-	while (move != nullptr)
+	while (move->next != nullptr)
 	{
-		cout << "\tThe " << count << " year" << endl;
-		cout << move->path << " ";
+		cout << "\tThe " << count++ << " object: ";
+		cout << move->path << " " << endl;
 		move = move->next;
-		count++;
 	}
 	return true;
 }
