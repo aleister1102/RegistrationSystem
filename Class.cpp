@@ -180,7 +180,25 @@ bool Class_Proc_Active(int option,string classes)
 			Create_Class_Single(classes, 2021);
 		}
 		else {
+<<<<<<< HEAD
 			cout << File_Import();
+=======
+			string path;
+			bool check = true;
+			do {
+				
+				cout << "\t\t Enter file name for importing: "; 
+				string name;
+				getline(cin, name,'\n');
+				cin.ignore(32767,'\n');
+				path = name + ".csv";
+				cout << "\t\t Import file from: " << path << endl;
+
+				check = File_Exist(path);
+			} while (check==false);
+			
+			Import_Class(classes, path);
+>>>>>>> 04509c25f7ae6deffdc83ba08796bb61b4693f66
 		}
 		return true;
 	}
