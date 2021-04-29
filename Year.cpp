@@ -55,7 +55,6 @@ void Input_Year(string store, string path)
 	fstream f(store, ios::app | ios::out);
 	f << path << endl;
 	f.close();
-
 }
 ////Create new year file with limited time//
 //Input: limit of time that can be used to create
@@ -278,7 +277,7 @@ int Years_Display(string years)
 ////Process year task//
 bool Year_Proc_Active(int option)
 {
-	int time = 2021;
+	int time = 2020;
 	if (option == 1)
 	{
 		Create_Year(time);

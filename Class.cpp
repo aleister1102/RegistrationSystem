@@ -41,16 +41,19 @@ yrs Import_Class(string classes, string file)
 	{
 		string read;
 		f >> read;
+		cout << read << endl;
 		yr* node = Init_Node(read);
 		Add_Last(list, node);
 	}
 	f.close();
 
 	cout << "\t\t Saved to node" << endl;
-
-	yr* move = list.head;
+	Output_List(list);
+	system("pause");
+	/*yr* move = list.head;
 	while (move->next != nullptr)
 	{
+		
 		Input_Class(classes, move->path);
 		
 		string path = ".\\Classes\\" + Path_To_Directory(classes) + "\\" + move->path;
@@ -58,10 +61,27 @@ yrs Import_Class(string classes, string file)
 		fclose(f);
 
 		move = move->next;
-	}
+	}*/
 	return list;
 }
+string File_Import()
+{
+	string path;
+	bool check = true;
+	do {
 
+		cout << "\t\t Enter file name for importing: ";
+		string name;
+		getline(cin, name, '\n');
+		cin.ignore(32767, '\n');
+		path = name + ".csv";
+		cout << "\t\t Import file from: " << path << endl;
+
+		check = File_Exist(path);
+	} while (check == false);
+	return path;
+
+}
 //Option 2
 
 //Get code name for each department
@@ -160,12 +180,17 @@ bool Class_Proc_Active(int option,string classes)
 			Create_Class_Single(classes, 2021);
 		}
 		else {
+<<<<<<< HEAD
+			cout << File_Import();
+=======
 			string path;
 			bool check = true;
 			do {
+				
 				cout << "\t\t Enter file name for importing: "; 
 				string name;
-				getline(cin, name);
+				getline(cin, name,'\n');
+				cin.ignore(32767,'\n');
 				path = name + ".csv";
 				cout << "\t\t Import file from: " << path << endl;
 
@@ -173,6 +198,7 @@ bool Class_Proc_Active(int option,string classes)
 			} while (check==false);
 			
 			Import_Class(classes, path);
+>>>>>>> 04509c25f7ae6deffdc83ba08796bb61b4693f66
 		}
 		return true;
 	}
