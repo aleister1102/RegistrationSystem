@@ -15,10 +15,10 @@ yrs Init_List()
 	return l;
 }
 
-yr* Init_Node(string path)
+yr* Create_Node(string info)
 {
 	yr* s = new yr;
-	s->path = path;
+	s->info = info;
 	s->next = nullptr;
 	return s;
 }
@@ -81,13 +81,10 @@ bool Output_List(yrs l)
 	int count = 1;
 	while (move->next != nullptr)
 	{
-<<<<<<< HEAD
 		cout << "\tThe " << count++ << " object: ";
 		cout << move->path << " " << endl;
-=======
 		cout << "\tThe " << count << " object" << endl;
 		cout << move->path << " ";
->>>>>>> 04509c25f7ae6deffdc83ba08796bb61b4693f66
 		move = move->next;
 	}
 	return true;

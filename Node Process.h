@@ -3,7 +3,7 @@
 #include "Menu.h"
 
 struct yr {
-	string path;
+	string info;
 	yr* next;
 };
 struct yrs {
@@ -12,7 +12,7 @@ struct yrs {
 };
 
 yrs Init_List();
-yr* Init_Node(string path);
+yr* Create_Node(string path);
 void Add_Last(yrs& list, yr* node);
 bool Output_List(yrs l);
 void Remove_Info(yrs& list, string path);

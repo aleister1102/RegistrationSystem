@@ -1,4 +1,6 @@
-﻿  Class.cpp
+﻿  Menu.cpp
+  Year.cpp
   The contents of <filesystem> are available only with C++17 or later.
-B:\Projects\Git Repo\Đồ án\registration_system\Class.cpp(199): warning C4715: 'Class_Proc_Active': not all control paths return a value
-  Main Source.vcxproj -> B:\Projects\Git Repo\Đồ án\registration_system\Debug\Main Source.exe
+  Generating Code...
+B:\PROJECTS\Git Repo\Đồ án\registration_system\Menu.cpp(42): warning C4715: 'Main_Menu_Proc': not all control paths return a value
+  Main Source.vcxproj -> B:\PROJECTS\Git Repo\Đồ án\registration_system\Debug\Main Source.exe
