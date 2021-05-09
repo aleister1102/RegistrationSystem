@@ -171,18 +171,18 @@ void Select_Class()
 
 }
 //Process class task
-bool Class_Proc_Active(int option,string classes)
+bool Class_Proc_Active(int option)
 {
 	if (option == 1)
 	{
 		int choice  = Create_Type();
 		if (choice == 2) {
-			Create_Class_Single(classes, 2021);
+			//Create_Class_Single(classes, 2021);
 		}
 		else {
-<<<<<<< HEAD
+
 			cout << File_Import();
-=======
+
 			string path;
 			bool check = true;
 			do {
@@ -197,8 +197,8 @@ bool Class_Proc_Active(int option,string classes)
 				check = File_Exist(path);
 			} while (check==false);
 			
-			Import_Class(classes, path);
->>>>>>> 04509c25f7ae6deffdc83ba08796bb61b4693f66
+			//Import_Class(classes, path);
+
 		}
 		return true;
 	}

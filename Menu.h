@@ -23,10 +23,11 @@ int Student_Disp();
 
 //Year menu
 int Year_Menu_Disp();
-bool Year_Proc_Active(int option);
+bool Year_Proc_Active(int option,int time);
+int Years_Display();
 //Class menu
 int Class_Menu_Disp();
-bool Class_Proc_Active(int option,string classes);
+bool Class_Proc_Active(int option);
 int Classes_Display(string year);
 //Semester menu
 int Semester_Menu_Disp();

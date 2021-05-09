@@ -5,11 +5,9 @@
 #include <sstream>
 #include <fstream>
 
-bool File_Exist(string path);
-//Create year section
-void Input_Year(string store, string path);
+
+////Creating year section//
+void Input_Years(string store, string path);
+string Path_ToYear(string s);
+string Year_ToPath(int begin, int end);
 string Create_Year(int time);
-//Path Parsing
-string ParsePath(string s);
-
-
