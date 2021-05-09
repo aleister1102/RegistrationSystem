@@ -1,7 +1,18 @@
-﻿#include"Menu.h"
-#include"Year.h"
-#include"Class.h"
-#include "Node Process.h"
+﻿#include "Class.h"
+
+//Converting function
+string Int_ToString(int n)
+{
+	stringstream ss; string s;
+	ss << n; ss >> s;
+	ss.str("");
+	ss.clear();
+	return s;
+}
+string ClassName_To_Path(string year_name,string class_name)
+{
+	return  ".\\Classes\\" + year_name.substr(0, 9) + "\\" + class_name;
+}
 
 //Choose kind of class creating
 int Create_Type()
@@ -12,79 +23,113 @@ int Create_Type()
 	cout << "\t\t Select option: ";
 	return Valid_Data(2);
 }
-//Check whether class is existed
-bool Check_Class(string classes, string name)
-{
-	string path = ".\\Classes\\" + Path_To_Directory(classes) + "\\" + name + ".csv";
-	cout << "\t\t Check file at path: " << path << endl;
-	if (File_Exist(path))
-		return true;
-	return false;
-}
 //Put class path into list
-void Input_Class(string store, string path)
+void Input_Class(string year_name, string class_name)
 {
-	cout << "\t\t Save class at" << store << endl;
-	fstream f(store, ios::app | ios::out);
-	f << path << endl;
+	string year_path = ".\\Years\\" + year_name;
+	cout << "\t\t Save class at " << year_path << endl;
+	fstream f(year_path, ios::app | ios::out);
+	f << class_name << endl;
 	f.close();
 }
 
 //Option 1
 
-yrs Import_Class(string classes, string file)
+yrs Import_Class(string file,string year_name)
 {
 	fstream f(file);
 	yrs list = Init_List();
 
 	while (!f.eof())
 	{
-		string read;
-		f >> read;
-		cout << read << endl;
-		yr* node = Init_Node(read);
+		string year_name;
+		f >> year_name;
+		//Add class info to list of nodes
+		yr* node = Create_Node(year_name);
 		Add_Last(list, node);
 	}
 	f.close();
-
-	cout << "\t\t Saved to node" << endl;
-	Output_List(list);
-	system("pause");
-	/*yr* move = list.head;
+	
+	//Add and create
+	yr* move = list.head;
 	while (move->next != nullptr)
 	{
-		
-		Input_Class(classes, move->path);
-		
-		string path = ".\\Classes\\" + Path_To_Directory(classes) + "\\" + move->path;
-		FILE* f = fopen(path.c_str(), "a+");
-		fclose(f);
-
+		//Add class path into year file
+		string year_path = ".\\Years\\" + year_name;
+		Input_Class(year_path, move->info);
+		//Create new class file in Classes directory
+		string class_path = ".\\Classes\\" + year_name.substr(0, 9) + "\\" + move->info;
+		f.open(class_path.c_str(),ios::out);
+		f.close();
 		move = move->next;
-	}*/
+	}
 	return list;
+}
+string Year_Selection()
+{
+	cout << "\t\t Which year do you want to modify ?" << endl;
+	int limit = Years_Display();
+	cout << "\t\t Select option: ";
+	int choice = Valid_Data(limit);
+	string year_name = "NA";
+	fstream f("Years.csv", ios::in); int count = 1;
+	while (!f.eof() && choice > 0)
+	{
+		f >> year_name;
+		if (count++ == choice)
+		{
+			//Only create new directory of classes when year is selected
+			Create_Directory(year_name);
+			return year_name;
+		}
+	}
+	f.close();
+	system("cls");
+	return year_name;
+}
+string Create_Directory(string year_name)
+{
+	string dir = ".\\Classes\\" + year_name.substr(0, 9) + "\\";
+	cout << "\t\t Directory path: " << dir << endl;
+	// Creating a directory
+	if (_mkdir(dir.c_str()) == -1)
+		cerr << "\t\t Error :  " << strerror(errno) << endl;
+
+	else
+		cout << "\t\t Directory created" << endl;
+	return dir;
 }
 string File_Import()
 {
-	string path;
+	string file_path;
 	bool check = true;
 	do {
-
+		//Receive file name from user
 		cout << "\t\t Enter file name for importing: ";
 		string name;
+		cin.ignore();
 		getline(cin, name, '\n');
-		cin.ignore(32767, '\n');
-		path = name + ".csv";
-		cout << "\t\t Import file from: " << path << endl;
-
-		check = File_Exist(path);
+		
+		//Create file's path
+		file_path = name + ".csv";
+		cout << "\t\t Import file from: " << file_path << endl;
+		check = File_Exist(file_path);
 	} while (check == false);
-	return path;
+	return file_path;
 
 }
 //Option 2
 
 //Get code name for each department
+//Check whether class is existed
+bool Duplicated_Class(string year_name, string check)
+{
+	string path  = ClassName_To_Path(year_name, check);
+	cout << "\t\t Check file at path: " << path << endl;
+	if (File_Exist(path))
+		return true;
+	return false;
+}
 string Department_Name(int depart)
 {
 	switch (depart)
@@ -100,111 +145,85 @@ string Department_Name(int depart)
 	default: {return "VLH"; break; }
 	}
 }
-//Converting function
-string Convert_Char(char*ch)
+string Create_Class_Single(string year_name, int time)
 {
-	stringstream ss; string s;
-	ss << ch; ss >> s;
-	return s;
-}
-string Convert_Int(int n)
-{
-	stringstream ss; string s;
-	ss << n; ss >> s;
-	ss.str("");
-	ss.clear();
-	return s;
-}
-string Code_to_Name(string period, string code, string order)
-{
-	return period + code + order + ".csv";
-}
-string Path_To_Directory(string classes)
-{
-	return ParsePath(classes).substr(0, 9);
-	//If want convert from path to  name,just add ".csv" at the last of this function
-} 
-string Name_To_Path(string period,string code,string order,string classes)
-{
-	string path = ".\\Classes\\" + Path_To_Directory(classes) + "\\";
-	path = path + Code_to_Name(code, period, order);
-	return path;
-}
-
-string Create_Class_Single(string classes, int time)
-{
-	FILE* fileInput;
-	string code, period = Convert_Int(time % 100);
+	
+	string class_name, syntax, period = Int_ToString(time % 100);
 	int n = 0;
 
-	code = Department_Name(Department_Menu_Disp());
+	syntax = Department_Name(Department_Menu_Disp());
 	bool check = true;
 
 	do {
 		cout << "\t\t Enter order of class: ";
 		cin >> n;
 
-		string temp = period + code + Convert_Int(n);
-		check = Check_Class(classes, temp);
+		class_name = period + syntax + Int_ToString(n) + ".csv";
+		check = Duplicated_Class(year_name, class_name);
 
 	} while (n < 0 || n>5 || check == true);
 	
-	
-	string path = Name_To_Path(period,code,Convert_Int(n),classes);
-	fileInput = fopen(path.c_str(), "a+");
-	fclose(fileInput);
+	string class_path = ClassName_To_Path(year_name, class_name);
+	fstream f(class_path, ios::out);
+	f.close();
 
-	cout << "\t\t File path: " << path << endl;
+	cout << "\t\t File path: " << class_path << endl;
 	cout << "\t\t Class created successfully" << endl;
 
-	Input_Class(classes, ParsePath(path));
+	Input_Class(year_name, class_name);
 	cout << "\t\t ";  system("pause");
-	return path;
+	return class_path;
 }
 
-void Delete_Class()
+////Classes displaying//
+int Classes_Display(string year_path)
 {
+	if (File_Exist(year_path) == false)
+	{
+		return 0;
+	}
+	system("cls");
+	cout << "\t\t CREATED CLASS: " << endl;
+	fstream f(year_path, ios::in); int i = 1;
 
+	while (!f.eof())
+	{
+		string read;
+		f >> read;
+		if (read != "")
+		{
+			cout << "\t\t " << i++ << ". " << read << endl;
+		}
+	}
+	f.close();
+	return 1;
 }
-void Select_Class()
-{
 
-}
 //Process class task
-bool Class_Proc_Active(int option)
+bool Class_Proc_Active(int option,int time)
 {
+	string year_name = Year_Selection();
+	string year_path = ".\\Years\\" + year_name;
+	Classes_Display(year_path);
+
 	if (option == 1)
 	{
 		int choice  = Create_Type();
-		if (choice == 2) {
-			//Create_Class_Single(classes, 2021);
+		if (choice == 1) {
+			if (year_name != "NA")
+			{
+				string path = File_Import();
+				Import_Class(path, year_name);
+			}
 		}
 		else {
-
-			cout << File_Import();
-
-			string path;
-			bool check = true;
-			do {
-				
-				cout << "\t\t Enter file name for importing: "; 
-				string name;
-				getline(cin, name,'\n');
-				cin.ignore(32767,'\n');
-				path = name + ".csv";
-				cout << "\t\t Import file from: " << path << endl;
-
-				check = File_Exist(path);
-			} while (check==false);
-			
-			//Import_Class(classes, path);
-
+			Create_Class_Single(year_name, time);
 		}
 		return true;
 	}
 	else if (option == 2)
 	{
-		Delete_Class();
+		
 		return true;
 	}
 	else if (option == 3)
@@ -213,7 +232,6 @@ bool Class_Proc_Active(int option)
 	}
 	else if(option ==4)
 	{
-		cout << "EXIT" << endl;
 		return false;
 	}
 
