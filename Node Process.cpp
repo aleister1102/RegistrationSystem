@@ -39,7 +39,7 @@ void Add_Last(yrs& list, yr* node)
 void Remove_Info(yrs& list, string path)
 {
 	yr* move = list.head;
-	if (move->path == path)
+	if (move->info == path)
 	{
 		yr* temp = move;
 		list.head = list.head->next;
@@ -48,7 +48,7 @@ void Remove_Info(yrs& list, string path)
 	}
 	while (move->next->next != nullptr)
 	{
-		if (move->next->path == path)
+		if (move->next->info == path)
 		{
 			yr* temp = move;
 			move->next = move->next->next;
@@ -57,7 +57,7 @@ void Remove_Info(yrs& list, string path)
 		}
 		move = move->next;
 	}
-	if (move->next->path == path)
+	if (move->next->info == path)
 	{
 		yr* temp = move->next;
 		move->next = nullptr;
@@ -82,9 +82,7 @@ bool Output_List(yrs l)
 	while (move->next != nullptr)
 	{
 		cout << "\tThe " << count++ << " object: ";
-		cout << move->path << " " << endl;
-		cout << "\tThe " << count << " object" << endl;
-		cout << move->path << " ";
+		cout << move->info << " " << endl;
 		move = move->next;
 	}
 	return true;
@@ -95,13 +93,13 @@ yrs Copy_List(yrs l)
 	yrs temp = Init_List();
 	while (move != nullptr)
 	{
-		yr* add = Init_Node({ move->path });
+		yr* add = Create_Node({ move->info });
 		Add_Last(temp, add);
 		move = move->next;
 	}
 	return temp;
 }
-int Create_Number(string year)
+int Year_ToNumber(string year)
 {
 	stringstream ss; int n;
 	ss <<  year.substr(0, 4);
@@ -116,16 +114,16 @@ void SortAscen_List(yrs & list)
 
 	yr* move = list.head;
 	//Create flags
-	int min = Create_Number(move->path);
+	int min;
 	int before = 0;
 
 	while (curr != nullptr)
 	{
 		min = 100000;
-		//Set up the flag
+		//Set up the flag of smallest number
 		while (move != nullptr)
 		{
-			int num = Create_Number(move->path);
+			int num = Year_ToNumber(move->info);
 			if (num < min && num> before)
 			{
 				min = num;
@@ -138,10 +136,10 @@ void SortAscen_List(yrs & list)
 		//Compare node with flag and copy to new list
 		while (move != nullptr)
 		{
-			int num = Create_Number(move->path);
+			int num = Year_ToNumber(move->info);
 			if (num == min)
 			{
-				curr->path = move->path;
+				curr->info = move->info;
 				check = true;
 				curr = curr->next;
 			}

@@ -116,9 +116,7 @@ bool Admin_Proc(int option)
 		bool run = true;
 		while (run)
 		{
-			//system("cls");
-			//Years_Display();
-			run = Class_Proc_Active(Class_Menu_Disp());
+			run = Class_Proc_Active(Class_Menu_Disp(),2021);
 		}
 		return true;
 	}
@@ -143,12 +141,11 @@ int Year_Menu_Disp()
 	cout << "\t\t YEAR SECTION" << endl;
 	cout << "\t\t Choose your option: " << endl;
 	cout << "\t\t 1. Create new year" << endl;
-	cout << "\t\t 2. View year" << endl;
-	cout << "\t\t 3. Delete year" << endl;
-	cout << "\t\t 4. Delete all years" << endl;
-	cout << "\t\t 5. Exit" << endl;
+	cout << "\t\t 2. Delete year" << endl;
+	cout << "\t\t 3. Delete all years" << endl;
+	cout << "\t\t 4. Exit" << endl;
 	cout << "\t\t Select option: ";
-	return Valid_Data(5);
+	return Valid_Data(4);
 }
 //Class Menu
 int Class_Menu_Disp()
@@ -156,7 +153,7 @@ int Class_Menu_Disp()
 	cout << "\t\t Choose your option: " << endl;
 	cout << "\t\t 1. Add new class" << endl;
 	cout << "\t\t 2. Delete class" << endl;
-	cout << "\t\t 3. Select class" << endl;
+	cout << "\t\t 3. Clear classes" << endl;
 	cout << "\t\t 4. Exit" << endl;
 	cout << "\t\t Select option: ";
 	return Valid_Data(4);
