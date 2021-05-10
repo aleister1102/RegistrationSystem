@@ -123,6 +123,7 @@ bool enterpass_proc(int option, string& psw)
 }
 bool enter_acc(string& usr, string& psw)
 {
+	cin.ignore();
 	cout << "\t\tEnter username: ";
 	getline(cin, usr);
 	bool k = enterpass_proc(enterpass(), psw);
@@ -244,7 +245,6 @@ void login_as_admin(string& user, string& pass)
 {
 	int d = 0, m = 0, y = 0;
 	enter_dmy(d, m, y);
-	cin.ignore();
 	if (check_dmy(d, m, y))
 	{
 		if (enter_acc(user, pass))
