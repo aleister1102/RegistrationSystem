@@ -252,11 +252,13 @@ void Class_Clear(string year_path)
 			f >> class_name;
 
 			//Delete files
-			string class_path = ".\\Classes\\" 
-				+ Path_ToYear(year_path).substr(0, 9) 
+			string class_path = ".\\Classes\\"
+				+ Path_ToYear(year_path).substr(0, 9)
 				+ "\\"
 				+ class_name;
+			
 			remove(class_path.c_str());
+
 
 		}
 		f.close();
@@ -264,9 +266,6 @@ void Class_Clear(string year_path)
 		remove(year_path.c_str());
 		f.open(year_path.c_str(), ios::out);
 		f.close();
-		/*string dir = ".\\Classes\\"
-			+ Path_ToYear(year_path).substr(0, 9);
-		Delete_Directory(dir);*/
 	}
 }
 ////Classes displaying//
@@ -279,7 +278,8 @@ int Classes_Display(string year_path)
 	system("cls");
 	cout << "\t\t CREATED CLASS: " << endl;
 	fstream f(year_path, ios::in); int i = 1;
-
+	
+	cout << "\t\t 0. Back" << endl;
 	while (!f.eof())
 	{
 		string read;
@@ -294,12 +294,9 @@ int Classes_Display(string year_path)
 }
 
 //Process class task
-bool Class_Proc_Active(int option,int time)
+bool Class_Proc_Active(string year_name,int option,int time)
 {
-	string year_name = Year_Selection();
 	string year_path = ".\\Years\\" + year_name;
-	Classes_Display(year_path);
-
 	if (option == 1)
 	{
 		if (year_name != "NA")
@@ -333,7 +330,13 @@ bool Class_Proc_Active(int option,int time)
 	}
 	else if(option ==4)
 	{
+		system("cls");
 		return false;
+	}
+	else
+	{
+		system("cls");
+		return true;
 	}
 
 }

@@ -7,6 +7,8 @@
 #include <sstream>
 #include <fstream>
 
+
+
 using namespace std;
 
 //Main menu
@@ -15,8 +17,6 @@ bool Main_Menu_Proc(int option);
 //Sub menu
 bool Login_Proc(int option);
 int Login_Disp();
-void ForgotPass_Proc(int option);
-int ForgotPass_Disp();
 void AboutUs();
 
 //Admin
@@ -32,7 +32,7 @@ int Years_Display();
 
 //Class menu
 int Class_Menu_Disp();
-bool Class_Proc_Active(int option,int time);
+bool Class_Proc_Active(string year_name, int option, int time);
 int Classes_Display(string year);
 
 //Semester menu

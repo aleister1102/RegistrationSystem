@@ -1,4 +1,5 @@
 ﻿#include "Menu.h"
+#include "Class.h"
 
 //Display main menu
 //Return: Choice (int type) of user
@@ -104,9 +105,13 @@ bool Admin_Proc(int option)
 	else if (option == 2)
 	{
 		bool run = true;
+		
 		while (run)
 		{
-			run = Class_Proc_Active(Class_Menu_Disp(),2021);
+			string year_name = Year_Selection();
+			string year_path = ".\\Years\\" + year_name;
+			Classes_Display(year_path);
+			run = Class_Proc_Active(year_name,Class_Menu_Disp(),2021);
 		}
 		return true;
 	}
