@@ -1,0 +1,16 @@
+﻿  Class.cpp
+  The contents of <filesystem> are available only with C++17 or later.
+  MainSource.cpp
+  The contents of <filesystem> are available only with C++17 or later.
+  Menu.cpp
+  The contents of <filesystem> are available only with C++17 or later.
+  Node Process.cpp
+  The contents of <filesystem> are available only with C++17 or later.
+  Semester.cpp
+  The contents of <filesystem> are available only with C++17 or later.
+  Year.cpp
+  The contents of <filesystem> are available only with C++17 or later.
+B:\PROJECTS\Git Repo\Đồ án\registration_system\Year.cpp(32,51): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  Generating Code...
+B:\PROJECTS\Git Repo\Đồ án\registration_system\Menu.cpp(37): warning C4715: 'Main_Menu_Proc': not all control paths return a value
+  Main Source.vcxproj -> B:\PROJECTS\Git Repo\Đồ án\registration_system\x64\Debug\Main Source.exe
