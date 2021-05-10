@@ -7,11 +7,10 @@ int Main_Menu_Disp()
 	system("cls");
 	cout << "\t\t---- Welcome to course registration system ----" << endl;
 	cout << "\t\t\t\t 1. Login" << endl;
-	cout << "\t\t\t\t 2. Forgot Password ?" << endl;
-	cout << "\t\t\t\t 3. About Us" << endl;
-	cout << "\t\t\t\t 4. Exit" << endl;
+	cout << "\t\t\t\t 2. About Us" << endl;
+	cout << "\t\t\t\t 3. Exit" << endl;
 	cout << "\t\t Your choice is (choose from 1 to 4): ";
-	return Valid_Data(4);
+	return Valid_Data(3);
 }
 bool Main_Menu_Proc(int option)
 {
@@ -24,19 +23,14 @@ bool Main_Menu_Proc(int option)
 		}
 		return true;
 	}
-	else if (option == 2)//Forgot Pass
-	{
-		ForgotPass_Proc(ForgotPass_Disp());
-		return true;
-	}
-	else if (option == 3)//About Us
+	else if (option == 2)//About Us
 	{
 		AboutUs();
 		return true;
 	}
-	else if (option == 4)//Exit
+	else if (option == 3)//Exit
 	{
-		cout << "EXIT !!!" << endl;
+		cout << "\t\t EXIT !!!" << endl;
 		return false;
 	}
 }
@@ -59,6 +53,11 @@ bool Login_Proc(int option)
 		Student_Disp();
 		return true;
 	}
+	else if (option == 3)
+	{
+		cout << "\t\t Call Change Pass Function Here" << endl;
+		return true;
+	}
 	else return false;
 }
 int Login_Disp()
@@ -67,19 +66,10 @@ int Login_Disp()
 	cout << "\t\t LOGIN" << endl;
 	cout << "\t\t 1. Admin" << endl;
 	cout << "\t\t 2. User" << endl;
-	cout << "\t\t 3. Exit" << endl;
+	cout << "\t\t 3. Change Pass" << endl;
+	cout << "\t\t 4. Exit" << endl;
 	cout << "\t\t Select option: ";
 	return Valid_Data(3);
-}
-void ForgotPass_Proc(int option)
-{
-
-}
-int ForgotPass_Disp()
-{
-	cout << "Forgot Pass" << endl;
-	system("pause");
-	return 0;
 }
 void AboutUs()
 {
@@ -195,7 +185,15 @@ int Department_Menu_Disp()
 	cout << "\t\t Select option: ";
 	return Valid_Data(9);
 }
-
+//Training System 
+int Training_System_Menu_Disp()
+{
+	cout << "\t\t Choose your training system: " << endl;
+	cout << "\t\t 1.Popular" << endl;
+	cout << "\t\t 2.High Quality" << endl;
+	cout << "\t\t Select option: ";
+	return Valid_Data(2);
+}
 int Valid_Data(int limit)
 {
 	int n = 0; 

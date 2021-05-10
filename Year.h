@@ -3,12 +3,9 @@
 
 #include "Menu.h"
 #include "Node Process.h"
-#include <direct.h>
-#include <filesystem>
-#include <sstream>
-#include <fstream>
 
 bool File_Exist(string path);
+
 
 ////Year Creation//
 void Input_Years(string store, string year_path);
@@ -20,8 +17,7 @@ string Create_Year(int time);
 void Year_Delete(int quanti);
 void Year_Clear(string years);
 
-////Year Sorting//
-void Year_Sort();
+////Year Sorting//void Year_Sort();
 
 ////Year Displaying//
 int Years_Display();

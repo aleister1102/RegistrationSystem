@@ -2,6 +2,11 @@
 #define _CRT_SECURE_NO_WARNINGS
 
 #include <iostream>
+#include <direct.h>
+#include <filesystem>
+#include <sstream>
+#include <fstream>
+
 using namespace std;
 
 //Main menu
@@ -34,5 +39,8 @@ int Classes_Display(string year);
 int Semester_Menu_Disp();
 //Department menu
 int Department_Menu_Disp();
+//System menu
+int Training_System_Menu_Disp();
+
 
 int Valid_Data(int limit);
