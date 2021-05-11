@@ -1,4 +1,5 @@
 ﻿#include "Menu.h"
+#include "Login.h"
 
 //Display main menu
 //Return: Choice (int type) of user
@@ -47,9 +48,12 @@ bool Login_Proc(int option)
 	//If user is administrator
 	if (option == 1)
 	{
+		
 		bool run = true;
 		while (run)
 		{
+			string user = "", name = "";
+			login_as_admin(user, name);
 			run = Admin_Proc(Admin_Disp());
 		}
 		return true;

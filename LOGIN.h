@@ -1,7 +1,6 @@
-#include<iostream>
-#include<string>
+#include"Menu.h"
 #include<conio.h>
-#include<fstream>
+
 using namespace std;
 // check day 
 bool check_leap_year(int y);
@@ -10,7 +9,7 @@ bool check_dmy(int d, int m, int y);
 void enter_dmy(int& d, int& m, int& y);
 // check option
 int Valid_Data(int limit);
-// passworwd procces
+// password proccess
 int enterpass();
 void showpass(string& pass);
 void hidepass(string& pass);
@@ -21,5 +20,12 @@ int count_acc_in_csv(string name);
 // create account
 string account(string usr, string psw);
 // check account
+
+//Login as ad
+bool check_acc_ad(string usr, string psw);
+void login_as_admin(string& user, string& pass);
+//Login as stu
+bool check_acc_student(string usr, string psw);
+void login_as_student(string& user, string& pass);
 
 
