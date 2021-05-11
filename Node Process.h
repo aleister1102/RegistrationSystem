@@ -1,19 +1,11 @@
-#pragma once
-#include "Year.h"
-#include "Menu.h"
+#include "MainSource.h"
 
-struct yr {
-	string info;
-	yr* next;
-};
-struct yrs {
-	yr* head;
-	yr* tail;
-};
+paths Init_List();
+path* Create_Node(string path);
+void Add_Last(paths& list, path* node);
+bool Output_List(paths l);
+void Remove_Info(paths& list, string path);
+void SortAscen_List(paths& list);
+void ReInput_fromList(string store, paths list);
+paths Import_Class(string file, string year_name);
 
-yrs Init_List();
-yr* Create_Node(string path);
-void Add_Last(yrs& list, yr* node);
-bool Output_List(yrs l);
-void Remove_Info(yrs& list, string path);
-void SortAscen_List(yrs& list);

@@ -1,11 +1,7 @@
+#include "Menu.h"
 #include "Year.h"
-
-//Delete directory
-void Delete_Directory(string dir)
-{
-	dir = "rmdir /s /q " + dir;
-	system(dir.c_str());
-}
+#include "Class.h"
+#include "Node Process.h"
 
 ////Check the existence of file//
 //Input: path of file in string type
@@ -27,9 +23,9 @@ bool File_Exist(string path)
 //Input: path of store file and path of year file
 void Input_Years(string store, string year_path)
 {
-	year_path = Path_ToYear(year_path);
+	string year_name = Path_ToYear(year_path);
 	fstream f(store, ios::app | ios::out);
-	f << year_path << endl;
+	f << year_name << endl;
 	f.close();
 }
 //Convert from year path to year name
@@ -59,13 +55,11 @@ string Create_Year(int time)
 
 	cout << "\t\t CREATE YEAR SECTION " << endl;
 	do {
-		
 		cout << "\t\t Created school year from: ";
 		begin = Valid_Data(time);
 		end = begin + 1;
 
 		years_path = Year_ToPath(begin, end);
-		
 	} while (File_Exist(years_path));
 
 	//Create new file
@@ -80,10 +74,10 @@ string Create_Year(int time)
 }
 
 ////Input Year from node to file after delete//
-void ReInput_Year(yrs list)
+void ReInput_fromList(string store, paths list)
 {
-	yr* move = list.head;
-	fstream f("Years.csv", ios::in | ios::out);
+	path* move = list.head;
+	fstream f(store, ios::in | ios::out);
 	while (move->next != nullptr)
 	{
 		f << move->info << endl;
@@ -98,23 +92,20 @@ void Year_Delete(int quanti)
 	int choice = Valid_Data(quanti);
 
 	int i = 1;
-	string years_path = "Years.csv";
-	stringstream ss;
-	yrs list = Init_List();
+	string years_path = "Years.csv",year_path, year_name;
+	paths list = Init_List();
 	fstream f(years_path, ios::in | ios::out);
 
 	while (!f.eof()) {
-
 		//Read year file's name from "Years.csv"
-		string year_path, year_name;
 		f >> year_name;
 		//Add year file's name into list of nodes
-		year_path = ".\\Years\\" + year_name;
-		yr* node = Create_Node(year_name);
+		path* node = Create_Node(year_name);
 		Add_Last(list, node);
 
 		if (i++ == choice)
 		{
+			year_path = ".\\Years\\" + year_name;
 			//Just deleted file in directory, not in Years.csv
 			remove(year_path.c_str());
 			//Delete in file by deleting node(s) in list
@@ -127,8 +118,13 @@ void Year_Delete(int quanti)
 	f.open(years_path.c_str(), ios::out);
 	f.close();
 	//Copy year's name to "Years.csv" from list
-	ReInput_Year(list);
-
+	ReInput_fromList("Years.csv", list);
+	
+	string dir = ".\\Classes\\"
+		+ Path_ToYear(year_path).substr(0, 9)
+		+ "\\"; //Have to use this syntax to accomplish folder path
+	Delete_Directory(dir);
+	
 }
 ////Delete all years//
 void Year_Clear(string years)
@@ -137,20 +133,26 @@ void Year_Clear(string years)
 	cout << "\t\t Are you sure ???" << endl;
 	cout << "\t\t Press 0 for accepting, 1 for not:  ";
 	int n; cin >> n;
+
+
+	string year_name, year_path;
 	if (n == 0)
 	{
 		fstream f(years, ios::in | ios::out);
 		int i = 1;
 
 		while (!f.eof()) {
-
-			string year_name, year_path;
+			
 			f >> year_name;
 
 			//Delete files
 			year_path = ".\\Years\\" + year_name;
 			remove(year_path.c_str());
-
+			//Delete class folder
+			string dir = ".\\Classes\\"
+				+ Path_ToYear(year_path).substr(0, 9)
+				+ "\\"; //Have to use this syntax to accomplish folder path
+			Delete_Directory(dir);
 		}
 		f.close();
 		//Remake a new "Years.csv"
@@ -167,14 +169,14 @@ void Year_Sort()
 	string years_path = "Years.csv";
 	fstream f(years_path, ios::in | ios::out);
 	stringstream ss;
-	yrs list = Init_List();
+	paths list = Init_List();
 
 	while (!f.eof())
 	{
 		string read;
 		f >> read;
 		//Add info into list of nodes
-		yr* node = Create_Node(read);
+		path* node = Create_Node(read);
 		Add_Last(list, node);
 	}
 	f.close();
@@ -183,12 +185,11 @@ void Year_Sort()
 	remove(years_path.c_str());
 	f.open(years_path.c_str(), ios::out);
 	f.close();
-	ReInput_Year(list);
+	ReInput_fromList(years_path, list);
 }
 ////Year displaying//
 int Years_Display()
 {
-
 	system("cls");
 	Year_Sort();
 	cout << "\t\t CREATED YEARS: " << endl;
@@ -210,7 +211,7 @@ int Years_Display()
 }
 
 ////Process year task//
-bool Year_Proc_Active(int option,int time)
+bool Year_Proc_Active(int option, int time)
 {
 	if (option == 1)
 	{
