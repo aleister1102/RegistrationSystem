@@ -206,7 +206,7 @@ string Create_Class_Single(string year_name, int time)
 	return class_path;
 }
 
-////Class Deleting//
+//Class Deleting
 void Class_Delete(string year_path,int quanti)
 {
 	cout << "\t\t Chosse class: ";
@@ -237,7 +237,7 @@ void Class_Delete(string year_path,int quanti)
 	f.close();
 	ReInput_fromList(year_path, list);
 }
-////Clear all classes//
+//Clear all classes
 void Class_Clear(string year_path)
 {
 	cout << "\t\t All classes will be deleted !!!!" << endl;
@@ -271,7 +271,7 @@ void Class_Clear(string year_path)
 		f.close();
 	}
 }
-////Classes displaying//
+//Classes displaying
 int Classes_Display(string year_path)
 {
 	if (File_Exist(year_path) == false)

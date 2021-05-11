@@ -1,11 +1,12 @@
 #include "Menu.h"
 #include "LOGIN.h"
 
+// Checking
 bool check_leap_year(int year)
 {
 	return ((year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0));
 }
-int day_in_month(int month, int year)
+int day_of_month(int month, int year)
 {
 	switch (month)
 	{
@@ -30,7 +31,7 @@ bool check_dmy(date dmy)
 	{
 		return false;
 	}
-	if (dmy.day <= 0 || dmy.day > day_in_month(dmy.month, dmy.year))
+	if (dmy.day <= 0 || dmy.day > day_of_month(dmy.month, dmy.year))
 	{
 		return false;
 	}
@@ -44,7 +45,8 @@ void enter_dmy(date& dmy)
 	cin >> dmy.month; cout << "\t\t";
 	cin >> dmy.year;
 }
-//
+
+// Password proccess
 int enterpass()
 {
 	cout << "\t\t1.Show your password !!!" << endl;
@@ -106,8 +108,9 @@ bool enter_acc(user& info)
 	bool k = enterpass_proc(enterpass(), info.password);
 	return k;
 }
-//
-int count_acc_in_csv(string name)
+
+// Count line in csv file
+int count_acc(string name)
 {
 	ifstream f;
 	f.open(name+".csv");
@@ -121,18 +124,20 @@ int count_acc_in_csv(string name)
 	f.close();
 	return c - 1;
 }
+// Create account
 string account(user info)
 {
 	return info.username + ',' + info.password;
 }
-//
+
+// Login as Student
 bool check_acc_student(user info)
 {
 	ifstream f;
 	f.open("acc_sv.csv");
 	string acc = account(info);
 	int c = 0;
-	int n = count_acc_in_csv("acc_sv");
+	int n = count_acc("acc_sv");
 	while (!f.eof())
 	{
 		c++;
@@ -163,7 +168,6 @@ bool check_acc_student(user info)
 }
 bool login_as_student(user &info,date &dmy)
 {
-	date dmy;
 	cout << "\t\tLogin as Student" << endl;
 	cin.ignore();
 	do {
@@ -174,7 +178,7 @@ bool login_as_student(user &info,date &dmy)
 		return check_acc_student(info);
 	}
 }
-//
+// Login as Admin
 bool check_acc_ad(user info)
 {
 	if (info.password[0] == 'A' && info.password[1] == 'D')
@@ -183,7 +187,7 @@ bool check_acc_ad(user info)
 		f.open("acc_ad.csv");
 		string acc = account(info);
 		int c = 0;
-		int n = count_acc_in_csv("acc_ad");
+		int n = count_acc("acc_ad");
 		while (!f.eof())
 		{
 			c++;

@@ -4,7 +4,7 @@ bool File_Exist(string path);
 void Input_Years(string store, string year_path);
 string Path_ToYear(string s);
 string Year_ToPath(int begin, int end);
-string Create_Year(int time);
+string Create_Year(int year);
 
 ////Year Deletion//
 void Year_Delete(int quanti);

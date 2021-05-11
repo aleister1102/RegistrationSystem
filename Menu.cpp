@@ -4,6 +4,25 @@
 #include "Node Process.h"
 #include "LOGIN.h"
 
+int Valid_Data(int limit)
+{
+	int n = 0;
+	do
+	{
+		if (cin.fail())
+		{
+			cin.clear();
+			cin.ignore();
+			cout << "\t\t Invalid Input !!!!!!!!" << endl;
+			cout << "\t\t Type input again: "; cin >> n;
+		}
+		else {
+			cin >> n;
+		}
+	} while (n > limit || n < 0);
+	cout << endl;
+	return n;
+}
 
 //Display main menu
 //Return: Choice (int type) of user
@@ -222,23 +241,4 @@ int Training_System_Menu_Disp()
 	cout << "\t\t 2.High Quality" << endl;
 	cout << "\t\t Select option: ";
 	return Valid_Data(2);
-}
-int Valid_Data(int limit)
-{
-	int n = 0; 
-	do 
-	{
-		if (cin.fail())
-		{
-			cin.clear();
-			cin.ignore();
-			cout << "\t\t Invalid Input !!!!!!!!" << endl;
-			cout << "\t\t Type input again: "; cin >> n;
-		}
-		else {
-			cin >> n;
-		}
-	} while (n > limit || n < 0);
-	cout << endl;
-	return n;
 }

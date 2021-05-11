@@ -1,36 +1,26 @@
 #include "MainSource.h"
 
 using namespace std;
-struct date{
-    int day,month,year;
-};
-struct user {
-    string username;
-    string password;
-};
-// check day
+
+// Checking
 bool check_leap_year(int year);
-int day_in_month(int month, int year);
+int day_of_month(int month, int year);
 bool check_dmy(date dmy);
 void enter_dmy(date& dmy);
-// check option
+// Check option
 int Valid_Data(int limit);
-// password proccess
+// Data proccess
 int enterpass();
 void showpass(string& pass);
 void hidepass(string& pass);
 bool enterpass_proc(int option, string& psw);
 bool enter_acc(user& info);
-// count line in file csv
-int count_acc_in_csv(string name);
-// create account
+int count_acc(string name);
 string account(user info);
-// check account
 
-//Login as ad
+// Login
 bool check_acc_ad(user info);
 bool login_as_admin(user& info, date& dmy);
-//Login as stu
 bool check_acc_student(user info);
 bool login_as_student(user& info, date& dmy);
 

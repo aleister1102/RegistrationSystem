@@ -1,12 +1,20 @@
 #include "Node Process.h"
-
+//Convert year file name to number
+int Year_ToNumber(string year_name)
+{
+	stringstream ss; int n;
+	ss << year_name.substr(0, 4);
+	ss >> n;
+	return n;
+}
+//Check for empty linked list
 bool CheckEmpty(paths list)
 {
 	if (list.head == nullptr)
 		return true;
 	return false;
 }
-
+//Initialize for linked list & node
 paths Init_List()
 {
 	paths l;
@@ -14,7 +22,6 @@ paths Init_List()
 	l.tail = nullptr;
 	return l;
 }
-
 path* Create_Node(string info)
 {
 	path* s = new path;
@@ -22,7 +29,7 @@ path* Create_Node(string info)
 	s->next = nullptr;
 	return s;
 }
-
+//Add node to last place of linked list
 void Add_Last(paths& list, path* node)
 {
 	if (CheckEmpty(list))
@@ -36,6 +43,7 @@ void Add_Last(paths& list, path* node)
 		list.tail = node;
 	}
 }
+//Delete one node in linked list
 void Remove_Info(paths& list, string info)
 {
 	path* move = list.head;
@@ -66,27 +74,7 @@ void Remove_Info(paths& list, string info)
 		return;
 	}
 }
-bool Output_List(paths l)
-{
-	if (CheckEmpty(l))
-	{
-		cout << "Danh sach rong" << endl;
-		return false;
-	}
-
-	cout << "List of Node: " << endl;
-	cout << "----------------------------------------------------------------------------" << endl;
-
-	path* move = l.head;
-	int count = 1;
-	while (move->next != nullptr)
-	{
-		cout << "\tThe " << count++ << " object: ";
-		cout << move->info << " " << endl;
-		move = move->next;
-	}
-	return true;
-}
+//Copy list to a new list with different address
 paths Copy_List(paths l)
 {
 	path* move = l.head;
@@ -99,13 +87,19 @@ paths Copy_List(paths l)
 	}
 	return temp;
 }
-int Year_ToNumber(string year)
+//Input info from node to file after delete
+void ReInput_fromList(string store, paths list)
 {
-	stringstream ss; int n;
-	ss <<  year.substr(0, 4);
-	ss >> n;
-	return n;
+	path* move = list.head;
+	fstream f(store, ios::in | ios::out);
+	while (move->next != nullptr)
+	{
+		f << move->info << endl;
+		move = move->next;
+	}
+	f.close();
 }
+
 void SortAscen_List(paths & list)
 {
 	//Create new list with different address
@@ -151,4 +145,25 @@ void SortAscen_List(paths & list)
 		if (check == false) { curr = curr->next; }
 	}
 	list = result;
+}
+bool Output_List(paths l)
+{
+	if (CheckEmpty(l))
+	{
+		cout << "Danh sach rong" << endl;
+		return false;
+	}
+
+	cout << "List of Node: " << endl;
+	cout << "----------------------------------------------------------------------------" << endl;
+
+	path* move = l.head;
+	int count = 1;
+	while (move->next != nullptr)
+	{
+		cout << "\tThe " << count++ << " object: ";
+		cout << move->info << " " << endl;
+		move = move->next;
+	}
+	return true;
 }

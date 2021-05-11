@@ -3,7 +3,7 @@
 #include "Class.h"
 #include "Node Process.h"
 
-////Check the existence of file//
+//Check the existence of file
 //Input: path of file in string type
 //Return: True if file is exist and false if not
 bool File_Exist(string path)
@@ -19,7 +19,7 @@ bool File_Exist(string path)
 	}
 }
 
-////Add year into year list//
+//Add year into year list
 //Input: path of store file and path of year file
 void Input_Years(string store, string year_path)
 {
@@ -44,10 +44,10 @@ string Year_ToPath(int begin, int end)
 	ss2 << end; ss2 >> name2;
 	return   ".\\Years\\" + name1 + "-" + name2 + ".csv";
 }
-////Create new year file with limited time//
+//Create new year file with limited time
 //Input: limit of time that can be used to create
 //Return: path of year file that have been created
-string Create_Year(int time)
+string Create_Year(int year)
 {
 	int begin, end;
 	string years_path;
@@ -56,7 +56,7 @@ string Create_Year(int time)
 	cout << "\t\t CREATE YEAR SECTION " << endl;
 	do {
 		cout << "\t\t Created school year from: ";
-		begin = Valid_Data(time);
+		begin = Valid_Data(year);
 		end = begin + 1;
 
 		years_path = Year_ToPath(begin, end);
@@ -73,19 +73,7 @@ string Create_Year(int time)
 	return years_path;
 }
 
-////Input Year from node to file after delete//
-void ReInput_fromList(string store, paths list)
-{
-	path* move = list.head;
-	fstream f(store, ios::in | ios::out);
-	while (move->next != nullptr)
-	{
-		f << move->info << endl;
-		move = move->next;
-	}
-	f.close();
-}
-////Year_Delete////
+//Year_Delete
 void Year_Delete(int quanti)
 {
 	cout << "\t\t Choose year: ";
@@ -126,7 +114,7 @@ void Year_Delete(int quanti)
 	Delete_Directory(dir);
 	
 }
-////Delete all years//
+//Delete all years
 void Year_Clear(string years)
 {
 	cout << "\t\t All years will be deleted !!!!" << endl;
@@ -187,7 +175,7 @@ void Year_Sort()
 	f.close();
 	ReInput_fromList(years_path, list);
 }
-////Year displaying//
+//Year displaying
 int Years_Display()
 {
 	system("cls");
@@ -210,7 +198,7 @@ int Years_Display()
 	return i;
 }
 
-////Process year task//
+//Process year task
 bool Year_Proc_Active(int option, int time)
 {
 	if (option == 1)
