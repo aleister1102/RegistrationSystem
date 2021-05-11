@@ -1,12 +1,14 @@
 #include"Menu.h"
 #include<conio.h>
-
 using namespace std;
-// check day 
+struct date{
+    int d,m,y;
+};
+// check day
 bool check_leap_year(int y);
 int day_in_month(int m, int y);
-bool check_dmy(int d, int m, int y);
-void enter_dmy(int& d, int& m, int& y);
+bool check_dmy(date dmy);
+void enter_dmy(date& dmy);
 // check option
 int Valid_Data(int limit);
 // password proccess
@@ -23,9 +25,9 @@ string account(string usr, string psw);
 
 //Login as ad
 bool check_acc_ad(string usr, string psw);
-void login_as_admin(string& user, string& pass);
+bool login_as_admin(string& user, string& pass,date& dmy);
 //Login as stu
 bool check_acc_student(string usr, string psw);
-void login_as_student(string& user, string& pass);
+bool login_as_student(string& user, string& pass,date& dmy);
 
 

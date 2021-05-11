@@ -1,4 +1,4 @@
-#include"Login.h"
+#include"LOGIN.h"
 
 //
 bool check_leap_year(int y)
@@ -44,6 +44,28 @@ void enter_dmy(date& dmy)
 {
 	cout << "\t\tEnter day / month / year: ";
 	cin >> dmy.d >> dmy.m >> dmy.y;
+}
+//
+int Valid_Data(int limit)
+{
+	int n = 0;
+	do
+	{
+		if (cin.fail())
+		{
+			cin.clear();
+			cin.ignore();
+			cout << "\t\t Invalid Input !!!!!!!!" << endl;
+			cout << "\t\t Type input again: ";
+			cin >> n;
+		}
+		else {
+			cout << "\t\tChoose your option: ";
+			cin >> n;
+		}
+	} while (n > limit || n < 0);
+	cout << endl;
+	return n;
 }
 //
 int enterpass()
@@ -147,13 +169,7 @@ bool check_acc_student(string usr, string psw)
 			else if (c == n)
 			{
 				cout << "\t\tWrong password or username !!!" << endl;
-<<<<<<< HEAD
 				return false;
-=======
-				cout << "\t\tPress Enter to return -Main Menu- !!!" << endl;
-				cin.ignore();
-				return 0;
->>>>>>> e30ec609cd9ea44a7ded06ee06963e75b0a779f5
 				//Nhan phim 0 de quay ve menu chinh
 			}
 		}
@@ -162,7 +178,6 @@ bool check_acc_student(string usr, string psw)
 			cout << "\t\tLogin sucessed !!!" << endl;
 			return true;
 			break;
-			return 1;
 		}
 	}
 	f.close();
@@ -204,13 +219,7 @@ bool check_acc_ad(string usr, string psw)
 				else if (c == n)
 				{
 					cout << "\t\tWrong password or username !!!" << endl;
-<<<<<<< HEAD
 					return false;
-=======
-					cout << "Press Enter to return menu main !!!" << endl;
-					cin.ignore();
-					return 0;
->>>>>>> e30ec609cd9ea44a7ded06ee06963e75b0a779f5
 					//Nhan phim 0 de quay ve menu chinh
 				}
 			}
@@ -219,7 +228,6 @@ bool check_acc_ad(string usr, string psw)
 				cout << "\t\tLogin sucessed !!!" << endl;
 				return true;
 				break;
-				return 1;
 			}
 		}
 		f.close();
