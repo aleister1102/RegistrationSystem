@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 #pragma once
 #define _CRT_SECURE_NO_WARNINGS
 
@@ -10,6 +11,9 @@
 
 
 using namespace std;
+=======
+#include "MainSource.h"
+>>>>>>> Stashed changes
 
 //Main menu
 int Main_Menu_Disp();

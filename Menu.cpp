@@ -42,7 +42,17 @@ bool Login_Proc(int option)
 	//If user is administrator
 	if (option == 1)
 	{
+<<<<<<< Updated upstream
 		bool run = true;
+=======
+		bool run = false;
+		user info;date dmy;
+		do
+		{
+			run = login_as_admin(info, dmy);
+			system("cls");
+		} while (run!=true);
+>>>>>>> Stashed changes
 		while (run)
 		{
 			run = Admin_Proc(Admin_Disp());

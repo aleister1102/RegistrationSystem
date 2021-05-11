@@ -1,6 +1,4 @@
-#pragma once
-#define _CRT_SECURE_NO_WARNINGS
-
+#include "MainSource.h"
 #include "Menu.h"
 #include "Node Process.h"
 

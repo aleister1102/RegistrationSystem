@@ -1,6 +1,11 @@
+<<<<<<< Updated upstream
 #include"Menu.h"
 #include"Year.h"
 #include "Node Process.h"
+=======
+#include "MainSource.h"
+#include "Year.h"
+>>>>>>> Stashed changes
 
 int Create_Type();
 void Input_Class(string year_name, string class_name);

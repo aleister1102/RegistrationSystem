@@ -148,6 +148,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class.h" />
+<<<<<<< Updated upstream
+=======
+    <ClInclude Include="Login.h" />
+    <ClInclude Include="MainSource.h" />
+>>>>>>> Stashed changes
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Node Process.h" />
     <ClInclude Include="Year.h" />
