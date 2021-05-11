@@ -1,6 +1,5 @@
-#include"LOGIN.h"
-#include"Log_as_ad.h"
-#include"Log_as_stu.h"
+#include"Login.h"
+
 //
 bool check_leap_year(int y)
 {
@@ -45,28 +44,6 @@ void enter_dmy(int& d, int& m, int& y)
 {
 	cout << "\t\tEnter day / month / year: ";
 	cin >> d >> m >> y;
-}
-//
-int Valid_Data(int limit)
-{
-	int n = 0;
-	do
-	{
-		if (cin.fail())
-		{
-			cin.clear();
-			cin.ignore();
-			cout << "\t\t Invalid Input !!!!!!!!" << endl;
-			cout << "\t\t Type input again: ";
-			cin >> n;
-		}
-		else {
-			cout << "\t\tChoose your option: ";
-			cin >> n;
-		}
-	} while (n > limit || n < 0);
-	cout << endl;
-	return n;
 }
 //
 int enterpass()
@@ -149,7 +126,7 @@ string account(string usr, string psw)
 	return usr + ',' + psw;
 }
 //
-void check_acc_student(string usr, string psw)
+bool check_acc_student(string usr, string psw)
 {
 	ifstream f;
 	f.open("acc_sv.csv");
@@ -172,6 +149,7 @@ void check_acc_student(string usr, string psw)
 				cout << "\t\tWrong password or username !!!" << endl;
 				cout << "\t\tPress Enter to return -Main Menu- !!!" << endl;
 				cin.ignore();
+				return 0;
 				//Nhan phim 0 de quay ve menu chinh
 			}
 		}
@@ -179,6 +157,7 @@ void check_acc_student(string usr, string psw)
 		{
 			cout << "\t\tLogin sucessed !!!" << endl;
 			break;
+			return 1;
 		}
 	}
 	f.close();
@@ -198,7 +177,7 @@ void login_as_student(string& user, string& pass)
 	else enter_dmy(d, m, y);
 }
 //
-void check_acc_ad(string usr, string psw)
+bool check_acc_ad(string usr, string psw)
 {
 	if (psw[0] == 'A' && psw[1] == 'D')
 	{
@@ -223,6 +202,7 @@ void check_acc_ad(string usr, string psw)
 					cout << "\t\tWrong password or username !!!" << endl;
 					cout << "Press Enter to return menu main !!!" << endl;
 					cin.ignore();
+					return 0;
 					//Nhan phim 0 de quay ve menu chinh
 				}
 			}
@@ -230,6 +210,7 @@ void check_acc_ad(string usr, string psw)
 			{
 				cout << "\t\tLogin sucessed !!!" << endl;
 				break;
+				return 1;
 			}
 		}
 		f.close();
