@@ -1,22 +1,18 @@
-#include"LOGIN.h"
+#include "Menu.h"
+#include "LOGIN.h"
 
-//
-bool check_leap_year(int y)
+bool check_leap_year(int year)
 {
-	if ((y % 4 == 0) && (y % 100 != 0) || (y % 400 == 0))
-	{
-		return true;
-	}
-	return false;
+	return ((year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0));
 }
-int day_in_month(int m, int y)
+int day_in_month(int month, int year)
 {
-	switch (m)
+	switch (month)
 	{
 	case 1:case 3:case 5:case 7:case 8:case 10:case 12:	return 31;
 	case 4:case 6:case 9:case 11: return 30;
 	default:
-		if (check_leap_year(y))
+		if (check_leap_year(year))
 		{
 			return 29;
 		}
@@ -26,15 +22,15 @@ int day_in_month(int m, int y)
 }
 bool check_dmy(date dmy)
 {
-	if (dmy.y <= 0 || dmy.m <= 0)
+	if (dmy.year <= 0 || dmy.month <= 0)
 	{
 		return false;
 	}
-	if (dmy.m < 1 || dmy.m>12)
+	if (dmy.month < 1 || dmy.month>12)
 	{
 		return false;
 	}
-	if (dmy.d <= 0 || dmy.d > day_in_month(dmy.m, dmy.y))
+	if (dmy.day <= 0 || dmy.day > day_in_month(dmy.month, dmy.year))
 	{
 		return false;
 	}
@@ -44,13 +40,16 @@ void enter_dmy(date& dmy)
 {
 	cout << "\t\tEnter day / month / year: " << endl;
 	cout << "\t\t";
-	cin >> dmy.d >> dmy.m >> dmy.y;
+	cin >> dmy.day; cout << "\t\t";
+	cin >> dmy.month; cout << "\t\t";
+	cin >> dmy.year;
 }
 //
 int enterpass()
 {
 	cout << "\t\t1.Show your password !!!" << endl;
 	cout << "\t\t2.Hide your password !!!" << endl;
+	cout << "\t\t";
 	return Valid_Data(2);
 }
 void showpass(string& pass)
@@ -148,31 +147,32 @@ bool check_acc_student(user info)
 			else if (c == n)
 			{
 				cout << "\t\tWrong password or username !!!" << endl;
+				cout << "\t\t"; system("pause");
 				return false;
-				//Nhan phim 0 de quay ve menu chinh
 			}
 		}
 		else
 		{
 			cout << "\t\tLogin sucessed !!!" << endl;
+			cout << "\t\t"; system("pause");
 			return true;
 			break;
 		}
 	}
 	f.close();
 }
-bool login_as_student(user &info,date & dmy)
+bool login_as_student(user &info,date &dmy)
 {
-	enter_dmy(dmy);
+	date dmy;
+	cout << "\t\tLogin as Student" << endl;
 	cin.ignore();
-	if (check_dmy(dmy))
+	do {
+		enter_dmy(dmy);
+	} while (check_dmy(dmy) != true);
+	if (enter_acc(info))
 	{
-		if (enter_acc(info))
-		{
-			return check_acc_student(info);
-		}
+		return check_acc_student(info);
 	}
-	else enter_dmy(dmy);
 }
 //
 bool check_acc_ad(user info)
@@ -198,13 +198,15 @@ bool check_acc_ad(user info)
 				else if (c == n)
 				{
 					cout << "\t\tWrong password or username !!!" << endl;
+					cout << "\t\t"; system("pause");
 					return false;
-					//Nhan phim 0 de quay ve menu chinh
+					
 				}
 			}
 			else
 			{
 				cout << "\t\tLogin sucessed !!!" << endl;
+				cout << "\t\t"; system("pause");
 				return true;
 				break;
 			}
@@ -214,18 +216,18 @@ bool check_acc_ad(user info)
 	else
 	{
 		cout << "\t\tWrong password or username !!!" << endl;
+		cout << "\t\t"; system("pause");
 		return false;
 	}
 }
-bool login_as_admin(user &info,date & dmy)
+bool login_as_admin(user& info,date &dmy)
 {
-	enter_dmy(dmy);
-	if (check_dmy(dmy))
+	cout << "\t\tLogin as Admin" << endl;
+	do {
+		enter_dmy(dmy);
+	} while (check_dmy(dmy)!=true);
+	if (enter_acc(info))
 	{
-		if (enter_acc(info))
-		{
-			return check_acc_ad(info);
-		}
+		return check_acc_ad(info);
 	}
-	else enter_dmy(dmy);
 }

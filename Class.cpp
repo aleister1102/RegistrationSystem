@@ -1,4 +1,7 @@
-﻿#include "Class.h"
+﻿#include "Menu.h"
+#include "Year.h"
+#include "Class.h"
+#include "Node Process.h"
 
 //Converting function
 string Int_ToString(int n)

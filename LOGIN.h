@@ -1,16 +1,16 @@
 #include "MainSource.h"
-#include "Menu.h"
+
 using namespace std;
 struct date{
-    int d,m,y;
+    int day,month,year;
 };
 struct user {
     string username;
     string password;
 };
 // check day
-bool check_leap_year(int y);
-int day_in_month(int m, int y);
+bool check_leap_year(int year);
+int day_in_month(int month, int year);
 bool check_dmy(date dmy);
 void enter_dmy(date& dmy);
 // check option
@@ -31,7 +31,7 @@ string account(user info);
 bool check_acc_ad(user info);
 bool login_as_admin(user& info, date& dmy);
 //Login as stu
-bool check_acc_student(string usr, string psw);
-bool login_as_student(string& user, string& pass,date& dmy);
+bool check_acc_student(user info);
+bool login_as_student(user& info, date& dmy);
 
 

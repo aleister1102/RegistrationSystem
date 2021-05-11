@@ -1,19 +1,5 @@
-<<<<<<< Updated upstream
-#pragma once
-#define _CRT_SECURE_NO_WARNINGS
-
-#include <iostream>
-#include <direct.h>
-#include <filesystem>
-#include <sstream>
-#include <fstream>
-
-
-
-using namespace std;
-=======
 #include "MainSource.h"
->>>>>>> Stashed changes
+
 
 //Main menu
 int Main_Menu_Disp();
@@ -25,9 +11,10 @@ void AboutUs();
 
 //Admin
 int Admin_Disp();
-bool Admin_Proc(int option);
+bool Admin_Proc(int option, user info, date dmy);
 //Student
 int Student_Disp();
+bool Student_Proc(int option, user info, date dmy);
 
 //Year menu
 int Year_Menu_Disp();

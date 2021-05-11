@@ -1,5 +1,9 @@
 ﻿#include "Menu.h"
+#include "Year.h"
 #include "Class.h"
+#include "Node Process.h"
+#include "LOGIN.h"
+
 
 //Display main menu
 //Return: Choice (int type) of user
@@ -39,48 +43,52 @@ bool Main_Menu_Proc(int option)
 //Sub menu (display and proccess)
 bool Login_Proc(int option)
 {
+	bool run = false;
+	user info; date dmy;
 	//If user is administrator
 	if (option == 1)
 	{
-<<<<<<< Updated upstream
-		bool run = true;
-=======
-		bool run = false;
-		user info;date dmy;
-		do
-		{
-			run = login_as_admin(info, dmy);
-			system("cls");
-		} while (run!=true);
->>>>>>> Stashed changes
+		run = login_as_admin(info,dmy);
+		system("cls");
+
 		while (run)
 		{
-			run = Admin_Proc(Admin_Disp());
+			run = Admin_Proc(Admin_Disp(),info,dmy);
 		}
 		return true;
 	}
 	else if (option == 2)
 	{
-		Student_Disp();
+		run = login_as_student(info,dmy);
+		system("cls");
+
+		while (run)
+		{
+			run = Student_Proc(Student_Disp(),info,dmy);
+		}
 		return true;
 	}
 	else if (option == 3)
 	{
 		cout << "\t\t Call Change Pass Function Here" << endl;
+		cout << "\t\t ";
+		system("pasue");
 		return true;
 	}
-	else return false;
+	else {
+		return false;
+	}
 }
 int Login_Disp()
 {
 	system("cls");
 	cout << "\t\t LOGIN" << endl;
-	cout << "\t\t 1. Admin" << endl;
-	cout << "\t\t 2. User" << endl;
-	cout << "\t\t 3. Change Pass" << endl;
+	cout << "\t\t 1. As Admin" << endl;
+	cout << "\t\t 2. As Student" << endl;
+	cout << "\t\t 3. Change Password" << endl;
 	cout << "\t\t 4. Exit" << endl;
 	cout << "\t\t Select option: ";
-	return Valid_Data(3);
+	return Valid_Data(4);
 }
 void AboutUs()
 {
@@ -96,11 +104,11 @@ int Admin_Disp()
 	cout << "\t\t Choose your option: " << endl;
 	cout << "\t\t 1. Year Section" << endl;
 	cout << "\t\t 2. Class Section" << endl;
-	cout << "\t\t 3. Exit" << endl;
+	cout << "\t\t 3. Log Out" << endl;
 	cout << "\t\t Select option: ";
 	return Valid_Data(3);
 }
-bool Admin_Proc(int option)
+bool Admin_Proc(int option,user info,date dmy)
 {
 	if (option == 1)
 	{
@@ -108,7 +116,7 @@ bool Admin_Proc(int option)
 		while (run)
 		{
 			Years_Display();
-			run = Year_Proc_Active(Year_Menu_Disp(),2021);
+			run = Year_Proc_Active(Year_Menu_Disp(),dmy.year);
 		}
 		return true;
 	}
@@ -121,7 +129,7 @@ bool Admin_Proc(int option)
 			string year_name = Year_Selection();
 			string year_path = ".\\Years\\" + year_name;
 			Classes_Display(year_path);
-			run = Class_Proc_Active(year_name,Class_Menu_Disp(),2021);
+			run = Class_Proc_Active(year_name,Class_Menu_Disp(),dmy.year);
 		}
 		return true;
 	}
@@ -134,11 +142,17 @@ bool Admin_Proc(int option)
 //Student Menu
 int Student_Disp()
 {
-	cout << "\t\t Student section" << endl;
-	cout << "\t\t 1. Exit" << endl;
+	//system("cls");
+	cout << "\t\t YOU ARE STUDENT NOW	" << endl;
+	cout << "\t\t Choose your option: " << endl;
+	cout << "\t\t 1. Log out" << endl;
+	cout << "\t\t Select option: ";
 	return Valid_Data(1);
 }
-
+bool Student_Proc(int option,user info,date dmy)
+{
+	if(option ==1) return false;
+}
 //Year Menu
 int Year_Menu_Disp()
 {

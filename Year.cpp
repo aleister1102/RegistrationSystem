@@ -1,5 +1,7 @@
+#include "Menu.h"
 #include "Year.h"
 #include "Class.h"
+#include "Node Process.h"
 
 ////Check the existence of file//
 //Input: path of file in string type
