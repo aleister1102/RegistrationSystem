@@ -1,21 +1,19 @@
-#include"LOGIN.h"
-//
-bool check_leap_year(int y)
+#include "Menu.h"
+#include "LOGIN.h"
+
+// Checking
+bool check_leap_year(int year)
 {
-	if ((y % 4 == 0) && (y % 100 != 0) || (y % 400 == 0))
-	{
-		return true;
-	}
-	return false;
+	return ((year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0));
 }
-int day_in_month(int m, int y)
+int day_of_month(int month, int year)
 {
-	switch (m)
+	switch (month)
 	{
 	case 1:case 3:case 5:case 7:case 8:case 10:case 12:	return 31;
 	case 4:case 6:case 9:case 11: return 30;
 	default:
-		if (check_leap_year(y))
+		if (check_leap_year(year))
 		{
 			return 29;
 		}
@@ -23,54 +21,37 @@ int day_in_month(int m, int y)
 		break;
 	}
 }
-bool check_dmy(int d, int m, int y)
+bool check_dmy(date dmy)
 {
-	if (y <= 0 || m <= 0)
+	if (dmy.year <= 0 || dmy.month <= 0)
 	{
 		return false;
 	}
-	if (m < 1 || m>12)
+	if (dmy.month < 1 || dmy.month>12)
 	{
 		return false;
 	}
-	if (d <= 0 || d > day_in_month(m, y))
+	if (dmy.day <= 0 || dmy.day > day_of_month(dmy.month, dmy.year))
 	{
 		return false;
 	}
 	return true;
 }
-void enter_dmy(int& d, int& m, int& y)
+void enter_dmy(date& dmy)
 {
-	cout << "\t\tEnter day / month / year: ";
-	cin >> d >> m >> y;
+	cout << "\t\tEnter day / month / year: " << endl;
+	cout << "\t\t";
+	cin >> dmy.day; cout << "\t\t";
+	cin >> dmy.month; cout << "\t\t";
+	cin >> dmy.year;
 }
-//
-int Valid_Data(int limit)
-{
-	int n = 0;
-	do
-	{
-		if (cin.fail())
-		{
-			cin.clear();
-			cin.ignore();
-			cout << "\t\t Invalid Input !!!!!!!!" << endl;
-			cout << "\t\t Type input again: ";
-			cin >> n;
-		}
-		else {
-			cout << "\t\tChoose your option: ";
-			cin >> n;
-		}
-	} while (n > limit || n < 0);
-	cout << endl;
-	return n;
-}
-//
+
+// Password proccess
 int enterpass()
 {
 	cout << "\t\t1.Show your password !!!" << endl;
 	cout << "\t\t2.Hide your password !!!" << endl;
+	cout << "\t\t";
 	return Valid_Data(2);
 }
 void showpass(string& pass)
@@ -119,15 +100,17 @@ bool enterpass_proc(int option, string& psw)
 		return false;
 	}
 }
-bool enter_acc(string& usr, string& psw)
+bool enter_acc(user& info)
 {
+	cin.ignore();
 	cout << "\t\tEnter username: ";
-	getline(cin, usr);
-	bool k = enterpass_proc(enterpass(), psw);
+	getline(cin, info.username);
+	bool k = enterpass_proc(enterpass(), info.password);
 	return k;
 }
-//
-int count_acc_in_csv(string name)
+
+// Count line in csv file
+int count_acc(string name)
 {
 	ifstream f;
 	f.open(name+".csv");
@@ -141,7 +124,114 @@ int count_acc_in_csv(string name)
 	f.close();
 	return c - 1;
 }
-string account(string usr, string psw)
+// Create account
+string account(user info)
 {
-	return usr + ',' + psw;
+	return info.username + ',' + info.password;
+}
+
+// Login as Student
+bool check_acc_student(user info)
+{
+	ifstream f;
+	f.open("acc_sv.csv");
+	string acc = account(info);
+	int c = 0;
+	int n = count_acc("acc_sv");
+	while (!f.eof())
+	{
+		c++;
+		string acc1;
+		f >> acc1;
+		if (acc.compare(acc1) != 0)
+		{
+			if (c < n)
+			{
+				continue;
+			}
+			else if (c == n)
+			{
+				cout << "\t\tWrong password or username !!!" << endl;
+				cout << "\t\t"; system("pause");
+				return false;
+			}
+		}
+		else
+		{
+			cout << "\t\tLogin sucessed !!!" << endl;
+			cout << "\t\t"; system("pause");
+			return true;
+			break;
+		}
+	}
+	f.close();
+}
+bool login_as_student(user &info,date &dmy)
+{
+	cout << "\t\tLogin as Student" << endl;
+	cin.ignore();
+	do {
+		enter_dmy(dmy);
+	} while (check_dmy(dmy) != true);
+	if (enter_acc(info))
+	{
+		return check_acc_student(info);
+	}
+}
+// Login as Admin
+bool check_acc_ad(user info)
+{
+	if (info.password[0] == 'A' && info.password[1] == 'D')
+	{
+		ifstream f;
+		f.open("acc_ad.csv");
+		string acc = account(info);
+		int c = 0;
+		int n = count_acc("acc_ad");
+		while (!f.eof())
+		{
+			c++;
+			string acc1;
+			f >> acc1;
+			if (acc.compare(acc1) != 0)
+			{
+				if (c < n)
+				{
+					continue;
+				}
+				else if (c == n)
+				{
+					cout << "\t\tWrong password or username !!!" << endl;
+					cout << "\t\t"; system("pause");
+					return false;
+					
+				}
+			}
+			else
+			{
+				cout << "\t\tLogin sucessed !!!" << endl;
+				cout << "\t\t"; system("pause");
+				return true;
+				break;
+			}
+		}
+		f.close();
+	}
+	else
+	{
+		cout << "\t\tWrong password or username !!!" << endl;
+		cout << "\t\t"; system("pause");
+		return false;
+	}
+}
+bool login_as_admin(user& info,date &dmy)
+{
+	cout << "\t\tLogin as Admin" << endl;
+	do {
+		enter_dmy(dmy);
+	} while (check_dmy(dmy)!=true);
+	if (enter_acc(info))
+	{
+		return check_acc_ad(info);
+	}
 }

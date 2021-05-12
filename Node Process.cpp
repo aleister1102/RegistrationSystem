@@ -1,29 +1,36 @@
 #include "Node Process.h"
-
-bool CheckEmpty(yrs list)
+//Convert year file name to number
+int Year_ToNumber(string year_name)
+{
+	stringstream ss; int n;
+	ss << year_name.substr(0, 4);
+	ss >> n;
+	return n;
+}
+//Check for empty linked list
+bool CheckEmpty(paths list)
 {
 	if (list.head == nullptr)
 		return true;
 	return false;
 }
-
-yrs Init_List()
+//Initialize for linked list & node
+paths Init_List()
 {
-	yrs l;
+	paths l;
 	l.head = nullptr;
 	l.tail = nullptr;
 	return l;
 }
-
-yr* Create_Node(string info)
+path* Create_Node(string info)
 {
-	yr* s = new yr;
+	path* s = new path;
 	s->info = info;
 	s->next = nullptr;
 	return s;
 }
-
-void Add_Last(yrs& list, yr* node)
+//Add node to last place of linked list
+void Add_Last(paths& list, path* node)
 {
 	if (CheckEmpty(list))
 	{
@@ -36,83 +43,70 @@ void Add_Last(yrs& list, yr* node)
 		list.tail = node;
 	}
 }
-void Remove_Info(yrs& list, string path)
+//Delete one node in linked list
+void Remove_Info(paths& list, string info)
 {
-	yr* move = list.head;
-	if (move->info == path)
+	path* move = list.head;
+	if (move->info == info)
 	{
-		yr* temp = move;
+		path* temp = move;
 		list.head = list.head->next;
 		delete temp;
 		return;
 	}
 	while (move->next->next != nullptr)
 	{
-		if (move->next->info == path)
+		if (move->next->info == info)
 		{
-			yr* temp = move;
+			path* temp = move;
 			move->next = move->next->next;
 			delete temp;
 			return;
 		}
 		move = move->next;
 	}
-	if (move->next->info == path)
+	if (move->next->info == info)
 	{
-		yr* temp = move->next;
+		path* temp = move->next;
 		move->next = nullptr;
 		list.tail = move;
 		delete temp;
 		return;
 	}
 }
-bool Output_List(yrs l)
+//Copy list to a new list with different address
+paths Copy_List(paths l)
 {
-	if (CheckEmpty(l))
-	{
-		cout << "Danh sach rong" << endl;
-		return false;
-	}
-
-	cout << "List of Node: " << endl;
-	cout << "----------------------------------------------------------------------------" << endl;
-
-	yr* move = l.head;
-	int count = 1;
-	while (move->next != nullptr)
-	{
-		cout << "\tThe " << count++ << " object: ";
-		cout << move->info << " " << endl;
-		move = move->next;
-	}
-	return true;
-}
-yrs Copy_List(yrs l)
-{
-	yr* move = l.head;
-	yrs temp = Init_List();
+	path* move = l.head;
+	paths temp = Init_List();
 	while (move != nullptr)
 	{
-		yr* add = Create_Node({ move->info });
+		path* add = Create_Node({ move->info });
 		Add_Last(temp, add);
 		move = move->next;
 	}
 	return temp;
 }
-int Year_ToNumber(string year)
+//Input info from node to file after delete
+void ReInput_fromList(string store, paths list)
 {
-	stringstream ss; int n;
-	ss <<  year.substr(0, 4);
-	ss >> n;
-	return n;
+	path* move = list.head;
+	fstream f(store, ios::in | ios::out);
+	while (move->next != nullptr)
+	{
+		f << move->info << endl;
+		move = move->next;
+	}
+	f.close();
 }
-void SortAscen_List(yrs & list)
+
+void SortAscen_List(paths & list)
 {
 	//Create new list with different address
-	yrs result = Copy_List(list);
-	yr * curr = result.head;
+	paths result = Copy_List(list);
+	path * curr = result.head;
 
-	yr* move = list.head;
+	path* move = list.head;
 	//Create flags
 	int min;
 	int before = 0;
@@ -151,4 +145,25 @@ void SortAscen_List(yrs & list)
 		if (check == false) { curr = curr->next; }
 	}
 	list = result;
+}
+bool Output_List(paths l)
+{
+	if (CheckEmpty(l))
+	{
+		cout << "Danh sach rong" << endl;
+		return false;
+	}
+
+	cout << "List of Node: " << endl;
+	cout << "----------------------------------------------------------------------------" << endl;
+
+	path* move = l.head;
+	int count = 1;
+	while (move->next != nullptr)
+	{
+		cout << "\tThe " << count++ << " object: ";
+		cout << move->info << " " << endl;
+		move = move->next;
+	}
+	return true;
 }

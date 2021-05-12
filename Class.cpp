@@ -1,4 +1,7 @@
-﻿#include "Class.h"
+﻿#include "Menu.h"
+#include "Year.h"
+#include "Class.h"
+#include "Node Process.h"
 
 //Converting function
 string Int_ToString(int n)
@@ -32,31 +35,40 @@ void Input_Class(string year_name, string class_name)
 	f << class_name << endl;
 	f.close();
 }
+//Delete directory
+void Delete_Directory(string dir)
+{
+	dir = "rmdir /s /q " + dir;
+	system(dir.c_str());
+}
 
 //Option 1
 
-yrs Import_Class(string file,string year_name)
+paths Import_Class(string file,string year_name)
 {
 	fstream f(file);
-	yrs list = Init_List();
+	paths list = Init_List();
 
 	while (!f.eof())
 	{
-		string year_name;
-		f >> year_name;
+		string class_name;
+		f >> class_name;
+
+		//Check for duplicating
+		if (Duplicated_Class(year_name, class_name)) continue;
+
 		//Add class info to list of nodes
-		yr* node = Create_Node(year_name);
+		path* node = Create_Node(class_name);
 		Add_Last(list, node);
 	}
 	f.close();
 	
 	//Add and create
-	yr* move = list.head;
+	path* move = list.head;
 	while (move->next != nullptr)
 	{
 		//Add class path into year file
-		string year_path = ".\\Years\\" + year_name;
-		Input_Class(year_path, move->info);
+		Input_Class(year_name, move->info);
 		//Create new class file in Classes directory
 		string class_path = ".\\Classes\\" + year_name.substr(0, 9) + "\\" + move->info;
 		f.open(class_path.c_str(),ios::out);
@@ -127,23 +139,42 @@ bool Duplicated_Class(string year_name, string check)
 	string path  = ClassName_To_Path(year_name, check);
 	cout << "\t\t Check file at path: " << path << endl;
 	if (File_Exist(path))
-		return true;
+	{
+		string year_path = ".\\Years\\" + year_name;
+		fstream f(year_path, ios::in);
+		while (!f.eof())
+		{
+			string read;
+			f >> read;
+			if (read == check)
+			{
+				return true;
+			}
+		}
+	}
 	return false;
 }
-string Department_Name(int depart)
+string Department_Name(int depart,int system)
 {
+	string name;
 	switch (depart)
 	{
-	case 1: {return "CTT"; break; }
-	case 2: {return "DCH"; break; }
-	case 3: {return "DTV"; break; }
-	case 4: {return "HOH"; break; }
-	case 5: {return "KVL"; break; }
-	case 6: {return "KMT"; break; }
-	case 7: {return "SHH"; break; }
-	case 8: {return "TTH"; break; }
-	default: {return "VLH"; break; }
+	case 1: {name= "CTT"; break; }
+	case 2: {name= "DCH"; break; }
+	case 3: {name= "DTV"; break; }
+	case 4: {name= "HOH"; break; }
+	case 5: {name= "KVL"; break; }
+	case 6: {name= "KMT"; break; }
+	case 7: {name= "SHH"; break; }
+	case 8: {name= "TTH"; break; }
+	default: {name= "VLH"; break; }
 	}
+	if (system == 2)
+	{
+		name = name + "_CLC";
+	}
+	return name;
+	
 }
 string Create_Class_Single(string year_name, int time)
 {
@@ -151,7 +182,7 @@ string Create_Class_Single(string year_name, int time)
 	string class_name, syntax, period = Int_ToString(time % 100);
 	int n = 0;
 
-	syntax = Department_Name(Department_Menu_Disp());
+	syntax = Department_Name(Department_Menu_Disp(),Training_System_Menu_Disp());
 	bool check = true;
 
 	do {
@@ -171,11 +202,76 @@ string Create_Class_Single(string year_name, int time)
 	cout << "\t\t Class created successfully" << endl;
 
 	Input_Class(year_name, class_name);
-	cout << "\t\t ";  system("pause");
+	cout << "\t\t ";  system("pause"); system("cls");
 	return class_path;
 }
 
-////Classes displaying//
+//Class Deleting
+void Class_Delete(string year_path,int quanti)
+{
+	cout << "\t\t Chosse class: ";
+	int choice = Valid_Data(quanti);
+
+	int i = 1;
+	string class_path = ".\\Classes\\" + Path_ToYear(year_path).substr(0,9) + "\\";
+	paths list = Init_List();
+	fstream f(year_path, ios::in | ios::out);
+
+	while (!f.eof())
+	{
+		string class_name;
+		f >> class_name;
+		path* node = Create_Node(class_name);
+		Add_Last(list, node);
+		
+		class_path += class_name;
+		if (i++ == choice)
+		{
+			remove(class_path.c_str());
+			Remove_Info(list, class_name);
+		}
+	}
+	f.close();
+	remove(year_path.c_str());
+	f.open(year_path.c_str(), ios::out);
+	f.close();
+	ReInput_fromList(year_path, list);
+}
+//Clear all classes
+void Class_Clear(string year_path)
+{
+	cout << "\t\t All classes will be deleted !!!!" << endl;
+	cout << "\t\t Are you sure ???" << endl;
+	cout << "\t\t Press 0 for accepting, 1 for not:  ";
+	int n; cin >> n;
+	if (n == 0)
+	{
+		fstream f(year_path, ios::in | ios::out);
+		int i = 1;
+
+		while (!f.eof()) {
+
+			string class_name;
+			f >> class_name;
+
+			//Delete files
+			string class_path = ".\\Classes\\"
+				+ Path_ToYear(year_path).substr(0, 9)
+				+ "\\"
+				+ class_name;
+			
+			remove(class_path.c_str());
+
+
+		}
+		f.close();
+		//Remake a new year's file
+		remove(year_path.c_str());
+		f.open(year_path.c_str(), ios::out);
+		f.close();
+	}
+}
+//Classes displaying
 int Classes_Display(string year_path)
 {
 	if (File_Exist(year_path) == false)
@@ -185,7 +281,8 @@ int Classes_Display(string year_path)
 	system("cls");
 	cout << "\t\t CREATED CLASS: " << endl;
 	fstream f(year_path, ios::in); int i = 1;
-
+	
+	cout << "\t\t 0. Back" << endl;
 	while (!f.eof())
 	{
 		string read;
@@ -196,43 +293,53 @@ int Classes_Display(string year_path)
 		}
 	}
 	f.close();
-	return 1;
+	return i-1;
 }
 
 //Process class task
-bool Class_Proc_Active(int option,int time)
+bool Class_Proc_Active(string year_name,int option,int time)
 {
-	string year_name = Year_Selection();
 	string year_path = ".\\Years\\" + year_name;
-	Classes_Display(year_path);
-
 	if (option == 1)
 	{
-		int choice  = Create_Type();
-		if (choice == 1) {
-			if (year_name != "NA")
-			{
+		if (year_name != "NA")
+		{
+			int choice = Create_Type();
+			if (choice == 1) {
+
 				string path = File_Import();
 				Import_Class(path, year_name);
+
 			}
-		}
-		else {
-			Create_Class_Single(year_name, time);
+			else {
+				Create_Class_Single(year_name, time);
+			}
 		}
 		return true;
 	}
 	else if (option == 2)
 	{
-		
+		int quanti = Classes_Display(year_path);
+		cout << "\t\t This year has " << quanti << " class(es)" << endl;
+		Class_Delete(year_path,quanti);
+		system("cls");
 		return true;
 	}
 	else if (option == 3)
 	{
+		Class_Clear(year_path);
+		system("cls");
 		return true;
 	}
 	else if(option ==4)
 	{
+		system("cls");
 		return false;
+	}
+	else
+	{
+		system("cls");
+		return true;
 	}
 
 }

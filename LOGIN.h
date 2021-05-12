@@ -1,25 +1,27 @@
-#include<iostream>
-#include<string>
-#include<conio.h>
-#include<fstream>
+#include "MainSource.h"
+
 using namespace std;
-// check day 
-bool check_leap_year(int y);
-int day_in_month(int m, int y);
-bool check_dmy(int d, int m, int y);
-void enter_dmy(int& d, int& m, int& y);
-// check option
+
+// Checking
+bool check_leap_year(int year);
+int day_of_month(int month, int year);
+bool check_dmy(date dmy);
+void enter_dmy(date& dmy);
+// Check option
 int Valid_Data(int limit);
-// passworwd procces
+// Data proccess
 int enterpass();
 void showpass(string& pass);
 void hidepass(string& pass);
 bool enterpass_proc(int option, string& psw);
-bool enter_acc(string& usr, string& psw);
-// count line in file csv
-int count_acc_in_csv(string name);
-// create account
-string account(string usr, string psw);
-// check account
+bool enter_acc(user& info);
+int count_acc(string name);
+string account(user info);
+
+// Login
+bool check_acc_ad(user info);
+bool login_as_admin(user& info, date& dmy);
+bool check_acc_student(user info);
+bool login_as_student(user& info, date& dmy);
 
 
