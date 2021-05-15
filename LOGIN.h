@@ -1,8 +1,10 @@
 #include"MainSource.h"
 
+bool compare(string s1, string s2);
+
 // check day
 bool check_leap_year(int year);
-int day_in_month(int month, int year);
+int day_of_month(int month, int year);
 bool check_dmy(date dmy);
 void enter_dmy(date& dmy);
 // check option

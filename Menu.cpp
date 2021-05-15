@@ -93,8 +93,8 @@ int Login_Disp()
 	cout << "\t\t LOGIN" << endl;
 	cout << "\t\t 1. As Admin" << endl;
 	cout << "\t\t 2. As Student" << endl;
-	cout << "\t\t 3. Change Password" << endl;
-	cout << "\t\t 4. Forgot password" << endl;
+	cout << "\t\t 3. Change Password(Only student)" << endl;
+	cout << "\t\t 4. Forgot password(Only student)" << endl;
 	cout << "\t\t 5. Exit" << endl;
 	cout << "\t\t Select option: ";
 	return Valid_Data(5);

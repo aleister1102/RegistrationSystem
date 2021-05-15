@@ -1,6 +1,24 @@
 #include "Menu.h"
 #include "LOGIN.h"
 
+bool compare(string s1, string s2)
+{
+	int n = size(s1);
+	int m = size(s2);
+	if (n == m)
+	{
+		for (int i = 0; i < n; i++)
+		{
+			if (s1[i] != s2[i])
+			{
+				return false;
+			}
+		}
+	}
+	else return false;
+	return true;
+}
+
 // Checking
 bool check_leap_year(int year)
 {
@@ -144,7 +162,7 @@ bool check_acc_student(user info)
 		c++;
 		string acc1;
 		f >> acc1;
-		if (acc.compare(acc1) != 0)
+		if (compare(acc1, acc) == false)
 		{
 			if (c < n)
 			{
@@ -194,7 +212,7 @@ bool check_acc_ad(user info)
 			c++;
 			string acc1;
 			f >> acc1;
-			if (acc.compare(acc1) != 0)
+			if (compare(acc, acc1) == false)
 			{
 				if (c < n)
 				{

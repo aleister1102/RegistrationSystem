@@ -1,5 +1,6 @@
 #include"Forgot_pass.h"
 #include"Node Process.h"
+#include"LOGIN.h"
 void split_string(string s, string& s1, string& s2)
 {
 	int k = 0;
@@ -22,23 +23,6 @@ void split_string(string s, string& s1, string& s2)
 		}
 	}
 }
-bool compare(string s1, string s2)
-{
-	int n = size(s1);
-	int m = size(s2);
-	if (n == m)
-	{
-		for (int i = 0; i < n; i++)
-		{
-			if (s1[i] != s2[i])
-			{
-				return false;
-			}
-		}
-	}
-	else return false;
-	return true;
-}
 void enter_usrname(string& name)
 {
 	getline(cin, name);
@@ -53,7 +37,7 @@ bool check_usrname(string name, string pathfile,int &count)
 		string f,usr,psw;
 		file >> f;
 		split_string(f, usr, psw);
-		if (usr.compare(name) == 0)
+		if (compare(usr, name) == true)
 		{
 			return true;
 			break;
@@ -73,7 +57,7 @@ bool check_pass(string pass,int count)
 		string nf,usr,psw;
 		getline(f,nf);
 		split_string(nf, usr, psw);
-		if (compare(psw,pass)!=false && (k == count))
+		if (compare(psw,pass)==true && (k == count))
 		{
 			return true;
 		}
@@ -91,7 +75,7 @@ bool check_key(string key,int count)
 		k++;
 		string f1;
 		f >> f1;
-		if (f1.compare(key) == 0 && k==count)
+		if (compare(key, f1) == true && k == count)
 		{
 			return true;
 			break;
@@ -189,7 +173,7 @@ bool check_newpass(string pass)
 bool Change_pass()
 {
 	string name="",pass="";
-	string path = "acc_ad.csv";
+	string path = "acc_sv.csv";
  	int count = 0;
 	do
 	{
