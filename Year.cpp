@@ -47,7 +47,7 @@ string Year_ToPath(int begin, int end)
 //Create new year file with limited time
 //Input: limit of time that can be used to create
 //Return: path of year file that have been created
-string Create_Year(int year)
+void Create_Year(int year)
 {
 	int begin, end;
 	string years_path;
@@ -70,7 +70,6 @@ string Create_Year(int year)
 
 	cout << "\t\t School year created successfully" << endl;
 	cout << "\t\t "; system("pause");
-	return years_path;
 }
 
 //Year_Delete
@@ -186,7 +185,6 @@ int Years_Display()
 	int i = 1;
 
 	//Reading Years information from "Years.csv"
-	cout << "\t\t 0. Back " << endl;
 	while (!f.eof()) {
 		string read;
 		f >> read;
@@ -198,12 +196,12 @@ int Years_Display()
 	return i;
 }
 
-//Process year task
-bool Year_Proc_Active(int option, int time)
+//Process year task at the beginning of the year
+bool Year_Proc(int option, int limited_year)
 {
 	if (option == 1)
 	{
-		Create_Year(time);
+		Create_Year(limited_year);
 		system("cls");
 		return true;
 	}
@@ -222,8 +220,8 @@ bool Year_Proc_Active(int option, int time)
 	}
 	else
 	{
-		cout << "\t\t EXIT" << endl;
 		system("cls");
 		return false;
 	}
 }
+

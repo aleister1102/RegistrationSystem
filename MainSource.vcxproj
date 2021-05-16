@@ -140,6 +140,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Class.cpp" />
+    <ClCompile Include="Course.cpp" />
+    <ClCompile Include="Password.cpp" />
     <ClCompile Include="Login.cpp" />
     <ClCompile Include="MainSource.cpp" />
     <ClCompile Include="Menu.cpp" />
@@ -149,10 +151,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class.h" />
+    <ClInclude Include="Course.h" />
+    <ClInclude Include="Password.h" />
     <ClInclude Include="Login.h" />
     <ClInclude Include="MainSource.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Node Process.h" />
+    <ClInclude Include="Semester.h" />
     <ClInclude Include="Year.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

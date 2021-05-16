@@ -1,5 +1,6 @@
 #include "MainSource.h"
-
+////Convert//
+int Year_ToNumber(string year_name);
 ////Initialize//
 paths Init_List();
 path* Create_Node(string path);

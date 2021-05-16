@@ -77,10 +77,10 @@ paths Import_Class(string file,string year_name)
 	}
 	return list;
 }
-string Year_Selection()
+string Year_Selection(string folder)
 {
-	cout << "\t\t Which year do you want to modify ?" << endl;
 	int limit = Years_Display();
+	cout << "\t\t Which year do you want to modify ?" << endl;
 	cout << "\t\t Select option: ";
 	int choice = Valid_Data(limit);
 	string year_name = "NA";
@@ -91,7 +91,7 @@ string Year_Selection()
 		if (count++ == choice)
 		{
 			//Only create new directory of classes when year is selected
-			Create_Directory(year_name);
+			Create_Directory(folder,year_name);
 			return year_name;
 		}
 	}
@@ -99,9 +99,9 @@ string Year_Selection()
 	system("cls");
 	return year_name;
 }
-string Create_Directory(string year_name)
+string Create_Directory(string folder,string year_name)
 {
-	string dir = ".\\Classes\\" + year_name.substr(0, 9) + "\\";
+	string dir = folder + year_name.substr(0, 9) + "\\";
 	cout << "\t\t Directory path: " << dir << endl;
 	// Creating a directory
 	if (_mkdir(dir.c_str()) == -1)
@@ -111,7 +111,7 @@ string Create_Directory(string year_name)
 		cout << "\t\t Directory created" << endl;
 	return dir;
 }
-string File_Import()
+string File_Import(string folder)
 {
 	string file_path;
 	bool check = true;
@@ -123,12 +123,12 @@ string File_Import()
 		getline(cin, name, '\n');
 		
 		//Create file's path
-		file_path = name + ".csv";
+		file_path = folder + name + ".csv";
 		cout << "\t\t Import file from: " << file_path << endl;
 		check = File_Exist(file_path);
 	} while (check == false);
+	system("pause");
 	return file_path;
-
 }
 //Option 2
 
@@ -176,9 +176,9 @@ string Department_Name(int depart,int system)
 	return name;
 	
 }
-string Create_Class_Single(string year_name, int time)
+string Create_Class_Single(string year_name)
 {
-	
+	int time = Year_ToNumber(year_name);
 	string class_name, syntax, period = Int_ToString(time % 100);
 	int n = 0;
 
@@ -209,7 +209,7 @@ string Create_Class_Single(string year_name, int time)
 //Class Deleting
 void Class_Delete(string year_path,int quanti)
 {
-	cout << "\t\t Chosse class: ";
+	cout << "\t\t Choose class: ";
 	int choice = Valid_Data(quanti);
 
 	int i = 1;
@@ -282,7 +282,6 @@ int Classes_Display(string year_path)
 	cout << "\t\t CREATED CLASS: " << endl;
 	fstream f(year_path, ios::in); int i = 1;
 	
-	cout << "\t\t 0. Back" << endl;
 	while (!f.eof())
 	{
 		string read;
@@ -297,7 +296,7 @@ int Classes_Display(string year_path)
 }
 
 //Process class task
-bool Class_Proc_Active(string year_name,int option,int time)
+bool Class_Proc_Active(string year_name,int option)
 {
 	string year_path = ".\\Years\\" + year_name;
 	if (option == 1)
@@ -307,12 +306,13 @@ bool Class_Proc_Active(string year_name,int option,int time)
 			int choice = Create_Type();
 			if (choice == 1) {
 
-				string path = File_Import();
+				string folder = ".\\Classes\\";
+				string path = File_Import(folder);//Import from Classes folder
 				Import_Class(path, year_name);
 
 			}
 			else {
-				Create_Class_Single(year_name, time);
+				Create_Class_Single(year_name);
 			}
 		}
 		return true;
@@ -322,6 +322,7 @@ bool Class_Proc_Active(string year_name,int option,int time)
 		int quanti = Classes_Display(year_path);
 		cout << "\t\t This year has " << quanti << " class(es)" << endl;
 		Class_Delete(year_path,quanti);
+
 		system("cls");
 		return true;
 	}

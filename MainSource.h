@@ -23,3 +23,12 @@ struct paths {
 	path* head;
 	path* tail;
 };
+struct course {
+	int id;
+	string name;
+	string teacher;
+	int cre;
+	int capacity;
+	int day;
+	int session;
+};
