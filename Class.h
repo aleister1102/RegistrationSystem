@@ -2,6 +2,7 @@
 
 //Converting function
 string Int_ToString(int n);
+string CSV_ToName(string csv_name);
 
 int Create_Type();
 void Input_Class(string year_name, string class_name);

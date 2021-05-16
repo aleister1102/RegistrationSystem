@@ -16,6 +16,11 @@ string ClassName_To_Path(string year_name,string class_name)
 {
 	return  ".\\Classes\\" + year_name.substr(0, 9) + "\\" + class_name;
 }
+string CSV_ToName(string csv_name)
+{
+	int pos = csv_name.find_last_of(".", strlen(csv_name.c_str()));
+	return csv_name.substr(0,pos);
+}
 
 //Choose kind of class creating
 int Create_Type()

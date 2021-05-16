@@ -1,10 +1,9 @@
 #include "MainSource.h"
-string Create_Semester(int limited_year,string year_name);
-int Semesters_Display(string year_path);
-void Semester_Sort();
-void ReInput_Semester(paths list);
-string Semester_ToPath(string year_name, int season);
-int Season_Disp();
-void Semester_Delete(int quanti);
-void ReInput_Semester(paths list);
-bool Semester_Proc(int option,int limited_year,string year_name);
+
+//Semester Creation
+void Create_Semester(int limited_year,string year_name);
+string Semester_ToPath(string year_name);
+bool Semester_Proc(int option,int limited_year,string year_name);=
+bool Name_InFile(string store, string name);
+//Semester Displaying
+void Semesters_Display(string year_name);

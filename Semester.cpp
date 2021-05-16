@@ -1,118 +1,123 @@
 #include "Semester.h"
 #include "Menu.h"
 #include "Year.h"
+#include "Class.h"
 #include "Node Process.h"
 
-string Semester_ToPath(string year_name, int season)
+//Semester Creation
+bool Name_InFile(string store,string name)
 {
-	string season_name;
-	string prefix = ".\\Semesters\\" + year_name.substr(0, 9) + "\\";
-	string semester_name = year_name.substr(0, 9) + "-";
-	if (season == 1)
-		season_name = "Autumn.csv";
-	else if (season == 2)
-		season_name = "Summer.csv";
-	else if (season == 3)
-		season_name = "Fall.csv";
-	return prefix + semester_name + season_name;
-}
-string Create_Semester(int limited_year,string year_name)
-{
-	int season = Season_Disp();
-	string semester_path = Semester_ToPath(year_name, season);
-	string semesters_path = ".\\Semesters\\";
-	FILE* fileInput;
-
-	//Create new file
-	fileInput = fopen(semester_path.c_str(), "a+");
-	fclose(fileInput);
-
-	//Put file into store file
-	Input_Years(semesters_path + "Semesters.csv", year_name.c_str());
-
-	cout << "\t\t Semester year created successfully" << endl;
-	cout << "\t\t "; system("pause");
-	return semester_path;
-}
-
-void Semester_Sort()
-{
-	int i = 1;
-	string semesters_path = "Semesters.csv";
-	fstream f(semesters_path, ios::in | ios::out);
-	stringstream ss;
-	paths list = Init_List();
-
+	fstream f;
+	f.open(store.c_str(), ios::in|ios::out);
+	
 	while (!f.eof())
 	{
 		string read;
 		f >> read;
-		//Add info into list of nodes
-		path* node = Create_Node(read);
-		Add_Last(list, node);
-	}
-	f.close();
-	SortAscen_List(list);
-	//Remake a new "Years.csv"
-	remove(semesters_path.c_str());
-	f.open(semesters_path.c_str(), ios::out);
-	f.close();
-	ReInput_Semester(list);
-}
-void ReInput_Semester(paths list)
-{
-	path* move = list.head;
-	fstream f("Semesters.csv", ios::in | ios::out);
-	while (move->next != nullptr)
-	{
-		f << move->info << endl;
-		move = move->next;
-	}
-	f.close();
-}
-int Semesters_Display(string year_path)
-{
-
-	system("cls");
-	Semester_Sort();
-	cout << "\t\t CREATED SEMESTERS: " << endl;
-
-	fstream f(year_path, ios::in);
-	int i = 1;
-
-	//Reading Years information from "Semester.csv"
-	cout << "\t\t 0. Back " << endl;
-	while (!f.eof()) {
-		string read;
-		f >> read;
-		if (read != "") {
-			cout << "\t\t " << i++ << ". " << read << endl;
+		if (name == read)
+		{
+			return true;
+			break;
 		}
 	}
 	f.close();
-	return i;
+	return false;
 }
-int Season_Disp()
+string Season_ofSemester(int choice)
 {
-
-	cout << "\n\n\t\t 1. Semester 1 - Autumn" << endl;
-	cout << "\t\t 2. Semester 2 - Summer" << endl;
-	cout << "\t\t 3. Semester 3 - Fall" << endl;
-	cout << "\t\t Choose season: ";
-	return Valid_Data(3);
+	if (choice == 1)
+		return "-Autumn.csv";
+	else if (choice == 2)
+		return "-Summer.csv";
+	else if (choice == 3)
+		return "-Fall.csv";
 }
-
-int Semester_Disp()
+string Semester_ToPath(string year_name)
 {
-	cout << "\t\t Choose option " << endl;
-	cout << "\t\t 1. View cousres" << endl;
-	cout << "\t\t 2. Add course" << endl;
-	cout << "\t\t 3. Delete course" << endl;
-	cout << "\t\t 4. Exit" << endl;
-	cout << "\t\t Select option: ";
-	return Valid_Data(4);
+	return ".\\Semesters\\" + year_name.substr(0, 9) + "\\";
 }
+void Create_Semester(int limited_year,string year_name)
+{
+	string seasons[3] = { "-Autumn.csv","-Summer.csv","-Fall.csv" };
+	string semester_path = Semester_ToPath(year_name) + CSV_ToName(year_name);
+	string semesters_path = ".\\Semesters\\" + string("Semesters.csv");
+	FILE* fileInput;
 
+	bool check = Name_InFile(semesters_path, year_name);
+	if (check != true) {
+		cout << "\t\t Will add semester" << endl;
+		//Put file into store file
+		Input_Years(semesters_path, year_name.c_str());
+		//Create new file
+		for (int i = 1; i <= 3; i++)
+		{
+			string temp = semester_path + seasons[i - 1];
+			fileInput = fopen(temp.c_str(), "a+");
+			fclose(fileInput);
+		}
+	}
+
+	cout << "\t\t Semester year created successfully" << endl;
+	cout << "\t\t "; system("pause");
+}
+//Semester Deleting
+void Semester_Delete(string year_name)
+{
+	string semesters_path = ".\\Semesters\\" + string("Semesters.csv");
+	paths list = Init_List();
+	if (Name_InFile(semesters_path, year_name) == false)
+	{
+		cout << "\t\t This year does not have any semesters !!" << endl;
+		cout << "\t\t "; system("pause");
+		return;
+	}
+	fstream f(semesters_path, ios::in | ios::out);
+
+	while (!f.eof()) {
+
+		//Read year file's name from "Semester.csv"
+		string read;
+		f >> read;
+		//Add year file's name into list of nodes
+		if (read != year_name)
+		{
+			path* node = Create_Node(year_name);
+			Add_Last(list, node);
+		}
+	}
+	f.close();
+
+	//Just deleted file in directory, not in Years.csv
+	string dir = Semester_ToPath(year_name);
+	Delete_Directory(dir);
+	
+	//Delete old "Years.csv" and create the new one
+	remove(semesters_path.c_str());
+	f.open(semesters_path.c_str(), ios::out);
+	f.close();
+	//Copy year's name to "Years.csv" from list
+	ReInput_fromList(semesters_path, list);
+}\
+//Semester Displaying
+void Semesters_Display(string year_name)
+{
+	system("cls");
+	string seasons[3] = { "-Autumn.csv","-Summer.csv","-Fall.csv" };
+	string semesters_path = ".\\Semesters\\" + string("Semesters.csv");
+	if (Name_InFile(semesters_path, year_name) ==false )
+	{
+		cout << "\t\t This year does not have any semesters !!" << endl;
+		cout << "\t\t "; system("pause");
+		return;
+	}
+	cout << "\t\t CREATED SEMESTERS: " << endl;
+	cout << "\t\t 0. Back" << endl;
+	for (int i = 1; i <= 3; i++)
+	{
+		cout << "\t\t " << i << ". " << CSV_ToName(year_name) + seasons[i - 1] << endl;
+	}
+	cout << "\t\t "; system("pause");
+}
 //Process semester task
 bool Semester_Proc(int option,int limited_year,string year_name)
 {
@@ -124,17 +129,20 @@ bool Semester_Proc(int option,int limited_year,string year_name)
 	}
 	else if (option == 2)
 	{
+		Semester_Delete(year_name);
 		system("cls");
 		return true;
 	}
 	else if (option == 3)
 	{
-		Semester_Disp();
+		Semesters_Display(year_name);
+		system("cls");
 		return true;
 	}
 	else
 	{
-		cout << "EXIT" << endl;
+		cout << "\t\t EXIT" << endl;
+		system("cls");
 		return false;
 	}
 }

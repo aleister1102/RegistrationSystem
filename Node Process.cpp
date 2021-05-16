@@ -1,4 +1,5 @@
 #include "Node Process.h"
+#include "Semester.h"
 
 //Convert year file name to number
 int Year_ToNumber(string year_name)
@@ -95,6 +96,10 @@ void ReInput_fromList(string store, paths list)
 	fstream f(store, ios::in | ios::out);
 	while (move->next != nullptr)
 	{
+		if (Name_InFile(store, move->info) == true)
+		{
+			return;
+		}
 		f << move->info << endl;
 		move = move->next;
 	}

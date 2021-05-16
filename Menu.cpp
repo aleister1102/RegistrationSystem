@@ -200,7 +200,8 @@ bool Admin_Proc_Begin(int option,user info,date dmy)
 		{
 			string folder = ".\\Semesters\\";
 			string year_name = Year_Selection(folder);
-			run = Semester_Proc(Semester_Menu_Disp(), dmy.year,year_name);
+			if (year_name == "NA") break;
+			run = Semester_Proc(Semester_Menu_Disp(), dmy.year, year_name);
 		}
 		return true;
 	}
@@ -284,10 +285,11 @@ int Semester_Menu_Disp()
 {
 	cout << "\t\t Choose your option: " << endl;
 	cout << "\t\t 1. Add new semester" << endl;
-	cout << "\t\t 2. Select semester" << endl;
-	cout << "\t\t 3. Exit" << endl;
+	cout << "\t\t 2. Delete semesters" << endl;
+	cout << "\t\t 3. View semesters" << endl;
+	cout << "\t\t 4. Exit" << endl;
 	cout << "\t\t Select option: ";
-	return Valid_Data(3);
+	return Valid_Data(4);
 }
 //Course Menu
 int Course_Menu_Disp() 

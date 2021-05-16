@@ -17,6 +17,7 @@ bool File_Exist(string path)
 		cout << "\t\t File exists" << endl;
 		return true;
 	}
+	fileInput.close();
 }
 
 //Add year into year list
@@ -150,12 +151,9 @@ void Year_Clear(string years)
 }
 
 //Year sorting
-void Year_Sort()
+void File_Sort(string filepath)
 {
-	int i = 1;
-	string years_path = "Years.csv";
-	fstream f(years_path, ios::in | ios::out);
-	stringstream ss;
+	fstream f(filepath, ios::in | ios::out);
 	paths list = Init_List();
 
 	while (!f.eof())
@@ -169,18 +167,18 @@ void Year_Sort()
 	f.close();
 	SortAscen_List(list);
 	//Remake a new "Years.csv"
-	remove(years_path.c_str());
-	f.open(years_path.c_str(), ios::out);
+	remove(filepath.c_str());
+	f.open(filepath.c_str(), ios::out);
 	f.close();
-	ReInput_fromList(years_path, list);
+	ReInput_fromList(filepath, list);
 }
 //Year displaying
 int Years_Display()
 {
 	system("cls");
-	Year_Sort();
+	File_Sort("Years.csv");
 	cout << "\t\t CREATED YEARS: " << endl;
-
+	cout << "\t\t 0. Back" << endl;
 	fstream f("Years.csv", ios::in);
 	int i = 1;
 
