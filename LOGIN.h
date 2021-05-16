@@ -2,6 +2,8 @@
 
 bool compare(string s1, string s2);
 
+string delete_last(string s);
+
 // check day
 bool check_leap_year(int year);
 int day_of_month(int month, int year);
@@ -12,11 +14,11 @@ int Valid_Data(int limit);
 // password proccess
 int enterpass();
 void showpass(string& pass);
-void hidepass(string& pass);
-bool enterpass_proc(int option, string& psw);
+void hidepass(string& pass, string name);
+bool enterpass_proc(int option, string& psw, string name);
 bool enter_acc(user& info);
 // count line in file csv
-int count_acc_in_csv(string name);
+int count_acc(string name);
 // create account
 string account(user info);
 // check account

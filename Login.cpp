@@ -19,6 +19,18 @@ bool compare(string s1, string s2)
 	return true;
 }
 
+string delete_last(string s)
+{
+	string ss = s;
+	int n = size(s) - 1;
+	s = "";
+	for (int i = 0; i < n; i++)
+	{
+		s += ss[i];
+	}
+	return s;
+}
+
 // Checking
 bool check_leap_year(int year)
 {
@@ -69,7 +81,7 @@ int enterpass()
 {
 	cout << "\t\t1.Show your password !!!" << endl;
 	cout << "\t\t2.Hide your password !!!" << endl;
-	cout << "\t\t";
+	cout << "\t\tSelect your option: ";
 	return Valid_Data(2);
 }
 void showpass(string& pass)
@@ -78,28 +90,45 @@ void showpass(string& pass)
 	cout << "\t\tEnter password (No spacebar and special symbols in your password): ";
 	getline(cin, pass);
 }
-void hidepass(string& pass)
+void hidepass(string& pass, string user)
 {
 	cin.ignore();
 	cout << "\t\tEnter password (No spacebar and special symbols in your password): ";
+	string ss = "";
 	char a = _getch();
 	int i = 0;
 	while (a != 13)
 	{
 		if (a >= 65 && a <= 90 || a >= 97 && a <= 122)
 		{
+			ss += a;
 			cout << "*";
-			pass += a;
 		}
 		if (a >= 48 && a <= 57)
 		{
+			ss += a;
 			cout << "*";
-			pass += a;
+		}
+		if (a == 8)
+		{
+			system("cls");
+			cout << "\t\tEnter username: "; cout << user << endl;
+			cout << "\t\t1.Show your password !!!" << endl;
+			cout << "\t\t2.Hide your password !!!" << endl;
+			cout << "\t\tSelect your option: "; cout << 2;
+			cout << "\n\n";
+			cout << "\t\tEnter password (No spacebar and special symbols in your password): ";
+			ss = delete_last(ss);
+			for (int i = 0; i < size(ss); i++)
+			{
+				cout << "*";
+			}
 		}
 		a = _getch();
 	}
+	pass = ss;
 }
-bool enterpass_proc(int option, string& psw)
+bool enterpass_proc(int option, string& psw, string name)
 {
 	if (option == 1)
 	{
@@ -110,7 +139,7 @@ bool enterpass_proc(int option, string& psw)
 	else if (option == 2)
 	{
 		psw = "";
-		hidepass(psw);
+		hidepass(psw,name);
 		cout << endl;
 		return true;
 	}
@@ -124,7 +153,7 @@ bool enter_acc(user& info)
 	cin.ignore();
 	cout << "\t\tEnter username: ";
 	getline(cin, info.username);
-	bool k = enterpass_proc(enterpass(), info.password);
+	bool k = enterpass_proc(enterpass(), info.password, info.username);
 	return k;
 }
 
@@ -249,6 +278,7 @@ bool login_as_admin(user& info,date &dmy)
 	do {
 		enter_dmy(dmy);
 	} while (check_dmy(dmy)!=true);
+	system("cls");
 	if (enter_acc(info))
 	{
 		return check_acc_ad(info);
