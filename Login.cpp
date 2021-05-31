@@ -1,11 +1,12 @@
-#include "Menu.h"
+﻿#include "Menu.h"
 #include "Login.h"
 
-// Checking
+//Kiểm tra năm nhuận
 bool check_leap_year(int year)
 {
 	return ((year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0));
 }
+//Số ngày của tháng
 int day_of_month(int month, int year)
 {
 	switch (month)
@@ -21,6 +22,7 @@ int day_of_month(int month, int year)
 		break;
 	}
 }
+//Kiểm tra tính hợp lệ của ngày tháng
 bool check_dmy(date dmy)
 {
 	if (dmy.year <= 0 || dmy.month <= 0)
@@ -37,6 +39,7 @@ bool check_dmy(date dmy)
 	}
 	return true;
 }
+//Nhập ngày tháng
 void enter_dmy(date& dmy)
 {
 	do {
@@ -48,7 +51,6 @@ void enter_dmy(date& dmy)
 	} while (check_dmy(dmy) != true);
 }
 
-// Data proccess
 string delete_last(string s)
 {
 	string ss = s;

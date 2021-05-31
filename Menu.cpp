@@ -5,6 +5,8 @@
 #include "Login.h"
 #include "Password.h"
 #include "Course.h"
+#include "Convert.h"
+#include "File.h"
 #include "Semester.h"
 
 int Valid_Data(int limit)
@@ -21,6 +23,10 @@ int Valid_Data(int limit)
 		}
 		else {
 			cin >> n;
+		}
+		if (n > limit)
+		{
+			cout << "\t\t Input data is Over Limited" << endl;
 		}
 	} while (n > limit || n < 0);
 	cout << endl;
@@ -156,7 +162,7 @@ bool Display_Mode_Admin(user info, date dmy)
 }
 int Admin_Disp_Begin()
 {
-	//system("cls");
+	system("cls");
 	cout << "\t\t YOU ARE ADMIN NOW	" << endl;
 	cout << "\t\t Choose your option: " << endl;
 	cout << "\t\t 1. Year Section" << endl;
@@ -185,9 +191,10 @@ bool Admin_Proc_Begin(int option,user info,date dmy)
 		bool run = true;
 		while (run)
 		{
-			string folder = ".\\Classess\\";
-			string year_name = Year_Selection(folder);
-			string year_path = ".\\Years\\" + year_name;
+			string year_name = Year_Selection();
+			string pre_folder = ".\\Years\\";
+			string year_path = Make_Path(pre_folder, year_name);
+			if (year_name == "!")  return true;
 			Classes_Display(year_path);
 			run = Class_Proc_Active(year_name,Class_Menu_Disp());
 		}
@@ -195,14 +202,8 @@ bool Admin_Proc_Begin(int option,user info,date dmy)
 	}
 	else if (option == 3)
 	{
-		bool run = true;
-		while (run)
-		{
-			string folder = ".\\Semesters\\";
-			string year_name = Year_Selection(folder);
-			if (year_name == "NA") break;
-			run = Semester_Proc(Semester_Menu_Disp(), dmy.year, year_name);
-		}
+		string year_name = Year_Selection();
+		Semester_Proc(Semester_Menu_Disp(), dmy.year, year_name);
 		return true;
 	}
 	else if (option == 4)
@@ -279,6 +280,14 @@ int Class_Menu_Disp()
 	cout << "\t\t 4. Exit" << endl;
 	cout << "\t\t Select option: ";
 	return Valid_Data(4);
+}
+int Class_Create_Mod_Menu()
+{
+	cout << "\t\t CREATE CLASS SECTION " << endl;
+	cout << "\t\t 1. Import classes from files" << endl;
+	cout << "\t\t 2. Add single class" << endl;
+	cout << "\t\t Select option: ";
+	return Valid_Data(2);
 }
 //Semester Menu
 int Semester_Menu_Disp()

@@ -1,7 +1,14 @@
-#include "Course.h"
+﻿#include "Course.h"
 #include "Class.h"
 #include "Year.h"
 #include "Menu.h"
+#include "File.h"
+#include "Convert.h"
+//-------------------Đây chỉ là Demo, chưa phải code có thể dùng--------------------------------//
+//-------------------Đây chỉ là Demo, chưa phải code có thể dùng--------------------------------//
+//-------------------Đây chỉ là Demo, chưa phải code có thể dùng--------------------------------//
+//-------------------Đây chỉ là Demo, chưa phải code có thể dùng--------------------------------//
+//-------------------Đây chỉ là Demo, chưa phải code có thể dùng--------------------------------//
 bool Valid_Course(course c)
 {
 	if (c.id < 0 || c.cre < 0 || c.capacity < 0 || c.day<0 || c.session <0 )

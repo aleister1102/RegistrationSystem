@@ -1,17 +1,6 @@
 #include"Password.h"
 #include"Login.h"
 #include"Node Process.h"
-void ReInput_Account(paths list)
-{
-	path* move = list.head;
-	fstream f("acc_ad.csv", ios::in | ios::out);
-	while (move->next != nullptr)
-	{
-		f << move->info << endl;
-		move = move->next;
-	}
-	f.close();
-}
 //String proccess
 bool compare(string s1, string s2)
 {
@@ -126,9 +115,9 @@ bool check_newpass(string pass)
 	return false;
 }
 //Change Password & Recover Password
-void change_pass_in_file(string name, string pass)
+void change_pass_in_file(string username, string pass)
 {
-	paths list;
+	names list;
 	fstream f;
 	int k = 0;
 	list = Init_List();
@@ -147,7 +136,7 @@ void change_pass_in_file(string name, string pass)
 			split_string(f1, usr, psw);
 			//
 			psw = "";
-			if (compare(usr,name) == true)
+			if (compare(usr,username) == true)
 			{
 				f1 = "";
 				int n = size(pass);
@@ -155,11 +144,11 @@ void change_pass_in_file(string name, string pass)
 				{
 					psw += pass[i];
 				}
-				f1 = name + "," + psw;
+				f1 = username + "," + psw;
 				k = 1;
 			}
 		}
-		path* n1 = new path;
+		name* n1 = new name;
 		n1 = Create_Node(f1);
 		Add_Last(list, n1);
 	}

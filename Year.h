@@ -1,20 +1,9 @@
 #include "MainSource.h"
-bool File_Exist(string path);
-void File_Sort(string filepath);
-////Year Creation//
-void Input_Years(string store, string year_path);
-string Path_ToYear(string s);
-string Year_ToPath(int begin, int end);
-void Create_Year(int year);
-
-////Year Deletion//
+void Year_Create(int year);
 void Year_Delete(int quanti);
-void Year_Clear(string years);
-
-////Year Proccession//
+void Year_Clear();
+int Years_Display();
+string Year_Selection();
 bool Year_Proc(int option, int limited_year);
 
-
-////Year Displaying//
-int Years_Display();
 

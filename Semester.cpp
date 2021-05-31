@@ -2,59 +2,24 @@
 #include "Menu.h"
 #include "Year.h"
 #include "Class.h"
+#include "File.h"
+#include "Convert.h"
 #include "Node Process.h"
 
 //Semester Creation
-bool Name_InFile(string store,string name)
-{
-	fstream f;
-	f.open(store.c_str(), ios::in|ios::out);
-	
-	while (!f.eof())
-	{
-		string read;
-		f >> read;
-		if (name == read)
-		{
-			return true;
-			break;
-		}
-	}
-	f.close();
-	return false;
-}
-string Season_ofSemester(int choice)
-{
-	if (choice == 1)
-		return "-Autumn.csv";
-	else if (choice == 2)
-		return "-Summer.csv";
-	else if (choice == 3)
-		return "-Fall.csv";
-}
-string Semester_ToPath(string year_name)
-{
-	return ".\\Semesters\\" + year_name.substr(0, 9) + "\\";
-}
 void Create_Semester(int limited_year,string year_name)
 {
-	string seasons[3] = { "-Autumn.csv","-Summer.csv","-Fall.csv" };
-	string semester_path = Semester_ToPath(year_name) + CSV_ToName(year_name);
-	string semesters_path = ".\\Semesters\\" + string("Semesters.csv");
+	string seasons[3] = { "-Autumn","-Summer","-Fall" };
+	string pre_folder = ".\\Semesters\\" + Path_ToName(year_name) + "\\";
 	FILE* fileInput;
 
-	bool check = Name_InFile(semesters_path, year_name);
-	if (check != true) {
-		cout << "\t\t Will add semester" << endl;
-		//Put file into store file
-		Input_Years(semesters_path, year_name.c_str());
-		//Create new file
-		for (int i = 1; i <= 3; i++)
-		{
-			string temp = semester_path + seasons[i - 1];
-			fileInput = fopen(temp.c_str(), "a+");
-			fclose(fileInput);
-		}
+	//Create new file
+	for (int i = 1; i <= 3; i++)
+	{
+		string temp = Extension(pre_folder + year_name + seasons[i - 1],1);
+		fileInput = fopen(temp.c_str(), "a+");
+		fclose(fileInput);
+		Save_ToCSVLine("Years.csv", year_name.c_str(),Int_ToString(i));
 	}
 
 	cout << "\t\t Semester year created successfully" << endl;
@@ -64,13 +29,8 @@ void Create_Semester(int limited_year,string year_name)
 void Semester_Delete(string year_name)
 {
 	string semesters_path = ".\\Semesters\\" + string("Semesters.csv");
-	paths list = Init_List();
-	if (Name_InFile(semesters_path, year_name) == false)
-	{
-		cout << "\t\t This year does not have any semesters !!" << endl;
-		cout << "\t\t "; system("pause");
-		return;
-	}
+	names list = Init_List();
+
 	fstream f(semesters_path, ios::in | ios::out);
 
 	while (!f.eof()) {
@@ -81,15 +41,15 @@ void Semester_Delete(string year_name)
 		//Add year file's name into list of nodes
 		if (read != year_name)
 		{
-			path* node = Create_Node(year_name);
+			name* node = Create_Node(read);
 			Add_Last(list, node);
 		}
 	}
 	f.close();
 
 	//Just deleted file in directory, not in Years.csv
-	string dir = Semester_ToPath(year_name);
-	Delete_Directory(dir);
+	//string dir = Semester_ToPath(year_name);
+	//Directory_Delete(dir);
 	
 	//Delete old "Years.csv" and create the new one
 	remove(semesters_path.c_str());
@@ -97,7 +57,7 @@ void Semester_Delete(string year_name)
 	f.close();
 	//Copy year's name to "Years.csv" from list
 	ReInput_fromList(semesters_path, list);
-}\
+}
 //Semester Displaying
 void Semesters_Display(string year_name)
 {
@@ -114,7 +74,7 @@ void Semesters_Display(string year_name)
 	cout << "\t\t 0. Back" << endl;
 	for (int i = 1; i <= 3; i++)
 	{
-		cout << "\t\t " << i << ". " << CSV_ToName(year_name) + seasons[i - 1] << endl;
+		cout << "\t\t " << i << ". " << Extension(year_name,2) + seasons[i - 1] << endl;
 	}
 	cout << "\t\t "; system("pause");
 }
@@ -123,6 +83,8 @@ bool Semester_Proc(int option,int limited_year,string year_name)
 {
 	if (option == 1)
 	{
+		string run = Browse_and_CreateFolder("Years.csv", ".\\Semesters\\", year_name);
+		if (run == "!") return true;
 		Create_Semester(limited_year,year_name);
 		system("cls");
 		return true;

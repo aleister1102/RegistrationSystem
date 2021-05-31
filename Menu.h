@@ -20,6 +20,7 @@ bool Student_Proc_Begin(int option, user info, date dmy);
 int Year_Menu_Disp();
 ////Class menu//
 int Class_Menu_Disp();
+int Class_Create_Mod_Menu();
 ////Semester menu//
 int Semester_Menu_Disp();
 ////Course Menu//

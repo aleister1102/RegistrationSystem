@@ -9,6 +9,6 @@ bool check_pass(string pass,int count);
 bool check_key(string key, int count);
 bool check_newpass(string pass);
 //Change Password & Recover Password
-void change_pass_in_file(string name, string pass);
+void change_pass_in_file(string username, string pass);
 void forgot_pass();
 void change_pass();
