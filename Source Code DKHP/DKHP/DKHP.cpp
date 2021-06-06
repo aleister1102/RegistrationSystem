@@ -379,7 +379,7 @@ int Delete_a_course_Dis(SV sv)
 	string path = Make_Path(folder, filename);
 	View_List(sv);
 	cout<<"\t\t"<<Count_line(path)+1<<". Exit"<<endl;
-	cout << "\t\tYour choice is: ";
+	cout << "\t\tChoose a course that you want to delete(Choose a number): ";
 	return Valid_Data(Count_line(path)+1);
 }
 
