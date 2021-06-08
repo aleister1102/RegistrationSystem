@@ -1,36 +1,38 @@
-#include "Node Process.h"
-//Convert year file name to number
-int Year_ToNumber(string year_name)
-{
-	stringstream ss; int n;
-	ss << year_name.substr(0, 4);
-	ss >> n;
-	return n;
-}
-//Check for empty linked list
-bool CheckEmpty(paths list)
+﻿#include "Node Process.h"
+#include "Semester.h"
+#include "Convert.h"
+
+//Kiểm tra danh sách liên kết rỗng
+//Param: một DSLK
+//Return: true nếu list rỗng, false nếu list có phần tử
+bool CheckEmpty(names list)
 {
 	if (list.head == nullptr)
 		return true;
 	return false;
 }
-//Initialize for linked list & node
-paths Init_List()
+//Khởi tạo danh sách liên kết
+//Return: danh sách liên kết đã khởi tạo
+names Init_List()
 {
-	paths l;
+	names l;
 	l.head = nullptr;
 	l.tail = nullptr;
 	return l;
 }
-path* Create_Node(string info)
+//Khởi tạo node
+//Param: thông tin của node, ở đây là một chuỗi chứa tên
+//Return: con trỏ node chứa name
+name* Create_Node(string info)
 {
-	path* s = new path;
+	name* s = new name;
 	s->info = info;
 	s->next = nullptr;
 	return s;
 }
-//Add node to last place of linked list
-void Add_Last(paths& list, path* node)
+//Thêm node vào cuối list
+//Param: một danh sách chứa name, một con trỏ trỏ đến stuct name
+void Add_Last(names& list, name* node)
 {
 	if (CheckEmpty(list))
 	{
@@ -43,70 +45,47 @@ void Add_Last(paths& list, path* node)
 		list.tail = node;
 	}
 }
-//Delete one node in linked list
-void Remove_Info(paths& list, string info)
+//Sao chép thông tin danh sách liên kết sang một danh sách khác không cùng địa chỉ
+//Param: một list name
+//Return: một list name khác đã copy
+names Copy_List(names l)
 {
-	path* move = list.head;
-	if (move->info == info)
-	{
-		path* temp = move;
-		list.head = list.head->next;
-		delete temp;
-		return;
-	}
-	while (move->next->next != nullptr)
-	{
-		if (move->next->info == info)
-		{
-			path* temp = move;
-			move->next = move->next->next;
-			delete temp;
-			return;
-		}
-		move = move->next;
-	}
-	if (move->next->info == info)
-	{
-		path* temp = move->next;
-		move->next = nullptr;
-		list.tail = move;
-		delete temp;
-		return;
-	}
-}
-//Copy list to a new list with different address
-paths Copy_List(paths l)
-{
-	path* move = l.head;
-	paths temp = Init_List();
+	name* move = l.head;
+	names temp = Init_List();
 	while (move != nullptr)
 	{
-		path* add = Create_Node({ move->info });
+		name* add = Create_Node({ move->info });
 		Add_Last(temp, add);
 		move = move->next;
 	}
 	return temp;
 }
-//Input info from node to file after delete
-void ReInput_fromList(string store, paths list)
+//Truyền thông tin từ list vào file
+//Param: file cần truyển thông tin, danh sách liên kết chứa thông tin
+void ReInput_fromList(string store, names list)
 {
-	path* move = list.head;
+	name* move = list.head;
 	fstream f(store, ios::in | ios::out);
 	while (move->next != nullptr)
 	{
+		if (Name_InFile(store, move->info) == true)
+		{
+			return;
+		}
 		f << move->info << endl;
 		move = move->next;
 	}
 	f.close();
 }
-
-void SortAscen_List(paths & list)
+//Sắp xếp tăng dần cho năm
+//Param: DSLK chứa tên năm cần sort
+void SortAscen_YearList(names & list)
 {
 	//Create new list with different address
-	paths result = Copy_List(list);
-	path * curr = result.head;
+	names result = Copy_List(list);
+	name * curr = result.head;
 
-	path* move = list.head;
+	name* move = list.head;
 	//Create flags
 	int min;
 	int before = 0;
@@ -117,7 +96,7 @@ void SortAscen_List(paths & list)
 		//Set up the flag of smallest number
 		while (move != nullptr)
 		{
-			int num = Year_ToNumber(move->info);
+			int num = Year_ToInt(move->info);
 			if (num < min && num> before)
 			{
 				min = num;
@@ -130,7 +109,7 @@ void SortAscen_List(paths & list)
 		//Compare node with flag and copy to new list
 		while (move != nullptr)
 		{
-			int num = Year_ToNumber(move->info);
+			int num = Year_ToInt(move->info);
 			if (num == min)
 			{
 				curr->info = move->info;
@@ -146,18 +125,21 @@ void SortAscen_List(paths & list)
 	}
 	list = result;
 }
-bool Output_List(paths l)
+//Xuất danh sách liên kết
+//Param: list
+//Return: trả về false nếu danh sách rỗng
+bool Output_List(names l)
 {
 	if (CheckEmpty(l))
 	{
-		cout << "Danh sach rong" << endl;
+		cout << "Empty List !!" << endl;
 		return false;
 	}
 
 	cout << "List of Node: " << endl;
 	cout << "----------------------------------------------------------------------------" << endl;
 
-	path* move = l.head;
+	name* move = l.head;
 	int count = 1;
 	while (move->next != nullptr)
 	{

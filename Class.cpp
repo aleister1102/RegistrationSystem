@@ -1,159 +1,63 @@
 ﻿#include "Menu.h"
 #include "Year.h"
 #include "Class.h"
+#include "File.h"
+#include "Convert.h"
 #include "Node Process.h"
-
-//Converting function
-string Int_ToString(int n)
+//Kiểm tra lớp có bị trùng trong danh sách của năm hay không.
+//Param: tên năm và tên lớp cần kiểm tra
+//Return: True nếu trùng, False nếu ngược lại
+bool Duplicated_Class(string year_name, string check_class)
 {
-	stringstream ss; string s;
-	ss << n; ss >> s;
-	ss.str("");
-	ss.clear();
-	return s;
+	//Create folder path automatically
+	string pre_folder = ".\\Classes\\" + year_name + "\\";
+	string check_path = Make_Path(pre_folder, check_class);
+	cout << "\t\t Check file at path: " << check_path << endl;
+	if (File_Exist(check_path))
+	{
+		return true;
+	}
+	return false;
 }
-string ClassName_To_Path(string year_name,string class_name)
+//Hàm nhập hàng loạt lớp từ file
+//Param: Đường dẫn file cần nhập (nằm trong thư mục Classes) và tên năm
+//Return: Danh sách liên kết chứa các tên lớp
+names Class_Import(string import_file,string year_name)
 {
-	return  ".\\Classes\\" + year_name.substr(0, 9) + "\\" + class_name;
-}
-
-//Choose kind of class creating
-int Create_Type()
-{
-	cout << "\t\t CREATE CLASS SECTION " << endl;
-	cout << "\t\t 1. Import classes from files" << endl;
-	cout << "\t\t 2. Add single class" << endl;
-	cout << "\t\t Select option: ";
-	return Valid_Data(2);
-}
-//Put class path into list
-void Input_Class(string year_name, string class_name)
-{
-	string year_path = ".\\Years\\" + year_name;
-	cout << "\t\t Save class at " << year_path << endl;
-	fstream f(year_path, ios::app | ios::out);
-	f << class_name << endl;
-	f.close();
-}
-//Delete directory
-void Delete_Directory(string dir)
-{
-	dir = "rmdir /s /q " + dir;
-	system(dir.c_str());
-}
-
-//Option 1
-
-paths Import_Class(string file,string year_name)
-{
-	fstream f(file);
-	paths list = Init_List();
+	fstream f(import_file);
+	names list = Init_List();
 
 	while (!f.eof())
 	{
 		string class_name;
 		f >> class_name;
 
-		//Check for duplicating
+		//Kiểm tra trùng lặp
 		if (Duplicated_Class(year_name, class_name)) continue;
 
-		//Add class info to list of nodes
-		path* node = Create_Node(class_name);
+		//Thêm các tên lớp vào danh sách liên kết
+		name* node = Create_Node(class_name);
 		Add_Last(list, node);
 	}
 	f.close();
 	
-	//Add and create
-	path* move = list.head;
+	//Thêm các tên lớp từ danh sách liên kết sang file CSV của năm và tạo file lớp
+	name* move = list.head;
 	while (move->next != nullptr)
 	{
-		//Add class path into year file
-		Input_Class(year_name, move->info);
-		//Create new class file in Classes directory
-		string class_path = ".\\Classes\\" + year_name.substr(0, 9) + "\\" + move->info;
-		f.open(class_path.c_str(),ios::out);
-		f.close();
+		//Thêm tên lớp vào file CSV của năm
+		string year_path = ".\\Years\\" + Extension(year_name, 1);
+		Save_ToCSV(year_path, move->info);
+		//Tạo một file lớp mới
+		string class_path = ".\\Classes\\" + year_name + "\\" + Extension(move->info,1);
+		File_Create(class_path);
 		move = move->next;
 	}
 	return list;
 }
-string Year_Selection()
-{
-	cout << "\t\t Which year do you want to modify ?" << endl;
-	int limit = Years_Display();
-	cout << "\t\t Select option: ";
-	int choice = Valid_Data(limit);
-	string year_name = "NA";
-	fstream f("Years.csv", ios::in); int count = 1;
-	while (!f.eof() && choice > 0)
-	{
-		f >> year_name;
-		if (count++ == choice)
-		{
-			//Only create new directory of classes when year is selected
-			Create_Directory(year_name);
-			return year_name;
-		}
-	}
-	f.close();
-	system("cls");
-	return year_name;
-}
-string Create_Directory(string year_name)
-{
-	string dir = ".\\Classes\\" + year_name.substr(0, 9) + "\\";
-	cout << "\t\t Directory path: " << dir << endl;
-	// Creating a directory
-	if (_mkdir(dir.c_str()) == -1)
-		cerr << "\t\t Error :  " << strerror(errno) << endl;
-
-	else
-		cout << "\t\t Directory created" << endl;
-	return dir;
-}
-string File_Import()
-{
-	string file_path;
-	bool check = true;
-	do {
-		//Receive file name from user
-		cout << "\t\t Enter file name for importing: ";
-		string name;
-		cin.ignore();
-		getline(cin, name, '\n');
-		
-		//Create file's path
-		file_path = name + ".csv";
-		cout << "\t\t Import file from: " << file_path << endl;
-		check = File_Exist(file_path);
-	} while (check == false);
-	return file_path;
-
-}
-//Option 2
-
-//Get code name for each department
-//Check whether class is existed
-bool Duplicated_Class(string year_name, string check)
-{
-	string path  = ClassName_To_Path(year_name, check);
-	cout << "\t\t Check file at path: " << path << endl;
-	if (File_Exist(path))
-	{
-		string year_path = ".\\Years\\" + year_name;
-		fstream f(year_path, ios::in);
-		while (!f.eof())
-		{
-			string read;
-			f >> read;
-			if (read == check)
-			{
-				return true;
-			}
-		}
-	}
-	return false;
-}
+//Hàm xử lý tên các khoa trong trường
+//Param: số thứ tự khoa, số thứ tự của hệ đào tạo
+//Return: Mã Khoa - Hệ đào tạo 
 string Department_Name(int depart,int system)
 {
 	string name;
@@ -176,68 +80,85 @@ string Department_Name(int depart,int system)
 	return name;
 	
 }
-string Create_Class_Single(string year_name, int time)
+//Hàm tạo tên lớp
+//Param: tên năm
+//Return: một chuỗi có tên lớp hoàn chỉnh
+string Make_ClassName(string year_name)
 {
-	
-	string class_name, syntax, period = Int_ToString(time % 100);
+	//Tạo số niên khóa
+	int first_year = Year_ToInt(year_name);
+	string class_name, department, period = Int_ToString(first_year % 100);
 	int n = 0;
-
-	syntax = Department_Name(Department_Menu_Disp(),Training_System_Menu_Disp());
+	//Tạo mã khoa - hệ đào tạo
+	department = Department_Name(Department_Menu_Disp(), Training_System_Menu_Disp());
 	bool check = true;
-
+	//Nhập số thứ tự lớp (1 đến 5)
 	do {
 		cout << "\t\t Enter order of class: ";
 		cin >> n;
 
-		class_name = period + syntax + Int_ToString(n) + ".csv";
+		class_name = period + department + Int_ToString(n);
 		check = Duplicated_Class(year_name, class_name);
 
 	} while (n < 0 || n>5 || check == true);
-	
-	string class_path = ClassName_To_Path(year_name, class_name);
-	fstream f(class_path, ios::out);
-	f.close();
+	return class_name;
+
+}
+//Tạo một lớp thủ công
+//Param: tên năm
+//Return: đường dẫn đến file lớp mới tạo
+string Class_Create_Single(string year_name)
+{
+	string class_name = Make_ClassName(year_name);
+	string pre_folder = ".\\Classes\\" + year_name + "\\";
+	string class_path = Make_Path(pre_folder, class_name);
+	File_Create(class_path);
 
 	cout << "\t\t File path: " << class_path << endl;
 	cout << "\t\t Class created successfully" << endl;
 
-	Input_Class(year_name, class_name);
-	cout << "\t\t ";  system("pause"); system("cls");
+	//Save class into year's file.
+	string year_path = ".\\Years\\" + Extension(year_name,1);
+	Save_ToCSV(year_path, class_name);
+	cout << "\t\t ";  system("pause");
 	return class_path;
 }
-
-//Class Deleting
+//Xóa một lớp
+//Param: đường dẫn của file năm và số lượng lớp hiện có
 void Class_Delete(string year_path,int quanti)
 {
-	cout << "\t\t Chosse class: ";
+	//Chọn lớp cần xóa
+	cout << "\t\t Choose class: ";
 	int choice = Valid_Data(quanti);
 
 	int i = 1;
-	string class_path = ".\\Classes\\" + Path_ToYear(year_path).substr(0,9) + "\\";
-	paths list = Init_List();
+	string class_path = ".\\Classes\\" + Path_ToName(year_path) + "\\";
+	names list = Init_List();
 	fstream f(year_path, ios::in | ios::out);
-
+	//Duyệt qua và kiếm lớp cần xóa
 	while (!f.eof())
 	{
-		string class_name;
-		f >> class_name;
-		path* node = Create_Node(class_name);
-		Add_Last(list, node);
-		
-		class_path += class_name;
-		if (i++ == choice)
+		string read;
+		f >> read;
+		//Lưu vào danh sách liên kết
+		if (i++ != choice) //Nếu không phải lớp cần xóa thì cho vào LList
 		{
+			name* node = Create_Node(read);
+			Add_Last(list, node);
+		}
+		else //Nếu là lớp cần xóa thì xóa thư mục của lớp đó
+		{
+			class_path += Extension(read, 1);
 			remove(class_path.c_str());
-			Remove_Info(list, class_name);
 		}
 	}
 	f.close();
-	remove(year_path.c_str());
-	f.open(year_path.c_str(), ios::out);
-	f.close();
+	//Tạo file lớp mới và truyền dữ liệu từ LList vào lại
+	File_Clear(year_path);
 	ReInput_fromList(year_path, list);
 }
-//Clear all classes
+//Xóa tất cả các lớp
+//Param: đường dẫn tới file năm
 void Class_Clear(string year_path)
 {
 	cout << "\t\t All classes will be deleted !!!!" << endl;
@@ -251,27 +172,24 @@ void Class_Clear(string year_path)
 
 		while (!f.eof()) {
 
-			string class_name;
-			f >> class_name;
+			string read;
+			f >> read;
 
-			//Delete files
+			//Xóa thư mục năm chứa nhiều lớp
 			string class_path = ".\\Classes\\"
-				+ Path_ToYear(year_path).substr(0, 9)
+				+ Path_ToName(year_path)
 				+ "\\"
-				+ class_name;
-			
+				+ Extension(read,1);
 			remove(class_path.c_str());
-
-
 		}
 		f.close();
-		//Remake a new year's file
-		remove(year_path.c_str());
-		f.open(year_path.c_str(), ios::out);
-		f.close();
+		//Tạo lại một file năm mới
+		File_Clear(year_path);
 	}
 }
-//Classes displaying
+//Hiển thị các lớp
+//Param: đường dẫn đến file năm
+//Return: Số lượng năm hiện có
 int Classes_Display(string year_path)
 {
 	if (File_Exist(year_path) == false)
@@ -282,7 +200,6 @@ int Classes_Display(string year_path)
 	cout << "\t\t CREATED CLASS: " << endl;
 	fstream f(year_path, ios::in); int i = 1;
 	
-	cout << "\t\t 0. Back" << endl;
 	while (!f.eof())
 	{
 		string read;
@@ -295,24 +212,30 @@ int Classes_Display(string year_path)
 	f.close();
 	return i-1;
 }
-
-//Process class task
-bool Class_Proc_Active(string year_name,int option,int time)
+//Xử lý và điều hướng các hàm tính năng của lớp
+//Param: tên năm, các lựa chọn tính năng
+bool Class_Proc_Active(string year_name,int option)
 {
-	string year_path = ".\\Years\\" + year_name;
+	//Khởi tạo các đường dẫn & thư mục cần thiết
+	string year_path = ".\\Years\\" + Extension(year_name,1);
+	string folder = ".\\Classes\\";
 	if (option == 1)
 	{
-		if (year_name != "NA")
+		//Duyệt và tạo ra thư mục con của Classes chứa các lớp
+		Browse_and_CreateFolder("Years.csv", folder,year_name);
+		if (year_name != "")
 		{
-			int choice = Create_Type();
+			//Lựa chọn cách tạo lớp
+			int choice = Class_Create_Mod_Menu();
+			//Option 1: Nhập từ file
 			if (choice == 1) {
 
-				string path = File_Import();
-				Import_Class(path, year_name);
-
+				string import_path = File_Import(folder);
+				Class_Import(import_path, year_name);
 			}
+			//Option 2: Thủ công
 			else {
-				Create_Class_Single(year_name, time);
+				Class_Create_Single(year_name);
 			}
 		}
 		return true;
@@ -322,6 +245,7 @@ bool Class_Proc_Active(string year_name,int option,int time)
 		int quanti = Classes_Display(year_path);
 		cout << "\t\t This year has " << quanti << " class(es)" << endl;
 		Class_Delete(year_path,quanti);
+
 		system("cls");
 		return true;
 	}

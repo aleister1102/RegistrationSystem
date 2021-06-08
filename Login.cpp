@@ -1,11 +1,12 @@
-#include "Menu.h"
-#include "LOGIN.h"
+﻿#include "Menu.h"
+#include "Login.h"
 
-// Checking
+//Kiểm tra năm nhuận
 bool check_leap_year(int year)
 {
 	return ((year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0));
 }
+//Số ngày của tháng
 int day_of_month(int month, int year)
 {
 	switch (month)
@@ -21,6 +22,7 @@ int day_of_month(int month, int year)
 		break;
 	}
 }
+//Kiểm tra tính hợp lệ của ngày tháng
 bool check_dmy(date dmy)
 {
 	if (dmy.year <= 0 || dmy.month <= 0)
@@ -37,61 +39,46 @@ bool check_dmy(date dmy)
 	}
 	return true;
 }
+//Nhập ngày tháng
 void enter_dmy(date& dmy)
 {
-	cout << "\t\tEnter day / month / year: " << endl;
-	cout << "\t\t";
-	cin >> dmy.day; cout << "\t\t";
-	cin >> dmy.month; cout << "\t\t";
-	cin >> dmy.year;
+	do {
+		cout << "\t\tEnter day / month / year: " << endl;
+		cout << "\t\t";
+		cin >> dmy.day; cout << "\t\t";
+		cin >> dmy.month; cout << "\t\t";
+		cin >> dmy.year;
+	} while (check_dmy(dmy) != true);
 }
 
-// Password proccess
-int enterpass()
+string delete_last(string s)
+{
+	string ss = s;
+	int n = size(s) - 1;
+	s = "";
+	for (int i = 0; i < n; i++)
+	{
+		s += ss[i];
+	}
+	return s;
+}
+int pass_mode()
 {
 	cout << "\t\t1.Show your password !!!" << endl;
 	cout << "\t\t2.Hide your password !!!" << endl;
 	cout << "\t\t";
 	return Valid_Data(2);
 }
-void showpass(string& pass)
-{
-	cin.ignore();
-	cout << "\t\tEnter password (No spacebar and special symbols in your password): ";
-	getline(cin, pass);
-}
-void hidepass(string& pass)
-{
-	cin.ignore();
-	cout << "\t\tEnter password (No spacebar and special symbols in your password): ";
-	char a = _getch();
-	int i = 0;
-	while (a != 13)
-	{
-		cout << "*";
-		if (a >= 65 && a <= 90 || a >= 97 && a <= 122)
-		{
-			pass += a;
-		}
-		if (a >= 48 && a <= 57)
-		{
-			pass += a;
-		}
-		a = _getch();
-	}
-}
-bool enterpass_proc(int option, string& psw)
+bool pass_mode_proc(int option, user& info)
 {
 	if (option == 1)
 	{
-		psw = "";
-		showpass(psw);
+		enter_showpass(info);
 		return true;
 	}
 	else if (option == 2)
 	{
-		psw = "";
-		hidepass(psw);
+		enter_hidepass(info);
 		cout << endl;
 		return true;
 	}
@@ -100,20 +87,68 @@ bool enterpass_proc(int option, string& psw)
 		return false;
 	}
 }
+void enter_showpass(user &info)
+{
+	cin.ignore();
+	cout << "\t\tEnter password (No spacebar and special symbols in your password): ";
+	enter_data(info.password);
+}
+void enter_hidepass(user &info)
+{
+	cin.ignore();
+	cout << "\t\tEnter password (No spacebar and special symbols in your password): ";
+	string ss = "";
+	char a = _getch();
+	int i = 0;
+	while (a != 13)
+	{
+		if (a >= 65 && a <= 90 || a >= 97 && a <= 122)
+		{
+			ss += a;
+			cout << "*";
+		}
+		if (a >= 48 && a <= 57)
+		{
+			ss += a;
+			cout << "*";
+		}
+		if (a == 8)
+		{
+			system("cls");
+			cout << "\t\tEnter username: "; cout << info.username << endl;
+			cout << "\t\t1.Show your password !!!" << endl;
+			cout << "\t\t2.Hide your password !!!" << endl;
+			cout << "\t\tSelect your option: "; cout << 2;
+			cout << "\n\n";
+			cout << "\t\tEnter password (No spacebar and special symbols in your password): ";
+			ss = delete_last(ss);
+			for (int i = 0; i < size(ss); i++)
+			{
+				cout << "*";
+			}
+		}
+		a = _getch();
+	}
+	info.password = ss;
+}
+void enter_data(string& param)
+{
+	getline(cin, param);
+}
 bool enter_acc(user& info)
 {
 	cin.ignore();
 	cout << "\t\tEnter username: ";
-	getline(cin, info.username);
-	bool k = enterpass_proc(enterpass(), info.password);
+	enter_data(info.username);
+	bool k = pass_mode_proc(pass_mode(), info);
 	return k;
 }
 
 // Count line in csv file
-int count_acc(string name)
+int count_acc(string acc_path)
 {
 	ifstream f;
-	f.open(name+".csv");
+	f.open(acc_path);
 	int c = 0;
 	while (!f.eof())
 	{
@@ -134,10 +169,13 @@ string account(user info)
 bool check_acc_student(user info)
 {
 	ifstream f;
-	f.open("acc_sv.csv");
+	string acc_name = "acc_sv";
+	string acc_path = ".\\Accounts\\";
+	acc_path += (acc_name + ".csv");
+	f.open(acc_path);
 	string acc = account(info);
 	int c = 0;
-	int n = count_acc("acc_sv");
+	int n = count_acc(acc_path);
 	while (!f.eof())
 	{
 		c++;
@@ -166,13 +204,9 @@ bool check_acc_student(user info)
 	}
 	f.close();
 }
-bool login_as_student(user &info,date &dmy)
+bool login_as_student(user &info)
 {
 	cout << "\t\tLogin as Student" << endl;
-	cin.ignore();
-	do {
-		enter_dmy(dmy);
-	} while (check_dmy(dmy) != true);
 	if (enter_acc(info))
 	{
 		return check_acc_student(info);
@@ -184,10 +218,13 @@ bool check_acc_ad(user info)
 	if (info.password[0] == 'A' && info.password[1] == 'D')
 	{
 		ifstream f;
-		f.open("acc_ad.csv");
+		string acc_name = "acc_ad";
+		string acc_path = ".\\Accounts\\";
+		acc_path += (acc_name + ".csv");
+		f.open(acc_path);
 		string acc = account(info);
 		int c = 0;
-		int n = count_acc("acc_ad");
+		int n = count_acc(acc_path);
 		while (!f.eof())
 		{
 			c++;
@@ -224,12 +261,9 @@ bool check_acc_ad(user info)
 		return false;
 	}
 }
-bool login_as_admin(user& info,date &dmy)
+bool login_as_admin(user& info)
 {
 	cout << "\t\tLogin as Admin" << endl;
-	do {
-		enter_dmy(dmy);
-	} while (check_dmy(dmy)!=true);
 	if (enter_acc(info))
 	{
 		return check_acc_ad(info);

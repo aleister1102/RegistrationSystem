@@ -15,11 +15,20 @@ struct user {
     string username;
     string password;
 };
-struct path {
+struct name {
 	string info;
-	path* next;
+	name* next;
 };
-struct paths {
-	path* head;
-	path* tail;
+struct names {
+	name* head;
+	name* tail;
+};
+struct course {
+	int id;
+	string name;
+	string teacher;
+	int cre;
+	int capacity;
+	int day;
+	int session;
 };
