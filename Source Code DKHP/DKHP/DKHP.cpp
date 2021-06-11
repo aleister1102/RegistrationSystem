@@ -31,7 +31,7 @@ void removeNode(names& l, name* pDel)
 	{
 		removeHead(l);
 	}
-	else if (pDel=l.tail)
+	else if (pDel == l.tail)
 	{
 		removeTail(l);
 	}
