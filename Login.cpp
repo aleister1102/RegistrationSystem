@@ -1,4 +1,5 @@
 ﻿#include "Menu.h"
+#include "File.h"
 #include "Login.h"
 
 //Kiểm tra năm nhuận
@@ -175,7 +176,7 @@ bool check_acc_student(user info)
 	f.open(acc_path);
 	string acc = account(info);
 	int c = 0;
-	int n = count_acc(acc_path);
+	int n = Count_line(acc_path);
 	while (!f.eof())
 	{
 		c++;
@@ -224,7 +225,7 @@ bool check_acc_ad(user info)
 		f.open(acc_path);
 		string acc = account(info);
 		int c = 0;
-		int n = count_acc(acc_path);
+		int n = Count_line(acc_path);
 		while (!f.eof())
 		{
 			c++;

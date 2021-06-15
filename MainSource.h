@@ -32,3 +32,8 @@ struct course {
 	int day;
 	int session;
 };
+struct SV {
+	string name, faculty;
+	int id;
+};
+

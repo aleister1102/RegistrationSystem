@@ -142,6 +142,7 @@
     <ClCompile Include="Class.cpp" />
     <ClCompile Include="Convert.cpp" />
     <ClCompile Include="Course.cpp" />
+    <ClCompile Include="Enroll.cpp" />
     <ClCompile Include="File.cpp" />
     <ClCompile Include="Password.cpp" />
     <ClCompile Include="Login.cpp" />
@@ -155,6 +156,7 @@
     <ClInclude Include="Class.h" />
     <ClInclude Include="Convert.h" />
     <ClInclude Include="Course.h" />
+    <ClInclude Include="Enroll.h" />
     <ClInclude Include="File.h" />
     <ClInclude Include="Password.h" />
     <ClInclude Include="Login.h" />

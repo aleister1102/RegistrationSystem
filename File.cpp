@@ -55,6 +55,25 @@ void File_YearSort(string file_path)
 	f.close();
 	ReInput_fromList(file_path, list);
 }
+//Lưu các name từ file sang danh sách liên kết chứa name
+//Đường dẫn chứa file
+//Danh sách liên kết chứa các tên
+names File_to_NameList(string path)
+{
+	names l = Init_List();
+	ifstream f;
+	f.open(path);
+	while (!f.eof())
+	{
+		string f1;
+		getline(f, f1);
+		name* p = Create_Node(f1);
+		Add_Last(l, p);
+	}
+	f.close();
+	return l;
+}
+
 //Lưu tên vào file lưu giữ
 //Param: File lưu giữ, file cần lưu
 void Save_ToCSV(string store, string name)
@@ -170,6 +189,24 @@ string File_Import(string folder)
 	cout << "\t\t "; system("pause");
 	return file_path;
 }
+//Đếm số dòng trong file
+//Param: đường dẫn đến file
+//Số dòng trong file
+int Count_line(string path)
+{
+	ifstream f;
+	f.open(path);
+	int c = 0;
+	while (!f.eof())
+	{
+		string s1 = "";
+		getline(f,s1);
+		c++;
+	}
+	f.close();
+	return c - 1;
+}
+
 
 
 

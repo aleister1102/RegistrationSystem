@@ -7,6 +7,8 @@ string Make_Path(string pre_folder, string file_name);
 string Path_ToName(string s);
 //Class
 int Year_ToInt(string year_name);
+//
+string* File_toStringArray(string path);
 
 
 

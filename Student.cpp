@@ -159,7 +159,7 @@ int main() {
     List list;
     Node* node;
     init(list);
-    list = importfromCSV("Book1.csv");
+    list = importfromCSV("Students_list.csv");
     print(list);
     return 0;
 }

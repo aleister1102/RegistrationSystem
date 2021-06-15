@@ -8,6 +8,8 @@
 #include "Convert.h"
 #include "File.h"
 #include "Semester.h"
+#include "Enroll.h"
+
 
 int Valid_Data(int limit)
 {
@@ -27,6 +29,12 @@ int Valid_Data(int limit)
 		if (n > limit)
 		{
 			cout << "\t\t Input data is Over Limited" << endl;
+			cout<<"\t\t ";
+		}
+		if (n == -1) {
+			cout << "\t\t You have pressed the hidden button to stop the program ^^ " << endl;
+			cout << "\t\t "; system("pause");
+			return n;
 		}
 	} while (n > limit || n < 0);
 	cout << endl;
@@ -73,21 +81,22 @@ bool Main_Menu_Proc(int option)
 bool Login_Proc(int option)
 {
 	bool run = true;
-	user info; date dmy;
-
-	
-	
+	user account; date dmy;
+	SV info;
+	info.faculty = "CNTT";
+	info.id = 20120386;
+	info.name = "Le Phuoc Toan";
 	//If user is administrator
 	if (option == 1)
 	{
-		/*run = login_as_admin(info);*/ 
-		//Login system: off
+		/*run = login_as_admin(info);*/
+		////////////Login system: off/////////////////
 		enter_dmy(dmy);
 		system("cls");
 		
 		while (run)
 		{
-			run = Display_Mode_Admin(info, dmy);
+			run = Display_Mode_Admin(account, dmy);
 		}
 		return true;
 	}
@@ -202,9 +211,13 @@ bool Admin_Proc_Begin(int option,user info,date dmy)
 	}
 	else if (option == 3)
 	{
-		string year_name = Year_Selection();
-		Semester_Proc(Semester_Menu_Disp(), dmy.year, year_name);
-		return true;
+		bool run = true;
+		while(run)
+		{
+			string year_name = Year_Selection();
+			run = Semester_Proc(Semester_Menu_Disp(), dmy.year, year_name);
+		}
+
 	}
 	else if (option == 4)
 	{
@@ -223,7 +236,7 @@ bool Admin_Proc_Begin(int option,user info,date dmy)
 	}
 }
 //Student Menu
-bool Display_Mode_Student(user info, date dmy)
+bool Display_Mode_Student(SV info, date dmy)
 {
 	if (dmy.month == 9)
 	{
@@ -248,13 +261,23 @@ int Student_Disp_Begin()
 	//system("cls");
 	cout << "\t\t YOU ARE STUDENT NOW	" << endl;
 	cout << "\t\t Choose your option: " << endl;
-	cout << "\t\t 1. Log out" << endl;
+	cout << "\t\t 1. Enroll Classes" << endl;
+	cout << "\t\t 2. Log out" << endl;
 	cout << "\t\t Select option: ";
-	return Valid_Data(1);
+	return Valid_Data(2);
 }
-bool Student_Proc_Begin(int option,user info,date dmy)
+bool Student_Proc_Begin(int option,SV info,date dmy)
 {
-	if(option ==1) return false;
+	if(option == 1){
+		bool run = true;
+		while(run){
+			run = Enroll_MenuProc(Enroll_MenuDisp(info),info);
+		}
+		return true;
+	}
+	else{
+		return false;
+	}
 }
 //Year Menu
 int Year_Menu_Disp()

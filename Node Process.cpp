@@ -45,6 +45,56 @@ void Add_Last(names& list, name* node)
 		list.tail = node;
 	}
 }
+//Xóa node ở đầu
+//Param: một danh sách liên kết chứa tên
+void removeHead(names& l)
+{
+	name* p = l.head;
+	l.head = p->next;
+	p->next = nullptr;
+	delete p;
+	p = nullptr;
+}
+//Xóa node ở cuối
+//Param: một dánh sách liên kết chứa tên
+void removeTail(names& l)
+{
+	name* p = l.head;
+	name* pDel = l.tail;
+	while (p->next->next != nullptr)
+	{
+		p = p->next;
+	}
+	l.tail = p;
+	p->next = nullptr;
+	delete pDel;
+	pDel = nullptr;
+}
+//Xóa một node bất kỳ
+//Param: danh sách liên kết chứa tên, một node chứa tên
+void removeNode(names& l, name* pDel)
+{
+	if (pDel == l.head)
+	{
+		removeHead(l);
+	}
+	else if (pDel == l.tail)
+	{
+		removeTail(l);
+	}
+	else
+	{
+		name* nptr = l.head;
+		while (nptr->next != pDel)
+		{
+			nptr = nptr->next;
+		}
+		nptr->next = pDel->next;
+		pDel->next = nullptr;
+		delete pDel;
+		pDel = nullptr;
+	}
+}
 //Sao chép thông tin danh sách liên kết sang một danh sách khác không cùng địa chỉ
 //Param: một list name
 //Return: một list name khác đã copy

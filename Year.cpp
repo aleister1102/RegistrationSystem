@@ -25,7 +25,9 @@ void Year_Create(int year)
 		end = begin + 1;
 		year_name = Make_YearName(begin, end);
 		year_path = Make_Path(pre_folder,year_name);
-	} while (File_Exist(year_path));
+		if(begin<2002)  {cout<<"\t\t New School Year must be after 2002"<<endl;}
+	} while (File_Exist(year_path)== true || begin <2002);
+	//Năm được tạo không được bé hơn 2002
 
 	//Tạo ra file năm mới
 	File_Create(year_path);
@@ -90,7 +92,7 @@ void Year_Delete(int quanti)
 	string classes_folder = ".\\Classes\\"
 		+ year_name + "\\"; //Cần có ký hiệu cuối cùng này để hoàn thành đường dẫn thư mục
 	Directory_Delete(classes_folder);
-	
+	//Directory_Create(".\\Classes\\");
 }
 //Xóa toàn bộ năm
 void Year_Clear()
@@ -117,6 +119,7 @@ void Year_Clear()
 			string classes_folder = ".\\Classes\\"
 				+ year_name + "\\"; //Have to use this syntax to accomplish folder path
 			Directory_Delete(classes_folder);
+			Directory_Create(".\\Classes\\");
 		}
 		f.close();
 		//Create a new "Years.csv"
