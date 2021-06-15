@@ -5,7 +5,7 @@
 void removeHead(names& l)
 {
 	name* p = l.head;
-	l.head = l.head->next;
+	l.head = p->next;
 	p->next = nullptr;
 	delete p;
 	p = nullptr;
@@ -379,7 +379,7 @@ int Delete_a_course_Dis(SV sv)
 	string path = Make_Path(folder, filename);
 	View_List(sv);
 	cout<<"\t\t"<<Count_line(path)+1<<". Exit"<<endl;
-	cout << "\t\tChoose a course that you want to delete(Choose a number): ";
+	cout << "\t\tYour choice is: ";
 	return Valid_Data(Count_line(path)+1);
 }
 
