@@ -1,14 +1,14 @@
-﻿#include "Menu.h"
-#include "Year.h"
-#include "Class.h"
-#include "Node Process.h"
-#include "Login.h"
-#include "Password.h"
-#include "Course.h"
-#include "Convert.h"
-#include "File.h"
-#include "Semester.h"
-#include "Enroll.h"
+﻿#include "Header/Menu.h"
+#include "Header/Year.h"
+#include "Header/Class.h"
+#include "Header/Node Process.h"
+#include "Header/Login.h"
+#include "Header/Password.h"
+#include "Header/Course.h"
+#include "Header/Convert.h"
+#include "Header/File.h"
+#include "Header/Semester.h"
+#include "Header/Enroll.h"
 
 
 int Valid_Data(int limit)
@@ -152,11 +152,7 @@ void AboutUs()
 //Admin Menu
 bool Display_Mode_Admin(user info, date dmy)
 {
-	if (dmy.month == 9)
-	{
-		return Admin_Proc_Begin(Admin_Disp_Begin(), info, dmy);
-	}
-	else if (dmy.month == 7)
+	if (dmy.month ==7 || dmy.month == 8)
 	{
 		cout << "\t\t Insert grade function here" << endl;
 		cout << "\t\t "; system("pause");
@@ -164,9 +160,7 @@ bool Display_Mode_Admin(user info, date dmy)
 	}
 	else
 	{
-		cout << "\t\t You can not do anything this time" << endl;
-		cout << "\t\t "; system("pause");
-		return false;
+		return Admin_Proc_Begin(Admin_Disp_Begin(), info, dmy);
 	}
 }
 int Admin_Disp_Begin()
@@ -215,7 +209,7 @@ bool Admin_Proc_Begin(int option,user info,date dmy)
 		while(run)
 		{
 			string year_name = Year_Selection();
-			run = Semester_Proc(Semester_Menu_Disp(), dmy.year, year_name);
+			run = Semester_Proc(Semester_Menu_Disp(), year_name,dmy);
 		}
 
 	}

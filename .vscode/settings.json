@@ -4,6 +4,8 @@
         "xlocale": "cpp",
         "ostream": "cpp",
         "iosfwd": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "filesystem": "cpp",
+        "fstream": "cpp"
     }
 }

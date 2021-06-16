@@ -1,9 +1,9 @@
-﻿#include "Menu.h"
-#include "Year.h"
-#include "Class.h"
-#include "File.h"
-#include "Convert.h"
-#include "Node Process.h"
+﻿#include "Header/Menu.h"
+#include "Header/Year.h"
+#include "Header/Class.h"
+#include "Header/File.h"
+#include "Header/Convert.h"
+#include "Header/Node Process.h"
 //Kiểm tra lớp có bị trùng trong danh sách của năm hay không.
 //Param: tên năm và tên lớp cần kiểm tra
 //Return: True nếu trùng, False nếu ngược lại

@@ -1,9 +1,9 @@
-﻿#include "Menu.h"
-#include "Year.h"
-#include "Class.h"
-#include "Convert.h"
-#include "File.h"
-#include "Node Process.h"
+﻿#include "Header/Menu.h"
+#include "Header/Year.h"
+#include "Header/Class.h"
+#include "Header/Convert.h"
+#include "Header/File.h"
+#include "Header/Node Process.h"
 //Param: Năm bắt đầu và năm kết thúc.
 //Return: Tên của năm (string)
 string Make_YearName(int begin, int end)

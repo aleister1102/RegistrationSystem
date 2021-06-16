@@ -1,6 +1,6 @@
-﻿#include "Node Process.h"
-#include "Semester.h"
-#include "Convert.h"
+﻿#include "Header/Node Process.h"
+#include "Header/Semester.h"
+#include "Header/Convert.h"
 
 //Kiểm tra danh sách liên kết rỗng
 //Param: một DSLK
@@ -118,11 +118,10 @@ void ReInput_fromList(string store, names list)
 	fstream f(store, ios::in | ios::out);
 	while (move->next != nullptr)
 	{
-		if (Name_InFile(store, move->info) == true)
+		if (!Name_InFile(store, move->info))
 		{
-			return;
+			f << move->info << endl;
 		}
-		f << move->info << endl;
 		move = move->next;
 	}
 	f.close();

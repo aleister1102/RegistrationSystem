@@ -1,6 +1,6 @@
-﻿#include "File.h"
-#include "Convert.h"
-#include "Node Process.h"
+﻿#include "Header/File.h"
+#include "Header/Convert.h"
+#include "Header/Node Process.h"
 //Kiểm tra sự tồn tại của file
 //Param: đường dẫn chứa file
 //Return: False nếu file không tồn tại
@@ -8,11 +8,11 @@ bool File_Exist(string path)
 {
 	fstream fileInput(path);
 	if (fileInput.fail()) {
-		cout << "\t\t File does not exist" << endl;
+		// cout << "\t\t File does not exist" << endl;
 		return false;
 	}
 	else {
-		cout << "\t\t File exists" << endl;
+		// cout << "\t\t File exists" << endl;
 		return true;
 	}
 	fileInput.close();
@@ -84,29 +84,27 @@ void Save_ToCSV(string store, string name)
 }
 //Lưu tên vào file lưu giữ tại 1 hàng nào đó, lưu vào cột tiếp theo
 //store: file lưu giữ
-//line_name: tên của hàng
+//linename: tên của hàng
 //newname: tên mới cần lưu vào hàng
-void Save_ToCSVLine(string store,string line_name, string newname)
-{
-	cout << newname << endl;
-	fstream f(store, ios::in | ios::out);
+void Save_ToCSVLine(string store, string linename,string newname){
 	names list = Init_List();
-	while (!f.eof())
+	fstream f(store,ios::out | ios ::in);
+	while(!f.eof())
 	{
-		string read;
-		f >> read;
-		cout << read << endl;
-		if (read == line_name)
+		string reader;
+		getline(f,reader);
+		string sign = reader.substr(0,9);//Cắt ra chuỗi ở cột 1
+		if(sign == linename)
 		{
-			read += ("," + newname);
+			reader = reader + "," + newname;
 		}
-		name* node = Create_Node(read);
+		name* node = Create_Node(reader);
 		Add_Last(list, node);
 	}
+	ReInput_fromList(store,list);
 	f.close();
-	ReInput_fromList(store, list);
 }
-//Xóa một thư mục
+//Xóa một thư mục/file
 //Param: đường dẫn thư mục
 void Directory_Delete(string dir)
 {
@@ -161,8 +159,8 @@ bool Name_InFile(string store, string name)
 		f >> read;
 		if (read == name)
 		{
+			f.close();
 			return true;
-			break;
 		}
 	}
 	f.close();

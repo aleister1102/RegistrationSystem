@@ -1,6 +1,6 @@
-#include"Password.h"
-#include"Login.h"
-#include"Node Process.h"
+#include"Header/Password.h"
+#include"Header/Login.h"
+#include"Header/Node Process.h"
 //String proccess
 bool compare(string s1, string s2)
 {

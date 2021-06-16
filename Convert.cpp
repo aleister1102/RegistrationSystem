@@ -1,5 +1,5 @@
-﻿#include "Convert.h"
-#include "File.h"
+﻿#include "Header/Convert.h"
+#include "Header/File.h"
 //Thêm phần mở rộng (.csv) vào tên file hoặc cắt nó đi
 //Param: một tên/tên file cần thêm/cắt, một option chọn loại hành động
 //Return: kết quả của chuỗi sau khi thêm/cắt

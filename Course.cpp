@@ -1,9 +1,9 @@
-﻿#include "Course.h"
-#include "Class.h"
-#include "Year.h"
-#include "Menu.h"
-#include "File.h"
-#include "Convert.h"
+﻿#include "Header/Course.h"
+#include "Header/Class.h"
+#include "Header/Year.h"
+#include "Header/Menu.h"
+#include "Header/File.h"
+#include "Header/Convert.h"
 //-------------------Đây chỉ là Demo, chưa phải code có thể dùng--------------------------------//
 //-------------------Đây chỉ là Demo, chưa phải code có thể dùng--------------------------------//
 //-------------------Đây chỉ là Demo, chưa phải code có thể dùng--------------------------------//
