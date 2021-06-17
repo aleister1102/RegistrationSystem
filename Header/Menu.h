@@ -9,9 +9,9 @@ int Login_Disp();
 void AboutUs();
 
 //Admin
-bool Display_Mode_Admin(user info, date dmy);
+bool Display_Mode_Admin(Account info, date dmy);
 int Admin_Disp_Begin();
-bool Admin_Proc_Begin(int option, user info, date dmy);
+bool Admin_Proc_Begin(int option, Account info, date dmy);
 ////Student//
 bool Display_Mode_Student(Student info, date dmy);
 int Student_Menu_forStudent();

@@ -11,7 +11,7 @@ using namespace std;
 struct date {
     int day, month, year;
 };
-struct user {
+struct Account {
     string username;
     string password;
 };
@@ -33,11 +33,11 @@ struct Course {
 	int session;
 };
 struct Student {
-	int Number;
-	int ID;
-	string name,gender, faculty;
-	date birthdate;
+	int number;
+	int id;
+	string name, gender, faculty, birthdate;
 	int socialID;
+	Account user;
 };
 struct Student_node{
 	Student info;

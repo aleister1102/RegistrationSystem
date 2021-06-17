@@ -8,6 +8,12 @@
         "filesystem": "cpp",
         "fstream": "cpp",
         "xiosbase": "cpp",
-        "istream": "cpp"
+        "istream": "cpp",
+        "compare": "cpp",
+        "exception": "cpp",
+        "type_traits": "cpp",
+        "xmemory": "cpp",
+        "xutility": "cpp",
+        "string": "cpp"
     }
 }

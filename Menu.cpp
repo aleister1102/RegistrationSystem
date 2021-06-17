@@ -26,6 +26,7 @@ int Valid_Data(int limit)
 		}
 		else {
 			cin >> n;
+			cin.ignore();
 		}
 		if (n > limit)
 		{
@@ -80,10 +81,10 @@ bool Main_Menu_Proc(int option)
 bool Login_Proc(int option)
 {
 	bool run = true;
-	user account; date dmy;
+	Account user; date dmy;
 	Student info;
 	info.faculty = "CNTT";
-	info.ID = 20120386;
+	info.id = 20120386;
 	info.name = "Le Phuoc Toan";
 	//If user is administrator
 	if (option == 1)
@@ -95,7 +96,7 @@ bool Login_Proc(int option)
 		
 		while (run)
 		{
-			run = Display_Mode_Admin(account, dmy);
+			run = Display_Mode_Admin(user, dmy);
 		}
 		return true;
 	}
@@ -148,7 +149,7 @@ void AboutUs()
 	system("pause");
 }
 //Admin Menu
-bool Display_Mode_Admin(user info, date dmy)
+bool Display_Mode_Admin(Account info, date dmy)
 {
 	if (dmy.month ==8)
 	{
@@ -175,7 +176,7 @@ int Admin_Disp_Begin()
 	cout << "\t\t Select option: ";
 	return Valid_Data(6);
 }
-bool Admin_Proc_Begin(int option,user info,date dmy)
+bool Admin_Proc_Begin(int option,Account info,date dmy)
 {
 	if (option == 1)
 	{

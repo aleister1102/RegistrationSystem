@@ -12,9 +12,9 @@ void Input_SvInfo(Student &sv)
 	cout << "Enter your name: ";
 	getline(cin, sv.name);
 	cout << "Enter your ID: ";
-	cin >> sv.ID;
+	cin >> sv.id;
 	string folder = ".\\Students\\Student for Enroll\\";
-	string filename = Int_ToString(sv.ID) + "_" + sv.name;
+	string filename = Int_ToString(sv.id) + "_" + sv.name;
 	string path = Make_Path(folder, filename);
 	if (!File_Exist(path))
 	{
@@ -172,7 +172,7 @@ void View_Enrolled_Courses(Student sv)
 	system("cls");
 	cout << "\t\t\tList of enrolled courses" << endl;
 	string folder = ".\\Students\\Students for Enrollment\\";
-	string filename = Int_ToString(sv.ID) + "_" + sv.name;
+	string filename = Int_ToString(sv.id) + "_" + sv.name;
 	string path = Make_Path(folder, filename);
 	int n = Count_line(path);
 	ifstream f;
@@ -199,7 +199,7 @@ void View_Enrolled_Courses(Student sv)
 int Delete_course_Dis(Student sv)
 {
 	string folder = ".\\Students\\Students for Enrollment\\";
-	string filename = Int_ToString(sv.ID) + "_" + sv.name;
+	string filename = Int_ToString(sv.id) + "_" + sv.name;
 	string path = Make_Path(folder, filename);
 	View_Enrolled_Courses(sv);
 	cout << "\t\t" << Count_line(path) + 1 << ". Exit" << endl;
@@ -213,7 +213,7 @@ int Delete_course_Dis(Student sv)
 bool Delete_course_Proc(Student sv, int option)
 {
 	string folder = ".\\Students\\Students for Enrollment\\";
-	string filename = Int_ToString(sv.ID) + "_" + sv.name;
+	string filename = Int_ToString(sv.id) + "_" + sv.name;
 	string path = Make_Path(folder, filename);
 	names list = File_to_NameList(path);
 	if (option == Count_line(path) + 1)
@@ -251,7 +251,7 @@ bool Delete_course_Proc(Student sv, int option)
 		name *n1 = list1.head;
 		while (n1 != NULL)
 		{
-			string ss = Int_ToString(sv.ID) + "_" + sv.name;
+			string ss = Int_ToString(sv.id) + "_" + sv.name;
 			if (n1->info == ss)
 			{
 				break;
@@ -318,7 +318,7 @@ bool Enroll_Proc(int option, Student sv)
 		string *Session = File_toStringArray(pre_folder + "Session.csv");
 		//
 		string folder = ".\\Students\\Students for Enrollment\\";
-		string filename = Int_ToString(sv.ID) + "_" + sv.name;
+		string filename = Int_ToString(sv.id) + "_" + sv.name;
 		string path = Make_Path(folder, filename);
 
 		int k = Count_line(path);
@@ -334,7 +334,7 @@ bool Enroll_Proc(int option, Student sv)
 				if (Conflicted_Course(path, sub) == false)
 				{
 					Save_ToCSV(path, sub);
-					Save_ToCSV(path1, Int_ToString(sv.ID) + "_" + sv.name);
+					Save_ToCSV(path1, Int_ToString(sv.id) + "_" + sv.name);
 					cout << "\t\tEnroll for the course successfully" << endl;
 					cout << "\t\t";
 					system("pause");

@@ -1,5 +1,6 @@
 ﻿#include "Header/File.h"
 #include "Header/Convert.h"
+#include "Header/Login.h"
 #include "Header/Node Process.h"
 //Kiểm tra sự tồn tại của file
 //Param: đường dẫn chứa file
@@ -172,18 +173,20 @@ bool Name_InFile(string store, string name)
 string File_Import(string folder)
 {
 	string path;
+	bool flag =false;
 	do {
 		//Nhập tên file cần import
 		cout <<"\t\t Press '!' if want to exit"<<endl;
 		cout <<"\t\t Enter file name for importing: ";
 		string name;
-		cin.ignore();
 		getline(cin,name);
 		if(name=="!") return "!";
 		//Tạo đường dẫn file import
 		path = folder + Extension(name, 1);
 		cout << "\t\t Import file from: " << path << endl;
+		
 	} while (File_Exist(path)==false);
+	
 	cout << "\t\t "; system("pause");
 	return path;
 }

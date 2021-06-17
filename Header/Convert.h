@@ -11,6 +11,8 @@ int Year_ToInt(string year_name);
 string* File_toStringArray(string path);
 //Semester
 string Date_toString(date dmy);
+//Student
+Student String_ToStudent(string info,string arr[8]);
 
 
 

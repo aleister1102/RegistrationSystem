@@ -52,31 +52,41 @@ void Student_Import(string class_path)
 {
     if(class_path=="!") return;
     string folder = ".\\Students\\Students' Info\\";
+    string account_folder = ".\\Accounts\\acc_sv.csv";
     string path = File_Import(folder);
     if(path=="!") return;
 
     
     fstream f(path,ios::in);
-    names list = Init_List();
+    names info_list = Init_List();
+    names account_list = Init_List();
     while(!f.eof())
     {
         string reader;
         getline(f,reader);
-        name* node = Create_Node(reader);
-        Add_Last(list,node);
+
+        string arr[8];String_ToStudent(reader,arr);
+        cout<<arr[7]<<endl;
+        string temp =arr[1]+","+arr[7];
+        name *account = Create_Node(temp);
+        name *info = Create_Node(reader);
+        Add_Last(info_list,info);
+        Add_Last(account_list,account);
     }
     f.close();
-    Output_List(list);
-    ReInput_fromList(class_path,list);
+    ReInput_fromList(class_path,info_list);
+    ReInput_fromList(account_folder,account_list);
 }
 //Hiển thị học sinh có trong lớp
 //Đường dẫn của lớp cần truy cập
 int Student_Display(string class_path)
 {
     system("cls");
-    int count=0;
+    cout<<"Current Students in class: "<<endl;
+    cout<<"(No-ID-Name-Gender-Faculty-Birthdate-Social ID)"<<endl;
+    
+    int count=0; 
     fstream f(class_path,ios::in);
-    cout<<"\t\t Current Students in class: "<<endl;
     while(!f.eof())
     {
         string reader;
@@ -87,15 +97,21 @@ int Student_Display(string class_path)
         else{
             continue;
         }
-        cout<<"\t\t "<<count<<".  "<<reader<<endl;
+      string arr[8];
+      String_ToStudent(reader,arr);
+      for(int i=0;i<8;i++)
+      {
+          cout<<arr[i]<<" \t ";
+          if(i==7) cout<<endl;
+      }
     }
     f.close();
-
+    
     if(count<1)
     {
         cout<<"\t\t This class does not have any students"<<endl;
-        cout<<"\t\t ";system("pause");
     }
+    cout<<"\t\t ";system("pause");
     return count;
 }
 

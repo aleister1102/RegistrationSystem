@@ -75,7 +75,7 @@ int pass_mode()
 	cout << "\t\t";
 	return Valid_Data(2);
 }
-bool pass_mode_proc(int option, user& info)
+bool pass_mode_proc(int option, Account& info)
 {
 	if (option == 1)
 	{
@@ -93,13 +93,13 @@ bool pass_mode_proc(int option, user& info)
 		return false;
 	}
 }
-void enter_showpass(user &info)
+void enter_showpass(Account &info)
 {
 	cin.ignore();
 	cout << "\t\tEnter password (No spacebar and special symbols in your password): ";
 	enter_data(info.password);
 }
-void enter_hidepass(user &info)
+void enter_hidepass(Account &info)
 {
 	cin.ignore();
 	cout << "\t\tEnter password (No spacebar and special symbols in your password): ";
@@ -141,7 +141,7 @@ void enter_data(string& param)
 {
 	getline(cin, param);
 }
-bool enter_acc(user& info)
+bool enter_acc(Account& info)
 {
 	cin.ignore();
 	cout << "\t\tEnter username: ";
@@ -166,13 +166,13 @@ int count_acc(string acc_path)
 	return c - 1;
 }
 // Create account
-string account(user info)
+string account(Account info)
 {
 	return info.username + ',' + info.password;
 }
 
 // Login as Student
-bool check_acc_student(user info)
+bool check_acc_student(Account info)
 {
 	ifstream f;
 	string acc_name = "acc_sv";
@@ -210,7 +210,7 @@ bool check_acc_student(user info)
 	}
 	f.close();
 }
-bool login_as_student(user &info)
+bool login_as_student(Account &info)
 {
 	cout << "\t\tLogin as Student" << endl;
 	if (enter_acc(info))
@@ -219,7 +219,7 @@ bool login_as_student(user &info)
 	}
 }
 // Login as Admin
-bool check_acc_ad(user info)
+bool check_acc_ad(Account info)
 {
 	if (info.password[0] == 'A' && info.password[1] == 'D')
 	{
@@ -267,7 +267,7 @@ bool check_acc_ad(user info)
 		return false;
 	}
 }
-bool login_as_admin(user& info)
+bool login_as_admin(Account& info)
 {
 	cout << "\t\tLogin as Admin" << endl;
 	if (enter_acc(info))
