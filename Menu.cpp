@@ -9,6 +9,7 @@
 #include "Header/File.h"
 #include "Header/Semester.h"
 #include "Header/Enroll.h"
+#include "Header/Student.h"
 
 
 int Valid_Data(int limit)
@@ -75,16 +76,14 @@ bool Main_Menu_Proc(int option)
 		return false;
 	}
 }
-
-
 //Sub menu (display and proccess)
 bool Login_Proc(int option)
 {
 	bool run = true;
 	user account; date dmy;
-	SV info;
+	Student info;
 	info.faculty = "CNTT";
-	info.id = 20120386;
+	info.ID = 20120386;
 	info.name = "Le Phuoc Toan";
 	//If user is administrator
 	if (option == 1)
@@ -148,11 +147,10 @@ void AboutUs()
 	cout << "About Us" << endl;
 	system("pause");
 }
-
 //Admin Menu
 bool Display_Mode_Admin(user info, date dmy)
 {
-	if (dmy.month ==7 || dmy.month == 8)
+	if (dmy.month ==8)
 	{
 		cout << "\t\t Insert grade function here" << endl;
 		cout << "\t\t "; system("pause");
@@ -211,15 +209,22 @@ bool Admin_Proc_Begin(int option,user info,date dmy)
 			string year_name = Year_Selection();
 			run = Semester_Proc(Semester_Menu_Disp(), year_name,dmy);
 		}
-
 	}
 	else if (option == 4)
 	{
 		bool run = true;
-		
 		while (run)
 		{
 			run = Course_Proc(Course_Menu_Disp());
+		}
+		return true;
+	}
+	else if (option == 5)
+	{
+		bool run = true;
+		while (run)
+		{
+			run = Student_Menu_Proc(Student_Menu_Disp());
 		}
 		return true;
 	}
@@ -230,11 +235,11 @@ bool Admin_Proc_Begin(int option,user info,date dmy)
 	}
 }
 //Student Menu
-bool Display_Mode_Student(SV info, date dmy)
+bool Display_Mode_Student(Student info, date dmy)
 {
 	if (dmy.month == 9)
 	{
-		return Student_Proc_Begin(Student_Disp_Begin(), info, dmy);
+		return Student_Proc_forStudent(Student_Menu_forStudent(), info, dmy);
 	}
 	else if (dmy.month == 7)
 	{
@@ -250,7 +255,7 @@ bool Display_Mode_Student(SV info, date dmy)
 	}
 
 }
-int Student_Disp_Begin()
+int Student_Menu_forStudent()
 {
 	//system("cls");
 	cout << "\t\t YOU ARE STUDENT NOW	" << endl;
@@ -260,7 +265,7 @@ int Student_Disp_Begin()
 	cout << "\t\t Select option: ";
 	return Valid_Data(2);
 }
-bool Student_Proc_Begin(int option,SV info,date dmy)
+bool Student_Proc_forStudent(int option,Student info,date dmy)
 {
 	if(option == 1){
 		bool run = true;
@@ -333,10 +338,11 @@ int Student_Menu_Disp()
 	cout << "\t\t Choose your option: " << endl;
 	cout << "\t\t 1. Add new student(s)" << endl;
 	cout << "\t\t 2. Delete student(s)" << endl;
-	cout << "\t\t 3. Watch student(s)" << endl;
-	cout << "\t\t 4. Exit" << endl;
-	cout << "Select option: ";
-	return Valid_Data(3);
+	cout << "\t\t 3. Clear student(s)" << endl;
+	cout << "\t\t 4. View student(s)" << endl;
+	cout << "\t\t 5. Exit" << endl;
+	cout << "\t\t Select option: ";
+	return Valid_Data(5);
 }
 //Department
 int Department_Menu_Disp()

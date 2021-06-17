@@ -25,6 +25,7 @@ void Year_Create(int year)
 		end = begin + 1;
 		year_name = Make_YearName(begin, end);
 		year_path = Make_Path(pre_folder,year_name);
+		if(begin==-1) return;
 		if(begin<2002)  {cout<<"\t\t New School Year must be after 2002"<<endl;}
 	} while (File_Exist(year_path)== true || begin <2002);
 	//Năm được tạo không được bé hơn 2002

@@ -115,7 +115,7 @@ names Copy_List(names l)
 void ReInput_fromList(string store, names list)
 {
 	name* move = list.head;
-	fstream f(store, ios::in | ios::out);
+	fstream f(store, ios::in | ios::out | ios::app);
 	while (move->next != nullptr)
 	{
 		if (!Name_InFile(store, move->info))

@@ -1,7 +1,7 @@
-#include "MainSource.h"
+#include "Header/MainSource.h"
 ////Initialize//
 names Init_List();
-name* Create_Node(string path);
+name* Create_Node(string info);
 ////Operation//
 void Add_Last(names& list, name* node);
 bool Output_List(names l);

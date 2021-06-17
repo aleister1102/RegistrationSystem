@@ -9,7 +9,8 @@ string Path_ToName(string s);
 int Year_ToInt(string year_name);
 //
 string* File_toStringArray(string path);
-
+//Semester
+string Date_toString(date dmy);
 
 
 

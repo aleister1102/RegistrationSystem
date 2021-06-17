@@ -150,6 +150,7 @@
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Node Process.cpp" />
     <ClCompile Include="Semester.cpp" />
+    <ClCompile Include="Student.cpp" />
     <ClCompile Include="Year.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -158,12 +159,12 @@
     <ClInclude Include="Course.h" />
     <ClInclude Include="Enroll.h" />
     <ClInclude Include="File.h" />
+    <ClInclude Include="Header\Student.h" />
     <ClInclude Include="Password.h" />
     <ClInclude Include="Login.h" />
     <ClInclude Include="MainSource.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Node Process.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="Semester.h" />
     <ClInclude Include="Year.h" />
   </ItemGroup>

@@ -212,6 +212,42 @@ int Classes_Display(string year_path)
 	f.close();
 	return i-1;
 }
+//Chọn lựa lớp
+//Tên của năm cần truy cập
+//Đường dẫn tới lớp đó
+string Class_Selection(string year_name)
+{
+    string year_folder = ".\\Years\\";
+    string year_path = Make_Path(year_folder,year_name);
+    string class_folder = ".\\Classes\\" + year_name + "\\";
+
+    int limited_classes = Classes_Display(year_path);
+    if(limited_classes<1)
+    {
+        cout<<"\t\t This year does not have any classes"<<endl;
+        cout<<"\t\t ";system("pause");
+        return "!";
+    }
+    cout<<"\t\t Choose class to modify: ";
+    int option = Valid_Data(limited_classes);
+    int count=1;
+
+    fstream f(year_path,ios::in);
+    while(!f.eof())
+    {
+        string reader;
+        f>>reader;
+        if(count==option)
+        {
+            return Make_Path(class_folder,reader);
+        }
+        else{
+            count+=1;
+        }
+    }
+    f.close();
+
+}
 //Xử lý và điều hướng các hàm tính năng của lớp
 //Param: tên năm, các lựa chọn tính năng
 bool Class_Proc_Active(string year_name,int option)
@@ -227,10 +263,12 @@ bool Class_Proc_Active(string year_name,int option)
 		{
 			//Lựa chọn cách tạo lớp
 			int choice = Class_Create_Mod_Menu();
+			system("cls");
 			//Option 1: Nhập từ file
 			if (choice == 1) {
 
 				string import_path = File_Import(folder);
+				if(import_path=="!") return true;
 				Class_Import(import_path, year_name);
 			}
 			//Option 2: Thủ công

@@ -1,4 +1,8 @@
-﻿  Semester.cpp
+﻿  Menu.cpp
   The contents of <filesystem> are available only with C++17 or later.
-D:\Projects\Registration_system\Semester.cpp(60): warning C4715: 'Semester_Selection': not all control paths return a value
+  Student.cpp
+  The contents of <filesystem> are available only with C++17 or later.
+  Generating Code...
+D:\Projects\Registration_system\Menu.cpp(78): warning C4715: 'Main_Menu_Proc': not all control paths return a value
+D:\Projects\Registration_system\Menu.cpp(236): warning C4715: 'Admin_Proc_Begin': not all control paths return a value
   MainSource.vcxproj -> D:\Projects\Registration_system\x64\Debug\MainSource.exe

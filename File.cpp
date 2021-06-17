@@ -8,11 +8,11 @@ bool File_Exist(string path)
 {
 	fstream fileInput(path);
 	if (fileInput.fail()) {
-		// cout << "\t\t File does not exist" << endl;
+		cout << "\t\t File does not exist" << endl;
 		return false;
 	}
 	else {
-		// cout << "\t\t File exists" << endl;
+		cout << "\t\t File exists" << endl;
 		return true;
 	}
 	fileInput.close();
@@ -155,9 +155,9 @@ bool Name_InFile(string store, string name)
 
 	while (!f.eof())
 	{
-		string read;
-		f >> read;
-		if (read == name)
+		string reader;
+		getline(f,reader);
+		if (reader == name)
 		{
 			f.close();
 			return true;
@@ -171,21 +171,21 @@ bool Name_InFile(string store, string name)
 //Đường dẫn đến file
 string File_Import(string folder)
 {
-	string file_path;
-	bool check = true;
+	string path;
 	do {
 		//Nhập tên file cần import
-		cout << "\t\t Enter file name for importing: ";
+		cout <<"\t\t Press '!' if want to exit"<<endl;
+		cout <<"\t\t Enter file name for importing: ";
 		string name;
 		cin.ignore();
-		cin >> name;
+		getline(cin,name);
+		if(name=="!") return "!";
 		//Tạo đường dẫn file import
-		file_path = folder + Extension(name, 1);
-		cout << "\t\t Import file from: " << file_path << endl;
-		check = File_Exist(file_path);
-	} while (check == false);
+		path = folder + Extension(name, 1);
+		cout << "\t\t Import file from: " << path << endl;
+	} while (File_Exist(path)==false);
 	cout << "\t\t "; system("pause");
-	return file_path;
+	return path;
 }
 //Đếm số dòng trong file
 //Param: đường dẫn đến file

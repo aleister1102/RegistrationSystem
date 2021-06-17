@@ -2,6 +2,11 @@
 #include "Header/File.h"
 #include "Header/Login.h"
 
+void output_dmy(date dmy)
+{
+	cout<<dmy.day<<"/"<<dmy.month<<"/"<<dmy.year;
+}
+
 //Kiểm tra năm nhuận
 bool check_leap_year(int year)
 {

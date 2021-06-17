@@ -8,7 +8,6 @@
 #include <filesystem>
 #include <sstream>
 using namespace std;
-namespace fs = std::experimental::filesystem;
 struct date {
     int day, month, year;
 };
@@ -24,7 +23,7 @@ struct names {
 	name* head;
 	name* tail;
 };
-struct course {
+struct Course {
 	int id;
 	string name;
 	string teacher;
@@ -33,8 +32,19 @@ struct course {
 	int day;
 	int session;
 };
-struct SV {
-	string name, faculty;
-	int id;
+struct Student {
+	int Number;
+	int ID;
+	string name,gender, faculty;
+	date birthdate;
+	int socialID;
+};
+struct Student_node{
+	Student info;
+	Student_node*next;
+};
+struct Class{
+	Student_node* head;
+	Student_node* tail;
 };
 

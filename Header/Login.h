@@ -1,6 +1,7 @@
 #include "MainSource.h"
 
 // Date 
+void output_dmy(date dmy);
 bool check_leap_year(int year);
 int day_of_month(int month, int year);
 bool check_dmy(date dmy);

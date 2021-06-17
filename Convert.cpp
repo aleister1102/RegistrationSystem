@@ -70,5 +70,14 @@ string* File_toStringArray(string path)
 	file.close();
 	return s;
 }
+//Chuyển đổi từ ngày tháng sang chuỗi ngày tháng
+//Kiểu dữ liệu ngày tháng năm
+//Chuỗi ngày tháng năm
+string Date_toString(date dmy)
+{
+	return (Int_ToString(dmy.day)+ "/"
+	+Int_ToString(dmy.month)+"/"
+	+Int_ToString(dmy.year));
+}
 
 
