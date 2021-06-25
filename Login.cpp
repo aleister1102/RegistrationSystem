@@ -227,6 +227,33 @@ bool login_as_student(user &info,date &dmy)
 	}
 }
 // Login as Admin
+string* split(string s)
+{
+	string* s1=new string[2];
+	int n=s.size();
+	int c=0;
+	for(int i=n-1;i>=0;i--)
+	{
+		c++;
+		if(s[i]==',')
+		{
+			break;
+		}
+	}
+	string ss;
+	for(int i=0;i<n-c;i++)
+	{
+		ss+=s[i];
+	}
+	string ss1;
+	for(int i=n-c+1;i<n;i++)
+	{
+		ss1+=s[i];
+	}
+	s1[0]=ss;
+	s1[1]=ss1;
+	return s1;
+}
 bool check_acc_ad(user info)
 {
 	if (info.password[0] == 'A' && info.password[1] == 'D')
@@ -241,7 +268,8 @@ bool check_acc_ad(user info)
 			c++;
 			string acc1;
 			f >> acc1;
-			if (compare(acc, acc1) == false)
+			string acc2 = split_acc_ad(acc1);
+			if (compare(acc, acc2) == false)
 			{
 				if (c < n)
 				{

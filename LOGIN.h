@@ -24,6 +24,7 @@ string account(user info);
 // check account
 
 //Login as ad
+string* split_acc_ad(string s);
 bool check_acc_ad(user info);
 bool login_as_admin(user& info, date& dmy);
 //Login as stu
