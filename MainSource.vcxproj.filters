@@ -54,45 +54,57 @@
     <ClCompile Include="Student.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Date.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Class.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Login.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Menu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Node Process.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Year.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MainSource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Course.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Password.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Semester.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Convert.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="File.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Enroll.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Header\Student.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Date.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Vector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Class.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Convert.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Course.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Enroll.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\File.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Login.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\MainSource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Menu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Node Process.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Password.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Semester.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Year.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

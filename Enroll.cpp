@@ -1,8 +1,8 @@
-﻿#include "Header/Enroll.h"
-#include "Header/File.h"
-#include "Header/Menu.h"
-#include "Header/Convert.h"
-#include "Header/Node Process.h"
+﻿#include "Header\Enroll.h"
+#include "Header\File.h"
+#include "Header\Menu.h"
+#include "Header\Convert.h"
+#include "Header\Node Process.h"
 //Nhập thông tin sinh viên bằng tay
 //Dữ liệu sinh viên
 void Input_SvInfo(Student &sv)
@@ -14,7 +14,7 @@ void Input_SvInfo(Student &sv)
 	cout << "Enter your ID: ";
 	cin >> sv.id;
 	string folder = ".\\Students\\Student for Enroll\\";
-	string filename = Int_ToString(sv.id) + "_" + sv.name;
+	string filename = to_string(sv.id) + "_" + sv.name;
 	string path = Make_Path(folder, filename);
 	if (!File_Exist(path))
 	{
@@ -172,7 +172,7 @@ void View_Enrolled_Courses(Student sv)
 	system("cls");
 	cout << "\t\t\tList of enrolled courses" << endl;
 	string folder = ".\\Students\\Students for Enrollment\\";
-	string filename = Int_ToString(sv.id) + "_" + sv.name;
+	string filename = to_string(sv.id) + "_" + sv.name;
 	string path = Make_Path(folder, filename);
 	int n = Count_line(path);
 	ifstream f;
@@ -199,7 +199,7 @@ void View_Enrolled_Courses(Student sv)
 int Delete_course_Dis(Student sv)
 {
 	string folder = ".\\Students\\Students for Enrollment\\";
-	string filename = Int_ToString(sv.id) + "_" + sv.name;
+	string filename = to_string(sv.id) + "_" + sv.name;
 	string path = Make_Path(folder, filename);
 	View_Enrolled_Courses(sv);
 	cout << "\t\t" << Count_line(path) + 1 << ". Exit" << endl;
@@ -213,10 +213,10 @@ int Delete_course_Dis(Student sv)
 bool Delete_course_Proc(Student sv, int option)
 {
 	string folder = ".\\Students\\Students for Enrollment\\";
-	string filename = Int_ToString(sv.id) + "_" + sv.name;
+	string filename = to_string(sv.id) + "_" + sv.name;
 	string path = Make_Path(folder, filename);
-	names list = File_to_NameList(path);
-	if (option == Count_line(path) + 1)
+	names list = File_to_LinkList(path);
+	if (option == Count_line(path) + 1 || option <1)
 	{
 		return false;
 	}
@@ -244,14 +244,15 @@ bool Delete_course_Proc(Student sv, int option)
 
 		//Xóa tên sinh viên khỏi file môn học
 
+		
 		string *s1 = Split_String_4(s);
-		string pre_folder = ".\\Faculty\\" + sv.faculty + "\\";
+		string pre_folder = ".\\Courses\\" + sv.faculty + "\\";
 		string path1 = pre_folder + ".\\List of courses\\" + s1[0] + "_" + s1[3] + ".csv";
-		names list1 = File_to_NameList(path1);
+		names list1 = File_to_LinkList(path1);
 		name *n1 = list1.head;
 		while (n1 != NULL)
 		{
-			string ss = Int_ToString(sv.id) + "_" + sv.name;
+			string ss = to_string(sv.id) + "_" + sv.name;
 			if (n1->info == ss)
 			{
 				break;
@@ -271,7 +272,7 @@ bool Delete_course_Proc(Student sv, int option)
 //Số thứ tự của môn học đã chọn
 int Enroll_Dis(Student sv)
 {
-	string pre_folder = ".\\Faculty\\" + sv.faculty + "\\";
+	string pre_folder = ".\\Courses\\" + sv.faculty + "\\";
 	string *Sub = File_toStringArray(pre_folder + "Courses.csv");
 	int n = Count_line(pre_folder + "Courses.csv");
 	string *ID = File_toStringArray(pre_folder + "ID.csv");
@@ -302,7 +303,7 @@ int Enroll_Dis(Student sv)
 //Sẽ có hàm gọi hàm này: True sẽ chạy tiếp, False thì không chạy
 bool Enroll_Proc(int option, Student sv)
 {
-	string pre_folder = ".\\Faculty\\" + sv.faculty + "\\";
+	string pre_folder = ".\\Courses\\" + sv.faculty + "\\";
 	int n = Count_line(pre_folder + "Courses.csv");
 	if (option == n + 1)
 	{
@@ -318,7 +319,7 @@ bool Enroll_Proc(int option, Student sv)
 		string *Session = File_toStringArray(pre_folder + "Session.csv");
 		//
 		string folder = ".\\Students\\Students for Enrollment\\";
-		string filename = Int_ToString(sv.id) + "_" + sv.name;
+		string filename = to_string(sv.id) + "_" + sv.name;
 		string path = Make_Path(folder, filename);
 
 		int k = Count_line(path);
@@ -333,8 +334,8 @@ bool Enroll_Proc(int option, Student sv)
 			{
 				if (Conflicted_Course(path, sub) == false)
 				{
-					Save_ToCSV(path, sub);
-					Save_ToCSV(path1, Int_ToString(sv.id) + "_" + sv.name);
+					File_Append(path, sub);
+					File_Append(path1, to_string(sv.id) + "_" + sv.name);
 					cout << "\t\tEnroll for the course successfully" << endl;
 					cout << "\t\t";
 					system("pause");

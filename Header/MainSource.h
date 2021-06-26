@@ -7,6 +7,8 @@
 #include <direct.h>
 #include <filesystem>
 #include <sstream>
+#include <vector>
+#include <algorithm>
 using namespace std;
 struct date {
     int day, month, year;
@@ -24,13 +26,13 @@ struct names {
 	name* tail;
 };
 struct Course {
-	int id;
+	string id;
 	string name;
 	string teacher;
 	int cre;
 	int capacity;
-	int day;
-	int session;
+	string day;
+	string session;
 };
 struct Student {
 	int number;

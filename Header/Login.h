@@ -1,14 +1,4 @@
-#include "MainSource.h"
-
-// Date 
-void output_dmy(date dmy);
-bool check_leap_year(int year);
-int day_of_month(int month, int year);
-bool check_dmy(date dmy);
-void enter_dmy(date& dmy);
-// Check option
-int Valid_Data(int limit);
-// Data proccess
+#include "Header\MainSource.h"
 int pass_mode();
 void enter_data(string& param);
 void enter_showpass(Account &info);
@@ -16,10 +6,9 @@ void enter_hidepass(Account& info);
 bool pass_mode_proc(int option, Account &info);
 bool enter_acc(Account& info);
 int count_acc(string name);
-// Login
 bool check_acc_ad(Account info);
 bool login_as_admin(Account& info);
-bool check_acc_student(Account info);
-bool login_as_student(Account& info);
+bool check_acc_student(Account user,Student &info);
+bool login_as_student(Account &user,Student &info);
 
 

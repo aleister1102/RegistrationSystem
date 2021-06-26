@@ -1,62 +1,7 @@
-﻿#include "Header/Menu.h"
-#include "Header/File.h"
-#include "Header/Login.h"
-
-void output_dmy(date dmy)
-{
-	cout<<dmy.day<<"/"<<dmy.month<<"/"<<dmy.year;
-}
-
-//Kiểm tra năm nhuận
-bool check_leap_year(int year)
-{
-	return ((year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0));
-}
-//Số ngày của tháng
-int day_of_month(int month, int year)
-{
-	switch (month)
-	{
-	case 1:case 3:case 5:case 7:case 8:case 10:case 12:	return 31;
-	case 4:case 6:case 9:case 11: return 30;
-	default:
-		if (check_leap_year(year))
-		{
-			return 29;
-		}
-		else return 28;
-		break;
-	}
-}
-//Kiểm tra tính hợp lệ của ngày tháng
-bool check_dmy(date dmy)
-{
-	if (dmy.year <= 0 || dmy.month <= 0)
-	{
-		return false;
-	}
-	if (dmy.month < 1 || dmy.month>12)
-	{
-		return false;
-	}
-	if (dmy.day <= 0 || dmy.day > day_of_month(dmy.month, dmy.year))
-	{
-		return false;
-	}
-	return true;
-}
-//Nhập ngày tháng
-void enter_dmy(date& dmy)
-{
-	do {
-		cout << "\t\tEnter day / month / year: " << endl;
-		cout << "\t\t";
-		cin >> dmy.day; cout << "\t\t";
-		cin >> dmy.month; cout << "\t\t";
-		cin >> dmy.year;
-	} while (check_dmy(dmy) != true);
-}
-
+﻿#include "Header\Menu.h"
+#include "Header\Student.h"
+#include "Header\File.h"
+#include "Header\Login.h"
 string delete_last(string s)
 {
 	string ss = s;
@@ -70,9 +15,9 @@ string delete_last(string s)
 }
 int pass_mode()
 {
-	cout << "\t\t1.Show your password !!!" << endl;
-	cout << "\t\t2.Hide your password !!!" << endl;
-	cout << "\t\t";
+	cout << "\t\t 1.Show your password !!!" << endl;
+	cout << "\t\t 2.Hide your password !!!" << endl;
+	cout << "\t\t ";
 	return Valid_Data(2);
 }
 bool pass_mode_proc(int option, Account& info)
@@ -95,14 +40,13 @@ bool pass_mode_proc(int option, Account& info)
 }
 void enter_showpass(Account &info)
 {
-	cin.ignore();
-	cout << "\t\tEnter password (No spacebar and special symbols in your password): ";
+	cout << "\t\t Enter password (No spacebar and special symbols in your password): ";
 	enter_data(info.password);
 }
 void enter_hidepass(Account &info)
 {
 	cin.ignore();
-	cout << "\t\tEnter password (No spacebar and special symbols in your password): ";
+	cout << "\t\t Enter password (No spacebar and special symbols in your password): ";
 	string ss = "";
 	char a = _getch();
 	int i = 0;
@@ -121,12 +65,12 @@ void enter_hidepass(Account &info)
 		if (a == 8)
 		{
 			system("cls");
-			cout << "\t\tEnter username: "; cout << info.username << endl;
-			cout << "\t\t1.Show your password !!!" << endl;
-			cout << "\t\t2.Hide your password !!!" << endl;
-			cout << "\t\tSelect your option: "; cout << 2;
+			cout << "\t\t Enter username: "; cout << info.username << endl;
+			cout << "\t\t 1.Show your password !!!" << endl;
+			cout << "\t\t 2.Hide your password !!!" << endl;
+			cout << "\t\t Select your option: "; cout << 2;
 			cout << "\n\n";
-			cout << "\t\tEnter password (No spacebar and special symbols in your password): ";
+			cout << "\t\t Enter password (No spacebar and special symbols in your password): ";
 			ss = delete_last(ss);
 			for (int i = 0; i < size(ss); i++)
 			{
@@ -143,8 +87,7 @@ void enter_data(string& param)
 }
 bool enter_acc(Account& info)
 {
-	cin.ignore();
-	cout << "\t\tEnter username: ";
+	cout << "\t\t Enter username: ";
 	enter_data(info.username);
 	bool k = pass_mode_proc(pass_mode(), info);
 	return k;
@@ -170,24 +113,45 @@ string account(Account info)
 {
 	return info.username + ',' + info.password;
 }
-
+string split_acc_stu(string &s)
+{
+	int n=size(s);
+	int c=0;
+	for(int i=n-1;i>=0;i--)
+	{
+		c++;
+		if(s[i]==',')
+		{
+			break;
+		}
+	}
+	string ss;
+	for(int i=0;i<n-c;i++)
+	{
+		ss+=s[i];
+	}
+	s=s.substr(n-c+1,n);
+	return ss;
+}
 // Login as Student
-bool check_acc_student(Account info)
+bool check_acc_student(Account user,Student &info)
 {
 	ifstream f;
 	string acc_name = "acc_sv";
 	string acc_path = ".\\Accounts\\";
 	acc_path += (acc_name + ".csv");
 	f.open(acc_path);
-	string acc = account(info);
+	string acc = account(user);
 	int c = 0;
 	int n = Count_line(acc_path);
 	while (!f.eof())
 	{
 		c++;
-		string acc1;
+		string acc1;//Cả dòng trong file tk & mk
 		f >> acc1;
-		if (acc.compare(acc1) != 0)
+		//acc2 chứa tk & mk, acc1 lúc này chứa đường dẫn tới file lớp
+		string acc2 = split_acc_stu(acc1);
+		if (acc.compare(acc2) != 0)
 		{
 			if (c < n)
 			{
@@ -195,27 +159,28 @@ bool check_acc_student(Account info)
 			}
 			else if (c == n)
 			{
-				cout << "\t\tWrong password or username !!!" << endl;
-				cout << "\t\t"; system("pause");
+				cout << "\t\t Wrong password or username !!!" << endl;
+				cout << "\t\t "; system("pause");
 				return false;
 			}
 		}
 		else
 		{
-			cout << "\t\tLogin sucessed !!!" << endl;
-			cout << "\t\t"; system("pause");
+			info = Find_Student_Info(acc1,user);
+			cout << "\t\t Login sucessed !!!" << endl;
+			cout << "\t\t "; system("pause");
 			return true;
 			break;
 		}
 	}
 	f.close();
 }
-bool login_as_student(Account &info)
+bool login_as_student(Account &user,Student &info)
 {
-	cout << "\t\tLogin as Student" << endl;
-	if (enter_acc(info))
+	cout << "\t\t Login as Student" << endl;
+	if (enter_acc(user))
 	{
-		return check_acc_student(info);
+		return check_acc_student(user,info);
 	}
 }
 // Login as Admin
@@ -244,7 +209,7 @@ bool check_acc_ad(Account info)
 				}
 				else if (c == n)
 				{
-					cout << "\t\tWrong password or username !!!" << endl;
+					cout << "\t\t Wrong password or username !!!" << endl;
 					cout << "\t\t"; system("pause");
 					return false;
 					
@@ -252,7 +217,7 @@ bool check_acc_ad(Account info)
 			}
 			else
 			{
-				cout << "\t\tLogin sucessed !!!" << endl;
+				cout << "\t\t Login sucessed !!!" << endl;
 				cout << "\t\t"; system("pause");
 				return true;
 				break;
@@ -262,14 +227,14 @@ bool check_acc_ad(Account info)
 	}
 	else
 	{
-		cout << "\t\tWrong password or username !!!" << endl;
+		cout << "\t\t Wrong password or username !!!" << endl;
 		cout << "\t\t"; system("pause");
 		return false;
 	}
 }
 bool login_as_admin(Account& info)
 {
-	cout << "\t\tLogin as Admin" << endl;
+	cout << "\t\t Login as Admin" << endl;
 	if (enter_acc(info))
 	{
 		return check_acc_ad(info);

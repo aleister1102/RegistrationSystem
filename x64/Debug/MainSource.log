@@ -1,13 +1,5 @@
-﻿  Convert.cpp
+﻿  Course.cpp
   The contents of <filesystem> are available only with C++17 or later.
-D:\Projects\Registration_system\Convert.cpp(14,57): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-D:\Projects\Registration_system\Convert.cpp(30,57): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-D:\Projects\Registration_system\Convert.cpp(58,66): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-D:\Projects\Registration_system\Convert.cpp(93,27): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-D:\Projects\Registration_system\Convert.cpp(98,37): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-D:\Projects\Registration_system\Convert.cpp(114,28): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-D:\Projects\Registration_system\Convert.cpp(120,45): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  Student.cpp
-  The contents of <filesystem> are available only with C++17 or later.
-  Generating Code...
+D:\Projects\Registration_system\Course.cpp(157,45): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\Projects\Registration_system\Course.cpp(189): warning C4715: 'Course_Find_in_Student': not all control paths return a value
   MainSource.vcxproj -> D:\Projects\Registration_system\x64\Debug\MainSource.exe

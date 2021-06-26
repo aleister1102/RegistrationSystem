@@ -1,107 +1,78 @@
-﻿#include "Header/Menu.h"
-#include "Header/Year.h"
-#include "Header/Class.h"
-#include "Header/Convert.h"
-#include "Header/File.h"
-#include "Header/Node Process.h"
-//Param: Năm bắt đầu và năm kết thúc.
-//Return: Tên của năm (string)
-string Make_YearName(int begin, int end)
-{
-	return  Int_ToString(begin) + "-" + Int_ToString(end);
-}
-//Hàm tạo năm
-//Param: Năm lớn nhất có thể tạo (giới hạn)
-void Year_Create(int year)
+﻿#include "Header\Menu.h"
+#include "Header\Year.h"
+#include "Header\Class.h"
+#include "Header\Convert.h"
+#include "Header\File.h"
+#include "Header\Node Process.h"
+#include "Header\Vector.h"
+
+//*Hàm tạo năm
+//@param year (năm lớn nhất có thể tạo)
+void Year_Create(int limited_year)
 {
 	int begin, end;
-	string year_path, year_name, pre_folder = ".\\Years\\";
+	string year_path, year_name, year_folder = ".\\Years\\";
 
-	//Tạo ra cái tên của năm, đường dẫn của năm.
 	cout << "\t\t CREATE YEAR SECTION " << endl;
 	do {
+		//Tạo tên & đường dẫn của năm
+		cout <<"\t\t You can type '-1' to exit!"<<endl;
 		cout << "\t\t Created school year from: ";
-		begin = Valid_Data(year);
+		begin = Valid_Data(limited_year);
 		end = begin + 1;
-		year_name = Make_YearName(begin, end);
-		year_path = Make_Path(pre_folder,year_name);
+		year_name = to_string(begin) + "-" + to_string(end);
+		year_path = Make_Path(year_folder,year_name);
+		//Nếu như người dùng chọn -1 thì không tạo năm nữa
 		if(begin==-1) return;
+		//Năm được tạo không được bé hơn 2002
 		if(begin<2002)  {cout<<"\t\t New School Year must be after 2002"<<endl;}
 	} while (File_Exist(year_path)== true || begin <2002);
-	//Năm được tạo không được bé hơn 2002
 
 	//Tạo ra file năm mới
 	File_Create(year_path);
-	//Lưu các tên năm vào file Years.csv
-	Save_ToCSV("Years.csv", year_name.c_str());
-
+	//Lưu tên năm vào file Years.csv
+	File_Append("Years.csv", year_name.c_str());
 	cout << "\t\t School year created successfully" << endl;
 	cout << "\t\t "; system("pause");
 }
-//Lấy và lưu thông tin cần thiết để xóa một phần tử nào đó
-//Param: 
-//pre_folder: Thư mục chứa file cần xóa
-//store: File cần xóa phần tử, lưu các giá trị là tên các phần tử
-//choice: Số thứ tự của phần tử cần xóa
-//name: Tên của phần tử sẽ xóa
-//path: Đường dẫn của phần tử sẽ xóa
-//Return: 
-//Một danh sách liên kết chứa tên của các phần tử còn lại
-names Deleted_Info(string pre_folder, string store,int choice, string &year_name, string &year_path)
+//*Xóa các file liên quan đến năm
+//@param year_path Đường dẫn của năm
+void Year_File_Delete(string year_path)
 {
-	names list = Init_List();
-	fstream f(store, ios::in | ios::out);
-	int i = 1;
-
-	while (!f.eof()) {
-		//Đọc các tên phần tử từ file csv ra biến read
-		string read;
-		f >> read;
-		//Thêm các tên phần tử vào danh sách liên kết
-		if (i++ != choice) {
-			name* node = Create_Node(read);
-			Add_Last(list, node);
-		}
-		else {
-			year_name = read;
-			year_path = Make_Path(pre_folder, year_name);
-		}
-	}
-	f.close();
-	return list;
-}
-//Xóa một năm
-//Param: Số lượng phần tử tối đa có thể xóa của năm
-void Year_Delete(int quanti)
-{
-	cout << "\t\t Choose option: ";
-	int choice = Valid_Data(quanti);
-
-	string years_path = "Years.csv", pre_folder = ".\\Years\\";
-	string year_path, year_name;
-	names list = Init_List();
-
-	//Lưu thông tin để xóa
-	list = Deleted_Info(pre_folder,years_path,choice,year_name,year_path);
+	string year_name = Path_ToName(year_path);
 	//Xóa file năm
 	remove(year_path.c_str());
-	//Xóa file Years.csv cũ và tạo file mới
-	File_Clear(years_path);
-	//Sao chép tên năm từ list vào file Years.csv
-	ReInput_fromList(years_path, list);
 	//Xóa thư mục năm trong thư mục Classes
-	string classes_folder = ".\\Classes\\"
+	string class_folder = ".\\Classes\\"
 		+ year_name + "\\"; //Cần có ký hiệu cuối cùng này để hoàn thành đường dẫn thư mục
-	Directory_Delete(classes_folder);
-	//Directory_Create(".\\Classes\\");
+	Directory_Delete(class_folder);
+	//Xóa thư mục năm trong semester
+	string semester_folder = ".\\Semesters\\"
+		+ year_name + "\\";
+	Directory_Delete(semester_folder);
 }
-//Xóa toàn bộ năm
+//*Xóa một năm
+void Year_Delete()
+{
+	int quanti = Years_Display();
+	cout << "\t\t Choose option: ";
+	int choice = Valid_Data(quanti);
+	if(choice<1) return;
+
+	string years_path = "Years.csv", year_folder = ".\\Years\\";
+	//Xóa tên năm trong file lưu các "Years.csv"
+	string year_name = File_Line_Delete(years_path,0,choice);
+	string year_path = Make_Path(year_folder,year_name);
+	//Xóa các file liên quan đến năm
+	Year_File_Delete(year_path);
+}
+//*Xóa toàn bộ năm
 void Year_Clear()
 {
 	cout << "\t\t All years will be deleted !!!!" << endl;
 	cout << "\t\t Are you sure ???" << endl;
 	cout << "\t\t Press 0 for accepting, 1 for not:  ";
-	int n; cin >> n;
+	int n; cin >> n;cin.ignore();
 
 	string year_name, year_path;
 	if (n == 0)
@@ -111,34 +82,51 @@ void Year_Clear()
 
 		while (!f.eof()) {
 			
-			string read; f >> read;
-			//Delete files
+			f>>year_name;
+			//Xóa file
 			year_path = Make_Path(".\\Years\\", year_name);
-			remove(year_path.c_str());
-			//Delete class folder
-			year_name = read;
-			string classes_folder = ".\\Classes\\"
-				+ year_name + "\\"; //Have to use this syntax to accomplish folder path
-			Directory_Delete(classes_folder);
-			Directory_Create(".\\Classes\\");
+			Year_File_Delete(year_path);
 		}
 		f.close();
-		//Create a new "Years.csv"
+		//Remake a new "Years.csv"
 		File_Clear("Years.csv");
 	}
 }
-//Hiển thị năm
-//Return: Số lượng năm hiện có
+//*Sắp xếp các năm học tăng dần
+//@param year_list (danh sách các chuỗi năm học)
+void Year_Sort(string years_path)
+{
+	//Lấy các chuỗi từ file năm học chính
+	vector<string> years_list = File_ToVector(years_path);
+	vector<int> years_int;
+	//Convert sang int năm đầu tiên và cho vào mảng int
+	for(int i=0;i<years_list.size();i++)
+	{
+		years_int.push_back(Year_ToInt(years_list[i]));
+	}
+	//Sắp xếp mảng int
+	sort(years_int.begin(),years_int.end());
+	//Convert mảng int sang string và cho vào lại mảng string
+	for(int i=0;i<years_list.size();i++)
+	{
+		years_list[i]=to_string(years_int[i]) + "-" + to_string(years_int[i]+1);
+	}
+	//Remake file lưu các năm học
+	File_Clear(years_path);
+	//Cho mảng string vào lại file
+	Vector_ToFile(years_path,years_list);
+}
+//*Hiển thị năm
+//@return Số năm hiện có
 int Years_Display()
 {
 	system("cls");
-	File_YearSort("Years.csv");
+	Year_Sort("Years.csv");
 	cout << "\t\t CREATED YEARS: " << endl;
 	cout << "\t\t 0. Back" << endl;
 	fstream f("Years.csv", ios::in);
 	int i = 1;
-
-	//Reading Years information from "Years.csv"
+	//Đọc các năm từ file "Years.csv"
 	while (!f.eof()) {
 		string read;
 		f >> read;
@@ -149,40 +137,39 @@ int Years_Display()
 	f.close();
 	return i-1;
 }
-//Chọn năm
-//Return: Tên của năm đã chọn
-string Year_Selection()
+//*Chọn năm
+//@return Tên của năm đã chọn hoặc "OUT" (nếu muốn thoát ra hoặc không có năm nào để chọn)
+string Year_Select()
 {
 	int limit = Years_Display();
-	cout << "\t\t Which year do you want to modify ?" << endl;
+	cout << "\t\t Which year do you want to process ?" << endl;
 	cout << "\t\t Select option: ";
 	int choice = Valid_Data(limit);
+	if(choice==0) return "OUT";
 
-	fstream f("Years.csv", ios::in | ios::out);
+	ifstream f("Years.csv");
 	string year_name;
 	int i = 1;
 
 	while (!f.eof()) {
-		//Read year file's name from "Years.csv"
+		//Đọc các năm từ file "Years.csv"
 		string read;
 		f >> read;
-		//Add year file's name into list of nodes
+		//Nếu đó là năm có số thứ tự được chọn 
 		if (i++ == choice)
 		{
 			year_name = read;
+			//thì trả về tên của năm đó
 			return year_name;
 		}
 	}
 	f.close();
-	if (choice == 0)
-	{
-		return "!";//Thoát ra ngoài luôn
-	}
-	return "";//Có thể tiếp tục vòng lặp
+	return "OUT";
 }
-//Xử lý và điều hướng các hàm tính năng của năm
-//Param: lựa chọn tính năng và năm giới hạn
-bool Year_Proc(int option, int limited_year)
+//*Xử lý và điều hướng các hàm tính năng của năm
+//@param limited_year Năm giới hạn @param option Lựa chọn tính năng
+//@return True nếu cần dùng tiếp, false nếu muốn thoát ra hẳn
+bool Year_Proc(int limited_year,int option)
 {
 	if (option == 1)
 	{
@@ -192,8 +179,7 @@ bool Year_Proc(int option, int limited_year)
 	}
 	else if (option == 2)
 	{
-		int quanti = Years_Display();
-		Year_Delete(quanti);
+		Year_Delete();
 		system("cls");
 		return true;
 	}
@@ -209,4 +195,3 @@ bool Year_Proc(int option, int limited_year)
 		return false;
 	}
 }
-

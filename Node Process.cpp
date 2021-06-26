@@ -1,6 +1,7 @@
-﻿#include "Header/Node Process.h"
-#include "Header/Semester.h"
-#include "Header/Convert.h"
+﻿#include "Header\Node Process.h"
+#include "Header\Semester.h"
+#include "Header\Convert.h"
+#include "Header\File.h"
 
 //Kiểm tra danh sách liên kết rỗng
 //Param: một DSLK
@@ -115,10 +116,10 @@ names Copy_List(names l)
 void ReInput_fromList(string store, names list)
 {
 	name* move = list.head;
-	fstream f(store, ios::in | ios::out | ios::app);
+	fstream f(store, ios::in | ios::app);
 	while (move->next != nullptr)
 	{
-		if (!Name_InFile(store, move->info))
+		if (!String_InFile(store, move->info))
 		{
 			f << move->info << endl;
 		}
@@ -126,6 +127,7 @@ void ReInput_fromList(string store, names list)
 	}
 	f.close();
 }
+
 //Sắp xếp tăng dần cho năm
 //Param: DSLK chứa tên năm cần sort
 void SortAscen_YearList(names & list)
@@ -190,8 +192,9 @@ bool Output_List(names l)
 
 	name* move = l.head;
 	int count = 1;
-	while (move->next != nullptr)
+	while (move != nullptr)
 	{
+		if(move->info=="") break;
 		cout << "\tThe " << count++ << " object: ";
 		cout << move->info << " " << endl;
 		move = move->next;
