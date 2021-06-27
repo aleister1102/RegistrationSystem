@@ -36,7 +36,7 @@ vector<string> File_ToVector(string file_path)
 //*Kiểm tra phần tử check có trùng trong vector
 //@param arr Mảng @param check Phần tử cần kiểm tra
 //@return True nếu trùng
-bool Int_Vector_Duplicate(vector<int> arr, int check)
+bool String_Vector_Duplicate(vector<string> arr, string check)
 {
 	for(int i=0;i<arr.size();i++)
 	{
@@ -47,11 +47,11 @@ bool Int_Vector_Duplicate(vector<int> arr, int check)
 }
 //*Xuất ra màn hình các phần tử của vector
 //@param arr Mảng động
-void Int_Vector_Display(vector<int> arr)
+void String_Vector_Display(vector<string> arr)
 {
 	for(int i=0;i<arr.size();i++)
 	{
-		if(arr[i]>0)
+		if(stoi(arr[i])>0)
 			cout<<arr[i] <<"  ";
 	}
 	cout<<endl;

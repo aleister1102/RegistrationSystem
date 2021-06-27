@@ -24,7 +24,7 @@ int Student_Menu_Passive();
 int Course_Menu_Disp();
 int Course_Day();
 int Course_Session();
-int Course_Update_Menu(vector<int> options);
+int Course_Update_Menu(vector<string> &choices);
 
 bool Main_Menu_Proc(int option);
 bool Login_Proc(int option);

@@ -154,12 +154,13 @@ int Student_Display(string class_path)
 //!Hàm này giữ cho thứ tự môn học không đổi
 //@param course_path Đường dẫn đến học kỳ.
 //@param new_course_teacher Giáo viên mới của môn học.
-void Student_Update(string course_path,string new_course_teacher)
+void Student_Course_Update(string course_path,string new_course_teacher)
 {
 	//Lấy ra tên môn học
 	string student_folder = ".\\Students\\Students for Enrollment\\";
 	string course_string=Path_ToName(course_path);
-	string course_name = CourseString_To_CourseName(course_string);
+    int pos = course_string.find_first_of("_",0);
+	string course_name = course_string.substr(0,pos);
 	//
 	ifstream f(course_path);
 	if(f.is_open()){
@@ -169,24 +170,18 @@ void Student_Update(string course_path,string new_course_teacher)
 			string student;
 			getline(f,student);
 			string student_path = Make_Path(student_folder,student);
-			//Nếu như chuỗi rỗng thì out vòng lặp
+			//Nếu như chuỗi rỗng thì bỏ qua đoạn dưới
 			if(Path_ToName(student_path)=="") continue;
-			cout<<"Student path: "<<student_path<<endl;
-			system("pause");
 			//Tìm môn học trong file student
 			int line = Course_Find_in_Student(student_path,course_name);
 			if(line!=0)
 			{
 				//Xóa dòng môn học cũ trong file student
 				string course_string = File_Line_Delete(student_path,0,line);
-				cout<<"Course in student file: "<<course_string<<endl;
-				system("pause");
 				//Thay giáo viên mới
 				int size = course_string.size();
 				int pos = course_string.find_last_of("_",size);
 				course_string.replace(pos+1,size-pos,new_course_teacher);
-				cout<<"New course string: "<<course_string<<endl;
-				system("pause");
 				//Cập nhật (nói khác đi là chèn) vào tên môn học cũ
 				File_Line_Update(student_path,0,line,course_string);
 			}

@@ -76,8 +76,6 @@ void Course_Create(string semester_path,string faculty)
 	string faculty_folder = ".\\Courses\\" + faculty + "\\";
 	string course_name = new_course.name + "_" + new_course.teacher;
 	string course_path = Make_Path(faculty_folder+"List of courses\\",course_name);
-	cout<<"Course path "<<course_path<<endl;
-	system("pause");
 	//Loại đi trường hợp course đã tạo
 	if(File_Exist(course_path)) return;
 	File_Create(course_path);
@@ -88,8 +86,9 @@ void Course_Create(string semester_path,string faculty)
 //*Hiển thị các môn học
 //@param semester_path Đường dẫn tới học kỳ
 //@return Số môn học đếm được
-int Courses_Display(string semester_path)
+int Courses_Display(string semester_path,string faculty)
 {
+	system("cls");
 	//Mở file semester lên và đọc chuỗi
 	ifstream f (semester_path);
 	int count=1;
@@ -106,29 +105,41 @@ int Courses_Display(string semester_path)
 		cout<<"\t\t -----------------------"<<endl;
 		cout<<"\t\t -----------------------"<<endl;
 		cout<<"\t\t LIST OF CREATED COURSES"<<endl;
+		cout<<"\t\t 0. Back"<<endl;
 		while(!f.eof())
 		{
 			getline(f,reader,'\n');
 			if(reader=="") break;
+			//Kiểm tra môn học đó có tòn tại trong khoa
+			string course_folder = ".\\Courses\\" + faculty + "\\";
+			string course_name = CourseString_To_CourseName(reader);
+			string course_path = Make_Path(course_folder+"List of courses\\",course_name);
+			if(File_Exist(course_path)==false) continue;
+			//Thay dấu để xuất ra trông đẹp hơn
 			String_Replace(reader,",","  -  ");
 			cout<<"\t\t "<<count<<". "<<reader<<endl;
 			count+=1;
 		}	
 	}
 	f.close();
+	//Nếu không có môn học nào thì xuất thông báo
+	if(count<2) {
+		cout<<"\t\t -----------------------------------------"<<endl;
+		cout<<"\t\t Wrong Faculty or this Faculty does not have any courses !!!!!!!"<<endl;
+	}
 	return count-1;
 }
 //*Chọn lựa môn học
-//@param semester_path Đường dẫn tới học kỳ 
-int Course_Select(string semester_path)
+//@param semester_path Đường dẫn tới học kỳ
+//@return Sự lựa chọn môn học (Bằng 0 nếu không có môn nào)
+int Course_Select(string semester_path,string faculty)
 {
 	//Xuất danh sách các môn học
-	int limited_course = Courses_Display(semester_path);
-	if(limited_course<1) return false;
-	cout<<"\t\t "<<limited_course+1<<". Exit"<<endl;
+	int limited_course = Courses_Display(semester_path,faculty);
+	if(limited_course<1) return 0;
 	cout<<"\t\t Choose course for modify: ";
 	//Chọn môn học cần chỉnh sửa
-	return Valid_Data(limited_course+1);
+	return Valid_Data(limited_course);
 }
 //*Xóa môn học
 //@param semester_path Đường dẫn tới học kỳ
@@ -136,54 +147,53 @@ int Course_Select(string semester_path)
 //@return True nếu cần utilize
 bool Course_Delete(string semester_path,string faculty)
 {
-	int choice = Course_Select(semester_path);
-	if(choice ==0) return false ;
+	int choice = Course_Select(semester_path,faculty);
+	if(choice == 0) return false ;
 	//Vừa xóa môn học trong file semester vừa lấy ra được môn học dạng string
 	string course_folder = ".\\Courses\\" + faculty + "\\";
 	string course_string = File_Line_Delete(semester_path,2,choice);
-	//Tạo đường dẫn cho việc xóa file
+	//Tạo đường dẫn cho việc xóa môn học trong file sinh viên và xóa file 
 	string arr[7];
 	Course info = String_ToCourse(course_string,arr);
 	string course_name  = info.name + "_" + info.teacher;
 	course_folder+="List of courses\\";
 	string course_path = Make_Path(course_folder,course_name);
+	//Xóa môn học trong file sinh viên
+	ifstream f(course_path);
+	while(!f.eof()){
+		string reader;
+		getline(f,reader);
+		if(reader=="") continue;//Chuỗi rỗng thì bỏ qua
+		string student_folder = ".\\Students\\Students for Enrollment\\";
+		string student_path = Make_Path(student_folder,reader);
+		//Tìm môn học trong file sinh viên
+		int line = Course_Find_in_Student(student_path,course_name);
+		//Và xóa môn học đó
+		File_Line_Delete(student_path,0,line);
+	}
+	f.close();
+	//Xóa file môn học
 	remove(course_path.c_str());
 	return true;
 }
 
-//TODO Hoàn thiện hàm cập nhật course
-//*Kiểm tra tên môn học trong chuỗi môn học
-//@param course Chuỗi môn học @param course_name Tên môn học
-//@return True nếu tồn tại tên môn học trong chuỗi lớn
-bool Course_Detect(string course_string,string course_name)
-{
-	//Todo Xóa ba dòng tiếp theo nếu code đã chạy ổn
-	int pos =course_string.find_first_of("_",0);
-	cout<<"Check "<<course_name<<" in "<<course_string<<endl;
-	system("pause");
-
-	if(course_string.find(course_name,0)!=string::npos)
-		return true;
-	return false;
-}
+//TODO Hoàn thiện hàm cập nhật course trong student
 //*Tìm môn học có trong file sinh viên
 //@param student_path File sinh viên
 //@param course_name Tên môn học
 //@return Số thứ tự dòng tìm thấy môn học (0 nếu không tìm được)
 int Course_Find_in_Student(string student_path,string course_name)
 {
-	cout<<"Check "<<course_name<<" in "<<student_path<<endl;
-	system("pause");
-	fstream f(student_path,ios::in);
+	ifstream f(student_path);
 	int count=1;
 	if(f.is_open())
 	{
 		while(!f.eof()){
 			string course_string;
 			getline(f,course_string);
-			if(CourseString_To_CourseName(course_string) == course_name)
+			//Đọc tên môn học và so sánh với môn học cần thay đổi
+			if(course_string == course_name)
 			{
-				cout<<"Find course at line: "<<count<<endl;
 				return count;
 			}
 			count+=1;
@@ -197,20 +207,25 @@ int Course_Find_in_Student(string student_path,string course_name)
 void Course_Update(string semester_path,string faculty)
 {
 	//Cho người dùng chọn lựa các field cần cập nhật
-	int choice = Course_Select(semester_path);
-	vector<int> choices;
+	int choice = Course_Select(semester_path,faculty);
+	if(choice==0) return;
+	vector <string> choices;
 	int choice_number = Course_Update_Menu(choices);
 	if(choice_number==0) return; 
 	//Xóa dòng đó trong file học kỳ và lấy ra để cập nhật
 	string course_string = File_Line_Delete(semester_path,2,choice);
+	cout<<"\t\t ---------------------------------"<<endl;
+	cout<<"\t\t Old Course Name:  "<<course_string<<endl;
 	string course_info[7];
 	Course c = String_ToCourse(course_string,course_info);
-
+	string teacher_temp = course_info[2];//Lưu tên giáo viên cũ
+	
 	//Thực thi việc cập nhật
-	for(int i=0;i<choice_number;i++)
+	
+	for(int i=0;i<choices.size();i++)
 	{
 		cout<<"Current option: "<<choices[i]<<endl;
-		switch (choices[i])
+		switch (stoi(choices[i]))
 		{
 		case 1: {
 			cout<<"\t\t Type new ID: "<<endl;
@@ -220,7 +235,6 @@ void Course_Update(string semester_path,string faculty)
 		case 2:{
 			cout<<"\t\t Type new Course's Teacher: "<<endl;
 			cout<<"\t\t ";getline(cin,c.teacher);
-			
 			break;
 		}
 		case 3:{
@@ -255,13 +269,13 @@ void Course_Update(string semester_path,string faculty)
 	File_Line_Update(semester_path,2,choice,course_string);
 	//Thực hiện đổi tên file môn học trong thư mục gốc với teacher mới
 	string course_folder = ".\\Courses\\" + faculty + "\\List of courses\\";
-	string course_name = c.name + "_" + c.teacher;
+	string course_name = c.name + "_" + teacher_temp;
 	string course_path =  Make_Path(course_folder,course_name);
 	string new_course_path = Make_Path(course_folder,c.name+"_"+c.teacher);
 	rename(course_path.c_str(),new_course_path.c_str());
-	cout<<"New path of course: "<<new_course_path<<endl;
-	//Đổi tên giáo viên trong file đăng ký của Hs
-	Student_Update(new_course_path,c.teacher);
+	//Đổi tên giáo viên trong file đăng ký của Sinh viên
+	if(teacher_temp==c.teacher) return; //Tên giáo viên không đổi thì out
+	Student_Course_Update(new_course_path,c.teacher);
 }
 //*Khởi tạo cho các tính năng của môn học
 //@param &semester_path Đường dẫn đến học kỳ
@@ -305,7 +319,7 @@ bool Course_Proc(int option,date dmy)
 		system("cls");
 		return true;
 	}
-	else if(option ==3)
+	else if(option ==2)
 	{
 		//Xóa môn học
 		//!Chưa xóa ở file sinh viên
@@ -316,17 +330,16 @@ bool Course_Proc(int option,date dmy)
 		system("cls");
 		return true;
 	}
-	else if(option ==2)
+	else if(option ==3)
 	{
 		//Cập nhật môn học
 		Course_Update(semester_path,faculty);
-		cout<<"\t\t ";system("pause");
 		system("cls");
 		return true;
 	}
 	else if(option ==4)
 	{
-		Courses_Display(semester_path);
+		Courses_Display(semester_path,faculty);
 		cout<<"\t\t ";system("pause");
 		system("cls");
 		return true;

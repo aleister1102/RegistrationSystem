@@ -168,7 +168,12 @@ string Course_ToString(Course c)
 //@return Tên môn học
 string CourseString_To_CourseName(string course_string)
 {
-	return course_string.substr(0,course_string.find_first_of("_",0));
+	int pos = course_string.find_first_of(",",0);
+	course_string.replace(pos,1,"/");
+	int pos2 = course_string.find_first_of(",",0);
+	course_string.replace(pos2,1,"_");
+	int pos3 = course_string.find_first_of(",",0);
+	return course_string.substr(pos+1,pos3-pos-1);
 }
 //*Thay đổi 1 ký tự trong chuỗi thành ký tự khác
 //@param &s chuỗi cần thay thế ký tự

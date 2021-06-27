@@ -26,13 +26,9 @@ struct names {
 	name* tail;
 };
 struct Course {
-	string id;
-	string name;
-	string teacher;
-	int cre;
-	int capacity;
-	string day;
-	string session;
+	string id,name,teacher;
+	string day,session;
+	int cre,capacity;
 };
 struct Student {
 	int number;

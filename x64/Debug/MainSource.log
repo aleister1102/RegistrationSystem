@@ -1,5 +1,4 @@
 ﻿  Course.cpp
   The contents of <filesystem> are available only with C++17 or later.
-D:\Projects\Registration_system\Course.cpp(157,45): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-D:\Projects\Registration_system\Course.cpp(189): warning C4715: 'Course_Find_in_Student': not all control paths return a value
+D:\Projects\Registration_system\Course.cpp(203): warning C4715: 'Course_Find_in_Student': not all control paths return a value
   MainSource.vcxproj -> D:\Projects\Registration_system\x64\Debug\MainSource.exe

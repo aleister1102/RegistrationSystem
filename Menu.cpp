@@ -267,14 +267,14 @@ int Course_Session()
 //*Menu cập nhật môn học
 //@param choices Mảng các chọn lựa cập nhật
 //@return Số lựa chọn đã chọn hoặc số 0 khi muốn thoát ra
-int Course_Update_Menu(vector<int> choices)
+int Course_Update_Menu(vector<string> &choices)
 {
 	system("cls");
 	string choice;
 	int count=0;
 	do{
 		system("cls");
-		cout<<"\t\t You have choosen: "; Int_Vector_Display(choices);
+		cout<<"\t\t You have choosen: "; String_Vector_Display(choices);
 		cout<<"\t\t UPDATE TABLE"<<endl;
 		cout<<"\t\t 0. Back"<<endl;
 		cout<<"\t\t 1. ID"<<endl;
@@ -283,20 +283,18 @@ int Course_Update_Menu(vector<int> choices)
 		cout<<"\t\t 4. Capacity"<<endl;
 		cout<<"\t\t 5. Day"<<endl;
 		cout<<"\t\t 6. Session"<<endl;
-		cout<<"\t\t If you want to apply update, press 'Y'."<<endl;
-		cout<<"\t\t Or if you want to exit, press '!' "<<endl;
+		cout<<"\t\t If you want to apply update(s), press 'Y'."<<endl;
 		cout<<"\t\t Select field for update: ";
 		getline(cin,choice);
-		if(stoi(choice)==0) return 0;
-		if(choice!="Y" && choice!="!")
+		if(choice!="0" && choice!="Y")
 		{
-			if(Int_Vector_Duplicate(choices,stoi(choice))==false)
-					{
-						choices.push_back(stoi(choice));
-						count+=1;
-					}
+			if(String_Vector_Duplicate(choices,choice)==false)
+			{
+				choices.push_back(choice);
+				count+=1;
+			}
 		}
-	}while(choice !="Y" && choice !="!" && count<6);
+	}while(choice !="Y" && choice !="0" && count<6);
 
 	if(choice =="Y" || count==6)
 	{
