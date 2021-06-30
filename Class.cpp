@@ -28,7 +28,7 @@ bool Class_Import(string year_name)
 	//Lưu danh sách lớp vào vector
 	ifstream file(import);
 	vector <string> class_list;
-	
+
 	while (!file.eof())
 	{
 		string class_name;
@@ -44,7 +44,7 @@ bool Class_Import(string year_name)
 		File_Create(class_path);
 	}
 	file.close();
-	
+
 	//Thêm tên lớp vào file CSV của năm
 	string year_path = ".\\Years\\" + Extension(year_name, 1);
 	Vector_ToFile(year_path,class_list);
@@ -233,7 +233,7 @@ bool Class_Proc(string year_name,int option)
 			//Lựa chọn cách tạo lớp
 			int choice = Class_Create_Mod_Menu();
 			if(choice ==3) return true;
-			
+
 			//Option 1: Nhập từ file
 			if (choice == 1) {
 				run = Class_Import(year_name);
