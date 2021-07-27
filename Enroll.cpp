@@ -3,24 +3,26 @@
 #include "Header\Menu.h"
 #include "Header\Convert.h"
 #include "Header\Node Process.h"
+#include"Header\Course.h"
+
 //Nhập thông tin sinh viên bằng tay
 //Dữ liệu sinh viên
-void Input_SvInfo(Student &sv)
-{
-	cout << "Enter your Faculty: ";
-	getline(cin, sv.faculty);
-	cout << "Enter your name: ";
-	getline(cin, sv.name);
-	cout << "Enter your ID: ";
-	cin >> sv.id;
-	string folder = ".\\Students\\Student for Enroll\\";
-	string filename = to_string(sv.id) + "_" + sv.name;
-	string path = Make_Path(folder, filename);
-	if (!File_Exist(path))
-	{
-		File_Create(path);
-	}
-}
+//void Input_SvInfo(Student &sv)
+//{
+//	cout << "Enter your Faculty: ";
+//	getline(cin, sv.faculty);
+//	cout << "Enter your name: ";
+//	getline(cin, sv.name);
+//	cout << "Enter your ID: ";
+//	cin >> sv.id;
+//	string folder = ".\\Students\\Student for Enroll\\";
+//	string filename = to_string(sv.id) + "_" + sv.name;
+//	string path = Make_Path(folder, filename);
+//	if (!File_Exist(path))
+//	{
+//		File_Create(path);
+//	}
+//}
 
 //Cắt chuỗi đăng ký thành bốn phần thông tin
 //Chuỗi môn học đã đăng ký
@@ -104,7 +106,7 @@ int *Sessesion(string s)
 			}
 		}
 	}
-	if (size(s) == 1)
+	if (size(s) == 2)
 	{
 		num[1] = num[0];
 	}
@@ -147,11 +149,15 @@ bool Conflicted_Course(string store, string name)
 				if (b[0] <= a[1] && b[0] >= a[0])
 				{
 					cout << "\t\tConflicted with existing enrolled course sessions" << endl;
+					cout << "\t\t";
+					system("pause");
 					return true;
 				}
 				else if (b[1] <= a[1] && b[1] >= a[0])
 				{
 					cout << "\t\tConflicted with existing enrolled course sessions" << endl;
+					cout << "\t\t";
+					system("pause");
 					return true;
 				}
 			}
@@ -201,6 +207,8 @@ int Delete_course_Dis(Student sv)
 	string folder = ".\\Students\\Students for Enrollment\\";
 	string filename = to_string(sv.id) + "_" + sv.name;
 	string path = Make_Path(folder, filename);
+	cout<<path<<endl;
+	system("pause");
 	View_Enrolled_Courses(sv);
 	cout << "\t\t" << Count_line(path) + 1 << ". Exit" << endl;
 	cout << "\t\tYour choice is: ";
@@ -215,7 +223,7 @@ bool Delete_course_Proc(Student sv, int option)
 	string folder = ".\\Students\\Students for Enrollment\\";
 	string filename = to_string(sv.id) + "_" + sv.name;
 	string path = Make_Path(folder, filename);
-	names list = File_to_LinkList(path);
+	strings list = File_to_LinkList(path);
 	if (option == Count_line(path) + 1 || option <1)
 	{
 		return false;
@@ -225,7 +233,7 @@ bool Delete_course_Proc(Student sv, int option)
 		// Xóa môn học khỏi file sinh viên
 
 		int c = 0;
-		name *p = list.head;
+		str *p = list.head;
 		while (p != NULL)
 		{
 			c++;
@@ -235,7 +243,7 @@ bool Delete_course_Proc(Student sv, int option)
 			}
 			p = p->next;
 		}
-		name *pDEl = p;
+		str *pDEl = p;
 		string s = pDEl->info;
 		removeNode(list, pDEl);
 		File_Clear(path);
@@ -247,9 +255,9 @@ bool Delete_course_Proc(Student sv, int option)
 		
 		string *s1 = Split_String_4(s);
 		string pre_folder = ".\\Courses\\" + sv.faculty + "\\";
-		string path1 = pre_folder + ".\\List of courses\\" + s1[0] + "_" + s1[3] + ".csv";
-		names list1 = File_to_LinkList(path1);
-		name *n1 = list1.head;
+		string path1 = pre_folder + s1[0] + "_" + s1[3] + ".csv";
+		strings list1 = File_to_LinkList(path1);
+		str *n1 = list1.head;
 		while (n1 != NULL)
 		{
 			string ss = to_string(sv.id) + "_" + sv.name;
@@ -267,74 +275,210 @@ bool Delete_course_Proc(Student sv, int option)
 	}
 }
 
+string Year_ToString(int year)
+{
+	stringstream ss;
+	string s;
+	ss << year;
+	ss >> s;
+	ss.str(""); ss.clear();
+	return s;
+}
+
+string Date_to_Sems(date dmy)
+{
+	if (dmy.month > 9 && dmy.month < 12)
+	{
+		return "Autumn";
+	}
+	else if (dmy.month == 9)
+	{
+		if (dmy.day >= 1)
+		{
+			return "Autumn";
+		}
+	}
+	else if (dmy.month == 12)
+	{
+		if (dmy.day <= 15)
+		{
+			return "Autumn";
+		}
+		else{
+			return "Spring";
+		}
+	}
+	//
+	if ((dmy.month > 1 && dmy.month < 4))
+	{
+		return "Spring";
+	}
+	else if (dmy.month == 1)
+	{
+		if (dmy.day >= 1)
+		{
+			return "Spring";
+		}
+	}
+	else if (dmy.month == 4)
+	{
+		if (dmy.day <= 15)
+		{
+			return "Spring";
+		}
+		else{
+			return "Summer";
+		}
+	}
+	//
+	if (dmy.month > 5 && dmy.month < 7)
+	{
+		return "Summer";
+	}
+	else if (dmy.month == 5)
+	{
+		if (dmy.day >= 1)
+		{
+			return "Summer";
+		}
+	}
+	else if (dmy.month == 7)
+	{
+		if (dmy.day <= 31)
+		{
+			return "Summer";
+		}
+	}
+	return "OUT";
+}
 //Hiển thị các môn học được đăng ký hiện tại
 //Dữ liệu sinh viên
 //Số thứ tự của môn học đã chọn
-int Enroll_Dis(Student sv)
+int Enroll_Dis(Student sv,date dmy)
 {
-	string pre_folder = ".\\Courses\\" + sv.faculty + "\\";
-	string *Sub = File_toStringArray(pre_folder + "Courses.csv");
-	int n = Count_line(pre_folder + "Courses.csv");
-	string *ID = File_toStringArray(pre_folder + "ID.csv");
-	string *Credits = File_toStringArray(pre_folder + "Number of credits.csv");
-	string *Teacher_name = File_toStringArray(pre_folder + "Teacher name.csv");
-	string *Day = File_toStringArray(pre_folder + "Day.csv");
-	string *Session = File_toStringArray(pre_folder + "Session.csv");
-	system("cls");
-	cout << "\t\t\tList of courses" << endl;
-	cout << "\t\t(ID - Name of courses - Number of credits - Teacher name - Day - Session - Student in courses)" << endl;
-	for (int i = 0; i < n; i++)
+	sv.faculty = "CTT";
+	string sems = Date_to_Sems(dmy);
+	if(sems=="OUT")
 	{
-		string path = pre_folder + ".\\List of courses\\" + Sub[i] + "_" + Teacher_name[i] + ".csv";
-		if (!File_Exist(path))
-		{
-			File_Create(path);
-		}
-		int c = Count_line(path);
-		cout << "\t\t" << i + 1 << ". " << ID[i] << " - " << Sub[i] << " - " << Credits[i] << " - " << Teacher_name[i] << " - " << Day[i] << " - " << Session[i] << " - " << c << "/50" << endl;
+		cout<<"It is not registration time!"<<endl;
+		return 0;
 	}
-	cout << "\t\t" << n + 1 << ". Exit" << endl;
+	string y = Year_ToString(dmy.year);
+	string y1 = Year_ToString(dmy.year + 1);
+	string years = y + '-' + y1;
+	string path = ".\\Semesters\\";
+	path += years+"\\";
+	string filename = Make_Path(path, years + "-" + sems);
+	int n;
+	if (File_Exist(filename))
+	{
+		n = Courses_Display(filename, sv.faculty);
+	}
+	else
+	{
+		cout << "This semester haven't been created !!!" << endl;
+		system("pause");
+		return 0;
+	}
 	cout << "\t\tYour choice is : ";
-	return Valid_Data(n + 1);
+	return Valid_Data(n);
 }
 
+string* Split_manyCourse(string path, int k)
+{
+	fstream f;
+	f.open(path.c_str(), ios::in | ios::out);
+	int c = 0;
+	int n = Count_line(path);
+	string* ss = new string[n];
+	int u = 0;
+	while (!f.eof())
+	{
+		c++;
+		string s;
+		getline(f, s);
+		int p = 0;
+		string s1;
+		if (c <= n && c >= 3)
+		{
+			for (int i = 0; i < size(s); i++)
+			{
+				if (p != k && s[i] != ',')
+				{
+					if (s[i + 1] == ',')
+					{
+						p++;
+						i++;
+					}
+				}
+				else if (p == k)
+				{
+					s1 += s[i];
+					if (i != size(s) - 1)
+					{
+						if (s[i + 1] == ',')
+						{
+							break;
+						}
+					}
+					else break;
+				}
+			}
+			ss[u++] = s1;
+		}
+		else if(c>n) break;
+	}
+	f.close();
+	return ss;
+}
 //Xử lý đăng ký môn học
 //Số thứ tự của môn học đã lựa chọn, dữ liệu sinh viên
 //Sẽ có hàm gọi hàm này: True sẽ chạy tiếp, False thì không chạy
-bool Enroll_Proc(int option, Student sv)
+bool Enroll_Proc(int option, Student sv,date dmy)
 {
 	string pre_folder = ".\\Courses\\" + sv.faculty + "\\";
-	int n = Count_line(pre_folder + "Courses.csv");
-	if (option == n + 1)
+	if (option == 0)
 	{
 		return false;
 	}
 	else
 	{
-		string *Sub = File_toStringArray(pre_folder + "Courses.csv");
-		string *ID = File_toStringArray(pre_folder + "ID.csv");
-		string *Credits = File_toStringArray(pre_folder + "Number of credits.csv");
-		string *Teacher_name = File_toStringArray(pre_folder + "Teacher name.csv");
-		string *Day = File_toStringArray(pre_folder + "Day.csv");
-		string *Session = File_toStringArray(pre_folder + "Session.csv");
+		string sems = Date_to_Sems(dmy);
+		string y = Year_ToString(dmy.year);
+		string y1 = Year_ToString(dmy.year + 1);
+		string years = y + '-' + y1;
+		string path = ".\\Semesters\\";
+		path += years + "\\";
+		string filename1 = Make_Path(path, years + "-" + sems);
+		cout<<filename1<<endl;
+		system("pause");
+		//
+		string* Sub = Split_manyCourse(filename1, 1);
+		string* Teacher_name = Split_manyCourse(filename1, 2);
+		string *Day = Split_manyCourse(filename1,5);
+		string* Session = Split_manyCourse(filename1, 6);
 		//
 		string folder = ".\\Students\\Students for Enrollment\\";
 		string filename = to_string(sv.id) + "_" + sv.name;
-		string path = Make_Path(folder, filename);
+		string pathh = Make_Path(folder, filename);
+		cout<<pathh<<endl;
+		system("pause");
 
-		int k = Count_line(path);
+		int k = Count_line(pathh);
 		//
-		string path1 = pre_folder + ".\\List of courses\\" + Sub[option - 1] + "_" + Teacher_name[option - 1] + ".csv";
+		string path1 = pre_folder + Sub[option - 1] + "_" + Teacher_name[option - 1] + ".csv";
+		cout<<path1<<endl;
 		int k1 = Count_line(path1);
+		system("pause");
 		string sub = Sub[option - 1] + "_" + Day[option - 1] + "_" + Session[option - 1] + "_" + Teacher_name[option - 1];
 		//
 		if (k < 5)
 		{
 			if (k1 < 50)
 			{
-				if (Conflicted_Course(path, sub) == false)
+				if (Conflicted_Course(pathh, sub) == false)
 				{
-					File_Append(path, sub);
+					File_Append(pathh, sub);
 					File_Append(path1, to_string(sv.id) + "_" + sv.name);
 					cout << "\t\tEnroll for the course successfully" << endl;
 					cout << "\t\t";
@@ -365,6 +509,7 @@ bool Enroll_Proc(int option, Student sv)
 //Sự lựa chọn tính năng
 int Enroll_MenuDisp(Student sv)
 {
+	system("cls");
 	cout << "\t\t\t----Menu of Enrollment----" << endl;
 	cout << "\t\t1. Enroll" << endl;
 	cout << "\t\t2. View list of courses have been enrolled" << endl;
@@ -377,26 +522,37 @@ int Enroll_MenuDisp(Student sv)
 //Menu xử lý các tính năng ĐKHP
 //Sự lựa chọn tính năng, dữ liệu sinh viên
 //True nếu dùng lại hàm, false nếu không
-bool Enroll_MenuProc(int option, Student sv)
+bool Enroll_MenuProc(int option, Student sv,date dmy,int mod)
 {
 	if (option == 1)
 	{
+		if(mod==0){
+			cout<<"\t\tYou can not register during this time!"<<endl;
+			cout<<"\t\t";system("pause");
+			return true;
+		}
 		bool run = true;
 		while (run)
 		{
-			run = Enroll_Proc(Enroll_Dis(sv), sv);
+			run = Enroll_Proc(Enroll_Dis(sv,dmy), sv,dmy);
 		}
 		return true;
 	}
 	else if (option == 2)
 	{
 		View_Enrolled_Courses(sv);
-		cout << "\t\t ";
+		cout << "\t\t";
 		system("pause");
 		return true;
 	}
 	else if (option == 3)
 	{
+		if (mod == 0)
+		{
+			cout << "\t\tYou can not delete course(s) during this time!" << endl;
+			cout<<"\t\t";system("pause");
+			return true;
+		}
 		bool run = true;
 		while (run)
 		{

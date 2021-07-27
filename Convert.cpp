@@ -89,39 +89,44 @@ date String_ToDate(string dmy)
 }
 
 //*Chuyển đổi từ chuỗi thông tin học sinh sang kiểu học sinh
-//@param info Chuỗi thông tin 
+//@param info Chuỗi thông tin
 //@param arr[8] mảng lưu thông tin nếu cần dùng kiểu mảng
 //@return Thông tin học sinh dạng struct
-Student String_ToStudent(string info,string arr[8])
+Student String_ToStudent(string info, string arr[8])
 {
-    Student s;
-	int length = info.length(); 
-	int i = 0;
-
-    while (i <=7)
-    {
-        int pos = info.find_first_of(",", 0);
-        string temp = info.substr(0,pos);
-		if(i<7)
-		{
-			info = info.substr(pos + 1, length);
-			arr[i++] = temp;
-		}
-		else{
-			arr[i++]=info;
-		}
-    }
-	
-	s.number = String_ToInt(arr[0]);
-	s.id = String_ToInt(arr[1]);
-	s.name=arr[2];
-	s.gender=arr[3];
-	s.faculty=arr[4];
-	s.birthdate =arr[5];
-	s.socialID=String_ToInt(arr[6]);
-	s.user.username=arr[1];
-	s.user.password=arr[7];
+	Student s;
+	int length = info.length();
+	int k = 0;
+	string temp = info;
+	string a[8];
+	while (k < 7)
+	{
+		int pos = info.find_first_of(",", 0);
+		string temp2 = info.substr(0, pos);
+		info = info.substr(pos + 1, length);
+		a[k++] = temp2;
+	}
+	s.number = String_ToInt(a[0]);
+	s.id = String_ToInt(a[1]);
+	s.name = a[2];
+	s.gender = a[3];
+	s.faculty = a[4];
+	s.birthdate = a[5];
+	s.socialID = stoi(a[6]);
+	s.user.username = a[1];
+	int pos = temp.find_last_of(",",temp.size());
+	s.user.password = temp.substr(pos+1,temp.size() - pos);
 	return s;
+}
+//*Chuyển từ kiểu học sinh sang chuỗi học sinh
+//@param info kiểu học sinh
+//@return chuỗi học sinh
+string Student_ToString(Student s)
+{
+	string result;
+	result += (to_string(s.number) + "," + to_string(s.id) + "," +s.name + "," + s.gender + "," + s.faculty + ",");
+	result += (s.birthdate + "," + to_string(s.socialID) + "," + s.user.username + "," + s.user.password);
+	return result;
 }
 //*Chuyển từ kiểu chuỗi sang kiểu môn học
 //@param info Dữ liệu môn học dạng chuỗi
@@ -195,16 +200,16 @@ void String_Replace(string &s,string target,string change)
 //*Lưu các string từ file sang danh sách liên kết
 //@param path Đường dẫn chứa file
 //@return Danh sách liên kết chứa các chuỗi
-names File_to_LinkList(string path)
+strings File_to_LinkList(string path)
 {
-	names l = Init_List();
+	strings l = Init_List();
 	ifstream f;
 	f.open(path);
 	while (!f.eof())
 	{
 		string f1;
 		getline(f, f1);
-		name* p = Create_Node(f1);
+		str* p = Create_Node(f1);
 		Add_Last(l, p);
 	}
 	f.close();

@@ -20,6 +20,11 @@
         "vector": "cpp",
         "initializer_list": "cpp",
         "list": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "locale": "cpp",
+        "xlocinfo": "cpp",
+        "xlocnum": "cpp",
+        "xloctime": "cpp",
+        "xstddef": "cpp"
     }
 }

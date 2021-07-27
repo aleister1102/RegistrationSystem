@@ -155,11 +155,12 @@ int Class_Display(string year_path)
 	fstream f(year_path, ios::in);
 	int count = 1;
 
-	cout << "\t\t CREATED CLASS: " << endl;
+	cout << "\t\t CREATED CLASS OF "<<Path_ToName(year_path)<< endl;
+	if(!f.is_open()) return 0;
 	while (!f.eof())
 	{
 		string reader;
-		f >> reader;
+		getline(f,reader);
 		if (reader != "")
 		{
 			cout << "\t\t " << count++ << ". " << reader << endl;
@@ -198,13 +199,10 @@ string Class_Select(string year_name,int &line_number)
 
 //*Khởi tạo các đường dẫn cần thiết cho các tính năng của class
 //@return Đường dẫn tới năm học hoặc "OUT" nếu muốn thoát ra
-string Class_Init()
+void Class_Init(string year_name)
 {
 	string year_folder = ".\\Years\\";
 	string class_folder = ".\\Classes\\";
-	//Lựa chọn và khởi tạo đường dẫn tới năm
-	string year_name = Year_Select();
-	if (year_name == "OUT") return "OUT";
 	string year_path = Make_Path(year_folder, year_name);
 	//Hiển thị các lớp có trong năm đó
 	Class_Display(year_path);
@@ -214,7 +212,6 @@ string Class_Init()
 		string dir = class_folder + year_name + "\\";
 		Directory_Create(dir);//Dir đã tồn tại thì không tạo
 	}
-	return year_name;
 }
 
 //*Xử lý và điều hướng các hàm tính năng của lớp
@@ -225,7 +222,12 @@ bool Class_Proc(string year_name,int option)
 	//Khởi tạo các đường dẫn & thư mục cần thiết
 	//!Năm học này là năm học cần chọn, có thể không phải năm học hiện tại
 	string year_path = Make_Path(".\\Years\\",year_name);
-
+	if(File_Exist(year_path)==false && option !=4) 
+	{
+		cout<<"\t\t This year was not created"<<endl;
+		cout<<"\t\t ";system("pause");
+		return false;
+	}
 	if (option == 1){
 		bool run = true;
 		while(run)
@@ -263,15 +265,10 @@ bool Class_Proc(string year_name,int option)
 		system("cls");
 		return true;
 	}
-	else if(option ==4)
+	else 
 	{
 		system("cls");
 		return false;
-	}
-	else
-	{
-		system("cls");
-		return true;
 	}
 
 }

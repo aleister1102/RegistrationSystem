@@ -134,7 +134,7 @@ string split_acc_stu(string &s)
 	return ss;
 }
 // Login as Student
-bool check_acc_student(Account user,Student &info)
+bool check_acc_student(Account user, Student &info)
 {
 	ifstream f;
 	string acc_name = "acc_sv";
@@ -147,7 +147,7 @@ bool check_acc_student(Account user,Student &info)
 	while (!f.eof())
 	{
 		c++;
-		string acc1;//Cả dòng trong file tk & mk
+		string acc1; //Cả dòng trong file tk & mk
 		f >> acc1;
 		//acc2 chứa tk & mk, acc1 lúc này chứa đường dẫn tới file lớp
 		string acc2 = split_acc_stu(acc1);
@@ -160,15 +160,17 @@ bool check_acc_student(Account user,Student &info)
 			else if (c == n)
 			{
 				cout << "\t\t Wrong password or username !!!" << endl;
-				cout << "\t\t "; system("pause");
+				cout << "\t\t ";
+				system("pause");
 				return false;
 			}
 		}
 		else
 		{
-			info = Find_Student_Info(acc1,user);
+			info = Get_Student_Info(acc1, user);
 			cout << "\t\t Login sucessed !!!" << endl;
-			cout << "\t\t "; system("pause");
+			cout << "\t\t ";
+			system("pause");
 			return true;
 			break;
 		}

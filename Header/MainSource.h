@@ -17,13 +17,13 @@ struct Account {
     string username;
     string password;
 };
-struct name {
+struct str {
 	string info;
-	name* next;
+	str* next;
 };
-struct names {
-	name* head;
-	name* tail;
+struct strings {
+	str* head;
+	str* tail;
 };
 struct Course {
 	string id,name,teacher;

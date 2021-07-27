@@ -55,3 +55,20 @@ void enter_dmy(date& dmy)
 	} while (check_dmy(dmy) != true);
 	
 }
+bool check_registration_date(date dmy)
+{
+	if(dmy.month == 9){
+		if(dmy.day>=1 && dmy.day <=14)
+		{
+			return true;
+		}
+	}
+	else if(dmy.month==12 ||dmy.month==4)
+	{
+		if(dmy.day>=16 && dmy.day<=26)
+		{
+			return true;
+		}
+	}
+	return false;
+}

@@ -1,0 +1,23 @@
+﻿  Course.cpp
+  The contents of <filesystem> are available only with C++17 or later.
+  Login.cpp
+  The contents of <filesystem> are available only with C++17 or later.
+B:\PROJECTS\Project1\Login.cpp(8,21): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+B:\PROJECTS\Project1\Login.cpp(118,15): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  Menu.cpp
+  The contents of <filesystem> are available only with C++17 or later.
+  Score.cpp
+  The contents of <filesystem> are available only with C++17 or later.
+  Student.cpp
+  The contents of <filesystem> are available only with C++17 or later.
+B:\PROJECTS\Project1\Student.cpp(232,49): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+B:\PROJECTS\Project1\Student.cpp(252,36): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+B:\PROJECTS\Project1\Student.cpp(253,51): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  Generating Code...
+B:\PROJECTS\Project1\Menu.cpp(339): warning C4715: 'Main_Menu_Proc': not all control paths return a value
+B:\PROJECTS\Project1\Login.cpp(187): warning C4715: 'login_as_student': not all control paths return a value
+B:\PROJECTS\Project1\Login.cpp(179): warning C4715: 'check_acc_student': not all control paths return a value
+B:\PROJECTS\Project1\Login.cpp(244): warning C4715: 'login_as_admin': not all control paths return a value
+B:\PROJECTS\Project1\Login.cpp(236): warning C4715: 'check_acc_ad': not all control paths return a value
+B:\PROJECTS\Project1\Course.cpp(201): warning C4715: 'Course_Find_in_Student': not all control paths return a value
+  Main Source.vcxproj -> B:\PROJECTS\Project1\x64\Debug\Main Source.exe

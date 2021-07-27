@@ -1,2 +1,0 @@
-D:\Projects\Registration_system\x64\Debug\MainSource.exe
-D:\Projects\RS - copy\x64\Debug\MainSource.exe

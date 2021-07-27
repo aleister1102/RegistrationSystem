@@ -1,13 +1,13 @@
 #include "Header/MainSource.h"
 //Initialize//
-names Init_List();
-name* Create_Node(string info);
+strings Init_List();
+str* Create_Node(string info);
 //Operation//
-void Add_Last(names& list, name* node);
-bool Output_List(names l);
-void SortAscen_YearList(names& list);
-void ReInput_fromList(string store, names list);
-void removeHead(names& l);
-void removeTail(names& l);
-void removeNode(names& l, name* pDel);
+void Add_Last(strings& list, str* node);
+bool Output_List(strings l);
+void SortAscen_YearList(strings& list);
+void ReInput_fromList(string store, strings list);
+void removeHead(strings& l);
+void removeTail(strings& l);
+void removeNode(strings& l, str* pDel);
 

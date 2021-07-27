@@ -9,5 +9,5 @@ int Semester_Display(string year_name);
 
 string Semester_Selection(string year_name);
 
-string Semester_Init();
+void Semester_Init(string year_name);
 bool Semester_Proc(string year_name,date dmy,int option);

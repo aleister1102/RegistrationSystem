@@ -117,7 +117,7 @@ bool check_newpass(string pass)
 //Change Password & Recover Password
 void change_pass_in_file(string username, string pass)
 {
-	names list;
+	strings list;
 	fstream f;
 	int k = 0;
 	list = Init_List();
@@ -148,7 +148,7 @@ void change_pass_in_file(string username, string pass)
 				k = 1;
 			}
 		}
-		name* n1 = new name;
+		str* n1 = new str;
 		n1 = Create_Node(f1);
 		Add_Last(list, n1);
 	}

@@ -76,18 +76,32 @@ string File_Import(string folder)
 	do {
 		//Nhập tên file cần import
 		cout <<"\t\t Press '!' if you want to exit"<<endl;
-		cout <<"\t\t Enter file name for importing: ";
-		string name;
-		getline(cin,name);
-		if(name=="!") return "OUT";
+		cout <<"\t\t Enter file str for importing: ";
+		string str;
+		getline(cin,str);
+		if(str=="!") return "OUT";
 		//Tạo đường dẫn file import
-		path = folder + Extension(name, 1);
+		path = folder + Extension(str, 1);
 		cout << "\t\t Import file from: " << path << endl;
 		
 	} while (File_Exist(path)==false);
 	if(File_isEmpty(path)) return "OUT";
 	cout << "\t\t "; system("pause");
 	return path;
+}
+//*Sao chép file sang một thư mục khác
+//@param path đường dẫn file được chép @param dest folder cần sao chép đến
+//@return Đường dẫn của file mới copy
+string File_Copy(string path, string dest)
+{
+	vector<string> list;
+	list = File_ToVector(path);
+	//Tạo file mới với tên tương tự
+	string file = Path_ToName(path);
+	string copy_path = Make_Path(dest,file);
+	File_Create(copy_path);
+	Vector_ToFile(copy_path,list);
+	return copy_path;
 }
 
 //*Thêm chuỗi mới vào cuối file
@@ -235,13 +249,14 @@ void Directory_Delete(string dir)
 //@param dir Đường dẫn thư mục
 void Directory_Create(string dir)
 {
-	// if(File_Exist(dir)) return;
-	if (_mkdir(dir.c_str()) == -1)
-		cerr << "\t\t Error :  " << strerror(errno) << endl;
+	_mkdir(dir.c_str());
+	// if (_mkdir(dir.c_str()) == -1)
+	// 	cerr << "\t\t Error :  " << strerror(errno) << endl;
 
-	else
-		cout << "\t\t Directory created" << endl;
+	// else
+	// 	cout << "\t\t Directory created" << endl;
 }
+
 
 
 

@@ -180,15 +180,6 @@ string Semester_Selection(string year_name)
 		}
 	}
 }
-//*Hàm khởi tạo đường dẫn cho semester
-//@return Đường dẫn của năm học
-string Semester_Init()
-{
-	string year_name = Year_Select();
-	if(year_name=="OUT") return "OUT";
-	Semester_Display(year_name);
-	return year_name;
-}
 //*Xử lý các tính năng của semester	
 //@param year_name Năm hiện tại @param dmy Dữ liệu thời gian hiện tại
 //@param option Sự lựa chọn tính năng 
@@ -196,6 +187,13 @@ string Semester_Init()
 bool Semester_Proc(string year_name,date dmy,int option)
 {
 	//!Năm học này là năm học hiện tại (không phải được chọn)
+	string year_path = Make_Path(".\\Years\\",year_name);
+	if(File_Exist(year_path)==false && option !=3)
+	{
+		cout<<"\t\t This year was not created"<<endl;
+		cout<<"\t\t ";system("pause");
+		return false;
+	}
 	if (option == 1)
 	{
 		//Kiểm tra năm học có tồn và tạo ra thư mục con của Semester chứa năm học đó
@@ -215,11 +213,6 @@ bool Semester_Proc(string year_name,date dmy,int option)
 		
 			run  = Semester_Delete(year_name);
 		}
-		system("cls");
-		return true;
-	}
-	else if(option==0)
-	{
 		system("cls");
 		return true;
 	}
