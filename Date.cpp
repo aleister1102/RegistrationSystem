@@ -4,12 +4,12 @@ void output_dmy(date dmy)
 	cout<<dmy.day<<"/"<<dmy.month<<"/"<<dmy.year;
 }
 
-//Kiểm tra năm nhuận
+//*Kiểm tra năm nhuận
 bool check_leap_year(int year)
 {
 	return ((year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0));
 }
-//Số ngày của tháng
+//*Số ngày của tháng
 int day_of_month(int month, int year)
 {
 	switch (month)
@@ -25,7 +25,7 @@ int day_of_month(int month, int year)
 		break;
 	}
 }
-//Kiểm tra tính hợp lệ của ngày tháng
+//*Kiểm tra tính hợp lệ của ngày tháng
 bool check_dmy(date dmy)
 {
 	if (dmy.year <= 0 || dmy.month <= 0)
@@ -42,7 +42,7 @@ bool check_dmy(date dmy)
 	}
 	return true;
 }
-//Nhập ngày tháng
+//*Nhập ngày tháng
 void enter_dmy(date& dmy)
 {
 	do {
@@ -55,6 +55,7 @@ void enter_dmy(date& dmy)
 	} while (check_dmy(dmy) != true);
 	
 }
+//*Kiểm tra ngay dang ky xem co hop le khong
 bool check_registration_date(date dmy)
 {
 	if(dmy.month == 9){

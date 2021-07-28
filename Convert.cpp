@@ -13,7 +13,7 @@ string Extension(string name, int option)
 	}
 	//Nếu option là 2: cắt phần đuôi
 	else {
-		int pos = name.find_last_of(".", strlen(name.c_str()));
+		int pos = name.find_last_of(".", name.length());
 		return name.substr(0, pos);
 	}
 }
@@ -31,7 +31,7 @@ string Make_Path(string pre_folder, string file_name)
 //@return Tên của file (không có extension)
 string Path_ToName(string path)
 {
-	int pos = path.find_last_of("\\", strlen(path.c_str()));
+	int pos = path.find_last_of("\\", path.length());
 	return Extension(path.substr(size_t(pos) + 1), 2);
 }
 
@@ -132,7 +132,7 @@ string Student_ToString(Student s)
 //@param info Dữ liệu môn học dạng chuỗi
 //@param arr[7] Mảng lưu dữ liệu khi tách ra nếu cần dùng
 //@return Kiểu dữ liệu môn học
-Course String_ToCourse(string info,string arr[7])
+Course String_ToCourse(string info, string arr[7])
 {
 	Course c;
 	int length=info.size();

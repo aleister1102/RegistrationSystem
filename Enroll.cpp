@@ -23,7 +23,6 @@
 //		File_Create(path);
 //	}
 //}
-
 //Cắt chuỗi đăng ký thành bốn phần thông tin
 //Chuỗi môn học đã đăng ký
 //Mảng chứa bốn thông tin môn học
@@ -119,7 +118,7 @@ int *Sessesion(string s)
 bool Conflicted_Course(string store, string name)
 {
 	fstream f;
-	f.open(store.c_str(), ios::in);
+	f.open(store, ios::in); //change store.ctr() -> store
 	int n = Count_line(store);
 	int k = 0;
 	while (!f.eof())
@@ -387,7 +386,7 @@ int Enroll_Dis(Student sv,date dmy)
 string* Split_manyCourse(string path, int k)
 {
 	fstream f;
-	f.open(path.c_str(), ios::in | ios::out);
+	f.open(path, ios::in | ios::out);
 	int c = 0;
 	int n = Count_line(path);
 	string* ss = new string[n];

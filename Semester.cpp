@@ -40,7 +40,7 @@ string Season_Name(date dmy)
 //@param year_name Năm học hiện tại 
 //@param semester_suffix Hậu tố season của semester
 //@param semester_path Đường dẫn đến file semester
-void Semester_Time_Create(string year_name,string semester_suffix,string semester_path)
+void Semester_Time_Create(string year_name, string semester_suffix, string semester_path)
 {
 	int start_year = Year_ToInt(year_name);
 	date semester_start,semester_end;
@@ -75,7 +75,7 @@ void Semester_Time_Create(string year_name,string semester_suffix,string semeste
 //*Tạo học kỳ
 //@param year_name Năm hiện tại cần tạo học kỳ
 //@param dmy Thời gian hiện tại
-void Semester_Create(string year_name,date dmy)
+void Semester_Create(string year_name, date dmy)
 {
 	cout<<"\t\t Current month: "<<dmy.month<<endl;
 	//Tạo tên của học kỳ dựa vào thời gian hiện tại

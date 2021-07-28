@@ -45,7 +45,8 @@ void split_string(string s, string& s1, string& s2)
 bool check_usrname(string name, string path,int &count)
 {
 	ifstream file;
-	file.open(path.c_str());
+	file.open(path
+	());
 	while (!file.eof())
 	{
 		count++;
@@ -124,7 +125,7 @@ void change_pass_in_file(string username, string pass)
 	string acc_name = "acc_sv";
 	string acc_path = ".\\Accounts\\";
 	acc_path += (acc_name + ".csv");
-	f.open(acc_path.c_str(), ios::in | ios::out);
+	f.open(acc_path, ios::in | ios::out);
 	while (!f.eof())
 	{
 		string f1;
@@ -154,7 +155,7 @@ void change_pass_in_file(string username, string pass)
 	}
 	f.close();
 	remove(acc_path.c_str());
-	f.open(acc_path.c_str(), ios::out);
+	f.open(acc_path, ios::out);
 	ReInput_fromList(acc_path,list);
 	cout << "\t\t New password has been updated !!!" << endl;
 }
