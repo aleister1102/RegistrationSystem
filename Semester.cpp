@@ -102,7 +102,7 @@ void Semester_Create(string year_name, date dmy)
 bool Semester_Delete(string year_name)
 {
 	//Chọn học kỳ cần xóa
-	string semester_path = Semester_Selection(year_name);
+	string semester_path = Semester_Select(year_name);
 	if(semester_path=="OUT") return false;
 	remove(semester_path.c_str());
 	//Kiểm tra xem nếu đã xóa hết học kỳ của năm thì xóa luôn thư mục
@@ -129,6 +129,7 @@ int Semester_Display(string year_name)
 	bool check=false;
 	
 	cout<<"\t\t CREATED SEMESTER OF "<<year_name<<endl;
+	cout<<"\t\t 0. Back"<<endl;
 	for(int i=1;i<=3;i++)
 	{
 		//Tạo tên và đường dẫn để kiểm tra sự tồn tại của học kỳ
@@ -150,13 +151,12 @@ int Semester_Display(string year_name)
 //*Hàm chọn semester để thao tác
 //@param limited_semester Số semester hiện có trong năm @param year_name năm hiện tại
 //@return Đường dẫn semester hoặc "OUT" (nếu không có sem nào hoặc muốn thoát ra)
-string Semester_Selection(string year_name)
+string Semester_Select(string year_name)
 {
 	//Hiển thị semester
 	int limited_semester = Semester_Display(year_name);
 	if(limited_semester==0) return "OUT";
 	//Chọn lựa semester
-	cout<<"\t\t Press '-1' if you want to exit"<<endl;
 	cout<<"\t\t Choose semester to modify: ";
 	int option  = Valid_Data(limited_semester);
 	if(option <1) return "OUT";
@@ -184,7 +184,7 @@ string Semester_Selection(string year_name)
 //@param year_name Năm hiện tại @param dmy Dữ liệu thời gian hiện tại
 //@param option Sự lựa chọn tính năng 
 //@return True nếu cần dùng tiếp, false nếu ngược lại
-bool Semester_Proc(string year_name,date dmy,int option)
+bool Semester_Proc(string year_name, date dmy, int option)
 {
 	//!Năm học này là năm học hiện tại (không phải được chọn)
 	string year_path = Make_Path(".\\Years\\",year_name);

@@ -132,7 +132,7 @@ string Student_ToString(Student s)
 //@param info Dữ liệu môn học dạng chuỗi
 //@param arr[7] Mảng lưu dữ liệu khi tách ra nếu cần dùng
 //@return Kiểu dữ liệu môn học
-Course String_ToCourse(string info, string arr[7])
+Course String_ToCourse(string info,string arr[7])
 {
 	Course c;
 	int length=info.size();
@@ -167,18 +167,6 @@ string Course_ToString(Course c)
 	return c.id + "," + c.name + "," + c.teacher + "," + 
 	to_string(c.cre) + "," + to_string(c.capacity) + "," + c.day + "," + 
 	c.session;
-}
-//*Lấy ra tên môn học từ Chuỗi môn học
-//@param course_string Chuỗi môn học
-//@return Tên môn học
-string CourseString_To_CourseName(string course_string)
-{
-	int pos = course_string.find_first_of(",",0);
-	course_string.replace(pos,1,"/");
-	int pos2 = course_string.find_first_of(",",0);
-	course_string.replace(pos2,1,"_");
-	int pos3 = course_string.find_first_of(",",0);
-	return course_string.substr(pos+1,pos3-pos-1);
 }
 //*Thay đổi 1 ký tự trong chuỗi thành ký tự khác
 //@param &s chuỗi cần thay thế ký tự

@@ -3,26 +3,9 @@
 #include "Header\Menu.h"
 #include "Header\Convert.h"
 #include "Header\Node Process.h"
-#include"Header\Course.h"
+#include "Header\Course.h"
+#include "Header\Vector.h"
 
-//Nhập thông tin sinh viên bằng tay
-//Dữ liệu sinh viên
-//void Input_SvInfo(Student &sv)
-//{
-//	cout << "Enter your Faculty: ";
-//	getline(cin, sv.faculty);
-//	cout << "Enter your name: ";
-//	getline(cin, sv.name);
-//	cout << "Enter your ID: ";
-//	cin >> sv.id;
-//	string folder = ".\\Students\\Student for Enroll\\";
-//	string filename = to_string(sv.id) + "_" + sv.name;
-//	string path = Make_Path(folder, filename);
-//	if (!File_Exist(path))
-//	{
-//		File_Create(path);
-//	}
-//}
 //Cắt chuỗi đăng ký thành bốn phần thông tin
 //Chuỗi môn học đã đăng ký
 //Mảng chứa bốn thông tin môn học
@@ -118,7 +101,7 @@ int *Sessesion(string s)
 bool Conflicted_Course(string store, string name)
 {
 	fstream f;
-	f.open(store, ios::in); //change store.ctr() -> store
+	f.open(store, ios::in);
 	int n = Count_line(store);
 	int k = 0;
 	while (!f.eof())
@@ -206,8 +189,6 @@ int Delete_course_Dis(Student sv)
 	string folder = ".\\Students\\Students for Enrollment\\";
 	string filename = to_string(sv.id) + "_" + sv.name;
 	string path = Make_Path(folder, filename);
-	cout<<path<<endl;
-	system("pause");
 	View_Enrolled_Courses(sv);
 	cout << "\t\t" << Count_line(path) + 1 << ". Exit" << endl;
 	cout << "\t\tYour choice is: ";
@@ -250,8 +231,6 @@ bool Delete_course_Proc(Student sv, int option)
 		ReInput_fromList(path, list);
 
 		//Xóa tên sinh viên khỏi file môn học
-
-		
 		string *s1 = Split_String_4(s);
 		string pre_folder = ".\\Courses\\" + sv.faculty + "\\";
 		string path1 = pre_folder + s1[0] + "_" + s1[3] + ".csv";
@@ -429,8 +408,9 @@ string* Split_manyCourse(string path, int k)
 	}
 	f.close();
 	return ss;
+
 }
-//Xử lý đăng ký môn học
+//*Xử lý đăng ký môn học
 //Số thứ tự của môn học đã lựa chọn, dữ liệu sinh viên
 //Sẽ có hàm gọi hàm này: True sẽ chạy tiếp, False thì không chạy
 bool Enroll_Proc(int option, Student sv,date dmy)
@@ -446,38 +426,29 @@ bool Enroll_Proc(int option, Student sv,date dmy)
 		string y = Year_ToString(dmy.year);
 		string y1 = Year_ToString(dmy.year + 1);
 		string years = y + '-' + y1;
-		string path = ".\\Semesters\\";
-		path += years + "\\";
-		string filename1 = Make_Path(path, years + "-" + sems);
-		cout<<filename1<<endl;
-		system("pause");
+		string courses = ".\\Courses\\"+sv.faculty+"\\Courses.csv";
 		//
-		string* Sub = Split_manyCourse(filename1, 1);
-		string* Teacher_name = Split_manyCourse(filename1, 2);
-		string *Day = Split_manyCourse(filename1,5);
-		string* Session = Split_manyCourse(filename1, 6);
+		vector <string> list  = File_ToVector(courses);
+		string course_info = list[option-1];
+		string arr[7];
+		Course c = String_ToCourse(course_info,arr);
 		//
 		string folder = ".\\Students\\Students for Enrollment\\";
 		string filename = to_string(sv.id) + "_" + sv.name;
-		string pathh = Make_Path(folder, filename);
-		cout<<pathh<<endl;
-		system("pause");
-
-		int k = Count_line(pathh);
+		string path = Make_Path(folder, filename);
+		int k = Count_line(path);
 		//
-		string path1 = pre_folder + Sub[option - 1] + "_" + Teacher_name[option - 1] + ".csv";
-		cout<<path1<<endl;
+		string path1 = pre_folder + c.name + "_" + c.teacher + ".csv";
 		int k1 = Count_line(path1);
-		system("pause");
-		string sub = Sub[option - 1] + "_" + Day[option - 1] + "_" + Session[option - 1] + "_" + Teacher_name[option - 1];
+		
 		//
 		if (k < 5)
 		{
 			if (k1 < 50)
 			{
-				if (Conflicted_Course(pathh, sub) == false)
+				if (Conflicted_Course(path, course_info) == false)
 				{
-					File_Append(pathh, sub);
+					File_Append(path, course_info);
 					File_Append(path1, to_string(sv.id) + "_" + sv.name);
 					cout << "\t\tEnroll for the course successfully" << endl;
 					cout << "\t\t";

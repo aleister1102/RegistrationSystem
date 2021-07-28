@@ -272,4 +272,3 @@ bool Class_Proc(string year_name,int option)
 	}
 
 }
-

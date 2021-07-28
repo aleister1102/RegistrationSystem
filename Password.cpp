@@ -45,8 +45,7 @@ void split_string(string s, string& s1, string& s2)
 bool check_usrname(string name, string path,int &count)
 {
 	ifstream file;
-	file.open(path
-	());
+	file.open(path.c_str());
 	while (!file.eof())
 	{
 		count++;

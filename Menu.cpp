@@ -273,9 +273,9 @@ int Course_Update_Menu(vector<string> &choices)
 	int count=0;
 	do{
 		system("cls");
-		cout<<"\t\t You have choosen: "; String_Vector_Display(choices);
 		cout<<"\t\t UPDATE TABLE"<<endl;
-		cout<<"\t\t 0. Back"<<endl;
+		cout<<"\t\t You have choosen: "; String_Vector_Display(choices);
+		cout<<endl<<"\t\t 0. Back"<<endl;
 		cout<<"\t\t 1. ID"<<endl;
 		cout<<"\t\t 2. Teacher"<<endl;
 		cout<<"\t\t 3. Number of credits"<<endl;

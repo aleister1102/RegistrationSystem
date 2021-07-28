@@ -55,7 +55,6 @@ void enter_dmy(date& dmy)
 	} while (check_dmy(dmy) != true);
 	
 }
-//*Kiểm tra ngay dang ky xem co hop le khong
 bool check_registration_date(date dmy)
 {
 	if(dmy.month == 9){

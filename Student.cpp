@@ -198,15 +198,15 @@ int Student_Display(string class_path)
     cout<<"\t\t ";system("pause");
     return count;
 }
-
 //*Xuất danh sách học sinh có trong môn học
 //@param semester_path Đường dẫn đến học kỳ @param faculty Khoa đang chọn hiện tại
-void Student_Export(string semester_path, string faculty)
+void Student_Export(string semester_path,string faculty)
 {
-    int choice = Course_Select(semester_path,faculty);
+    string courses = ".\\Courses\\" + faculty + "\\Courses.csv";
+    int choice = Course_Select(faculty);
     if (choice == 0) return;
     //Tạo đường dẫn đến file môn học
-    string course_string = File_Line_Seek(semester_path,2,choice);
+    string course_string = File_Line_Seek(courses, 2, choice);
     string info[7];
     Course c = String_ToCourse(course_string,info);
     string course_folder = ".\\Courses\\" + faculty + "\\";
@@ -221,47 +221,44 @@ void Student_Export(string semester_path, string faculty)
 
     //Chép danh sách sinh viên vào file mới tạo
     ofstream write(new_course_path);
-    for(int i = 0; i < lines; i++){
-        write << Student_ToString(list[i]) << endl;
+    for(int i=0; i<lines; i++){
+        write <<Student_ToString(list[i]) <<endl;
     }
     write.close();
+    
+    Student_Arrange(new_course_path);
 }
-
 //*Cập nhật môn học có trong file sinh viên (lấy DS SV từ file môn học).
 //!Hàm này giữ cho thứ tự môn học không đổi
 //@param course_path Đường dẫn đến học kỳ.
 //@param new_course_teacher Giáo viên mới của môn học.
-void Student_Course_Update(string course_path, string new_course_teacher)
+void Student_Course_Update(string new_course_path,string new_string)
 {
 	//Lấy ra tên môn học
 	string student_folder = ".\\Students\\Students for Enrollment\\";
-	string course_string=Path_ToName(course_path);
-    int pos = course_string.find_first_of("_",0);
-	string course_name = course_string.substr(0,pos);
-	//
-	ifstream f(course_path);
-	if(f.is_open()){
+    int pos = new_string.find_first_of(",", 0);
+    int pos2 = new_string.find_first_of(",", pos + 1);
+    string course_name = new_string.substr(pos + 1, pos2 - pos - 1);
+    //
+    ifstream f(new_course_path);
+    if(f.is_open()){
 		while(!f.eof())
 		{
 			//Đọc sinh viên từ file môn học
 			string student;
 			getline(f,student);
-			string student_path = Make_Path(student_folder,student);
 			//Nếu như chuỗi rỗng thì bỏ qua đoạn dưới
-			if(Path_ToName(student_path)=="") continue;
+            if(student=="") continue;
+			string student_path = Make_Path(student_folder,student);
 			//Tìm môn học trong file student
 			int line = Course_Find_in_Student(student_path,course_name);
 			if(line!=0)
 			{
 				//Xóa dòng môn học cũ trong file student
 				string course_string = File_Line_Delete(student_path,0,line);
-				//Thay giáo viên mới
-				int size = course_string.size();
-				int pos = course_string.find_last_of("_",size);
-				course_string.replace(pos+1,size-pos,new_course_teacher);
 				//Cập nhật (nói khác đi là chèn) vào tên môn học cũ
-				File_Line_Update(student_path,0,line,course_string);
-			}
+				File_Line_Update(student_path,0,line,new_string);
+            }
 		}
 	}
 	f.close();

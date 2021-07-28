@@ -52,6 +52,6 @@ void String_Vector_Display(vector<string> arr)
 	for(int i=0;i<arr.size();i++)
 	{
 		if(stoi(arr[i])>0)
-			cout<<arr[i] <<"  "<<endl;
+			cout<<arr[i] <<"  ";
 	}
 }
