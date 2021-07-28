@@ -271,7 +271,8 @@ void Course_Update(string semester_path,string faculty)
 	string course_name = c.name + "_" + teacher_temp;
 	string course_path =  Make_Path(course_folder,course_name);
 	string new_course_path = Make_Path(course_folder,c.name+"_"+c.teacher);
-	rename(course_path.c_str(),new_course_path.c_str());
+	int check = rename(course_path.c_str(),new_course_path.c_str());
+	if (check == 1) cout << "Error to rename!";
 	//Đổi tên giáo viên trong file đăng ký của Sinh viên
 	if(teacher_temp==c.teacher) return; //Tên giáo viên không đổi thì out
 	Student_Course_Update(new_course_path,c.teacher);

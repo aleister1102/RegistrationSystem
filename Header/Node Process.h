@@ -10,4 +10,3 @@ void ReInput_fromList(string store, strings list);
 void removeHead(strings& l);
 void removeTail(strings& l);
 void removeNode(strings& l, str* pDel);
-

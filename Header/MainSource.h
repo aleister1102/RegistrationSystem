@@ -37,11 +37,11 @@ struct Student {
 	int socialID;
 	Account user;
 };
-struct Student_node{
+struct Student_node {
 	Student info;
 	Student_node*next;
 };
-struct Class{
+struct Class {
 	Student_node* head;
 	Student_node* tail;
 };

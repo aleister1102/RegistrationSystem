@@ -198,9 +198,10 @@ int Student_Display(string class_path)
     cout<<"\t\t ";system("pause");
     return count;
 }
+
 //*Xuất danh sách học sinh có trong môn học
 //@param semester_path Đường dẫn đến học kỳ @param faculty Khoa đang chọn hiện tại
-void Student_Export(string semester_path,string faculty)
+void Student_Export(string semester_path, string faculty)
 {
     int choice = Course_Select(semester_path,faculty);
     if (choice == 0) return;
@@ -220,11 +221,12 @@ void Student_Export(string semester_path,string faculty)
 
     //Chép danh sách sinh viên vào file mới tạo
     ofstream write(new_course_path);
-    for(int i=0;i<lines;i++){
-        write<<Student_ToString(list[i])<<endl;
+    for(int i = 0; i < lines; i++){
+        write << Student_ToString(list[i]) << endl;
     }
     write.close();
 }
+
 //*Cập nhật môn học có trong file sinh viên (lấy DS SV từ file môn học).
 //!Hàm này giữ cho thứ tự môn học không đổi
 //@param course_path Đường dẫn đến học kỳ.
