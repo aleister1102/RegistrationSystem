@@ -13,7 +13,8 @@ string Extension(string name, int option)
 	}
 	//Nếu option là 2: cắt phần đuôi
 	else {
-		int pos = name.find_last_of(".", name.length());
+		size_t pos = 0;
+		pos = name.find_last_of(".");
 		return name.substr(0, pos);
 	}
 }
@@ -31,8 +32,8 @@ string Make_Path(string pre_folder, string file_name)
 //@return Tên của file (không có extension)
 string Path_ToName(string path)
 {
-	int pos = path.find_last_of("\\", path.length());
-	return Extension(path.substr(size_t(pos) + 1), 2);
+	size_t pos = path.find_last_of("\\", path.length());
+	return Extension(path.substr(pos + 1), 2);
 }
 
 //*Chuyển từ kiểu String sang kiểu Int
@@ -40,30 +41,31 @@ string Path_ToName(string path)
 //@return Giá trị int sau khi chuyển
 int String_ToInt(string s)
 {
-	stringstream ss;int number;
-	ss<<s;ss>>number;
-	ss.str("");ss.clear();
+	stringstream ss;
+	int number;
+	ss << s;
+	ss >> number;
+	ss.str("");
+	ss.clear();
 	return number;
 }
-
 //*Chuyển từ một tên năm sang kiểu int (lấy năm đầu tiên)(VD: 2002-2003 thì lấy 2002)
 //@param year_name tên năm
 //@return Dạng số int của năm đầu tiên trong tên năm
 int Year_ToInt(string year_name)
 {
-	int pos = year_name.find_first_of("-", 0);
+	size_t pos = year_name.find_first_of("-", 0);
 	string first_year = year_name.substr(0, pos);
 	return String_ToInt(first_year);
 }
-
 //*Chuyển đổi từ ngày tháng sang chuỗi ngày tháng
 //@param dmy Kiểu dữ liệu ngày tháng năm
 //@return Chuỗi ngày tháng năm
 string Date_toString(date dmy)
 {
-	return (to_string(dmy.day)+ "/"
-	+to_string(dmy.month)+"/"
-	+to_string(dmy.year));
+	return to_string(dmy.day)   + "/"
+		  +to_string(dmy.month) + "/"
+		  +to_string(dmy.year);
 }
 
 //*Chuyển đổi từ chuỗi ngày tháng sang kiểu ngày tháng
@@ -73,14 +75,14 @@ date String_ToDate(string dmy)
 {
 	date result;
 	int length = dmy.length();
-	int i=1;
+	int i = 1;
 	string arr[3];
-	while(i<2)
+	while(i < 2)
 	{
-		int pos = dmy.find_first_of("/",0);
-		string temp = dmy.substr(0,pos);
+		int pos = dmy.find_first_of("/", 0);
+		string temp = dmy.substr(0, pos);
 		arr[i++]= temp;
-		dmy = dmy.substr(pos+1,length);
+		dmy = dmy.substr((uint64_t)pos + 1, length);
 	}
 	result.day=String_ToInt(arr[0]);
 	result.month=String_ToInt(arr[1]);
@@ -103,7 +105,7 @@ Student String_ToStudent(string info, string arr[8])
 	{
 		int pos = info.find_first_of(",", 0);
 		string temp2 = info.substr(0, pos);
-		info = info.substr(pos + 1, length);
+		info = info.substr((uint64_t)pos + 1, length);
 		a[k++] = temp2;
 	}
 	s.number = String_ToInt(a[0]);
@@ -114,8 +116,8 @@ Student String_ToStudent(string info, string arr[8])
 	s.birthdate = a[5];
 	s.socialID = stoi(a[6]);
 	s.user.username = a[1];
-	int pos = temp.find_last_of(",",temp.size());
-	s.user.password = temp.substr(pos+1,temp.size() - pos);
+	int pos = temp.find_last_of(",", temp.size());
+	s.user.password = temp.substr((uint64_t)pos + 1, temp.size() - pos);
 	return s;
 }
 //*Chuyển từ kiểu học sinh sang chuỗi học sinh
@@ -124,7 +126,7 @@ Student String_ToStudent(string info, string arr[8])
 string Student_ToString(Student s)
 {
 	string result;
-	result += (to_string(s.number) + "," + to_string(s.id) + "," +s.name + "," + s.gender + "," + s.faculty + ",");
+	result += (to_string(s.number) + "," + to_string(s.id) + "," + s.name + "," + s.gender + "," + s.faculty + ",");
 	result += (s.birthdate + "," + to_string(s.socialID) + "," + s.user.username + "," + s.user.password);
 	return result;
 }
@@ -132,22 +134,22 @@ string Student_ToString(Student s)
 //@param info Dữ liệu môn học dạng chuỗi
 //@param arr[7] Mảng lưu dữ liệu khi tách ra nếu cần dùng
 //@return Kiểu dữ liệu môn học
-Course String_ToCourse(string info,string arr[7])
+Course String_ToCourse(string info, string arr[7])
 {
 	Course c;
-	int length=info.size();
-	int i=0;
-	while (i <=6)
+	int length = info.size();
+	int i = 0;
+	while (i <= 6)
     {
         int pos = info.find_first_of(",", 0);
-        string temp = info.substr(0,pos);
+        string temp = info.substr(0, pos);
 		if(i<6)
 		{
-			info = info.substr(pos + 1, length);
+			info = info.substr((uint64_t)pos + 1, length);
 			arr[i++] = temp;
 		}
 		else{
-			arr[i++]=info;
+			arr[i++] = info;
 		}
     }
 	c.id=arr[0];
@@ -165,24 +167,36 @@ Course String_ToCourse(string info,string arr[7])
 string Course_ToString(Course c)
 {
 	return c.id + "," + c.name + "," + c.teacher + "," + 
-	to_string(c.cre) + "," + to_string(c.capacity) + "," + c.day + "," + 
-	c.session;
+		   to_string(c.cre) + "," + to_string(c.capacity) + "," + c.day + "," + 
+		   c.session;
+}
+//*Lấy ra tên môn học từ Chuỗi môn học
+//@param course_string Chuỗi môn học
+//@return Tên môn học
+string CourseString_To_CourseName(string course_string)
+{
+	int pos = course_string.find_first_of(",",0);
+	course_string.replace(pos,1,"/");
+	int pos2 = course_string.find_first_of(",",0);
+	course_string.replace(pos2,1,"_");
+	int pos3 = course_string.find_first_of(",",0);
+	return course_string.substr((double)pos+1,(double)pos3-pos-1);
 }
 //*Thay đổi 1 ký tự trong chuỗi thành ký tự khác
 //@param &s chuỗi cần thay thế ký tự
 //@param target Chuỗi được thay 
 //@param change Chuỗi cần thay 
-void String_Replace(string &s,string target,string change)
+void String_Replace(string &s, string target, string change)
 {
-	string temp=s;
+	string temp = s;
 	int pos = 0;
-	while(pos!=string::npos)
+	while(pos != string::npos)
 	{
-		pos = temp.find_first_of(target,0);
+		pos = temp.find_first_of(target, 0);
 		if(pos == string::npos) break;
-		temp.replace(pos,1,change);
+		temp.replace(pos, 1, change);
 	}
-	s=temp;
+	s = temp;
 }
 
 //*Lưu các string từ file sang danh sách liên kết
@@ -206,19 +220,19 @@ strings File_to_LinkList(string path)
 
 //*Ghi dữ liệu từ file sang mảng string
 //@param path Đường dẫn file
-//@return Mảng chứa string
-string* File_toStringArray(string path)
+//@return Vector chứa string
+vector<string> File_toStringArray(string path)
 {
+	vector<string> s;
 	int n = Count_line(path);
 	fstream file;
 	file.open(path);
-	string* s = new string[n + 1];
 	int i = 0;
 	while (!file.eof())
 	{
 		string s1;
 		getline(file, s1);
-		s[i++] = s1;
+		s.push_back(s1);
 	}
 	file.close();
 	return s;
