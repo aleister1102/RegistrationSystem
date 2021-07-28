@@ -1,18 +1,5 @@
-﻿  Course.cpp
+﻿  Semester.cpp
   The contents of <filesystem> are available only with C++17 or later.
-B:\PROJECTS\Project1\Course.cpp(187,48): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-B:\PROJECTS\Project1\Course.cpp(188,53): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  Enroll.cpp
-  The contents of <filesystem> are available only with C++17 or later.
-  Menu.cpp
-  The contents of <filesystem> are available only with C++17 or later.
-  Student.cpp
-  The contents of <filesystem> are available only with C++17 or later.
-B:\PROJECTS\Project1\Student.cpp(239,47): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-B:\PROJECTS\Project1\Student.cpp(240,54): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  Year.cpp
-  The contents of <filesystem> are available only with C++17 or later.
-  Generating Code...
-B:\PROJECTS\Project1\Menu.cpp(339): warning C4715: 'Main_Menu_Proc': not all control paths return a value
-B:\PROJECTS\Project1\Course.cpp(199): warning C4715: 'Course_Find_in_Student': not all control paths return a value
+B:\PROJECTS\Project1\Semester.cpp(25,37): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+B:\PROJECTS\Project1\Semester.cpp(164): warning C4715: 'Semester_Select': not all control paths return a value
   Main Source.vcxproj -> B:\PROJECTS\Project1\x64\Debug\Main Source.exe

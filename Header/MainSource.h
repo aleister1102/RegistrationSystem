@@ -13,6 +13,10 @@ using namespace std;
 struct date {
     int day, month, year;
 };
+struct TimeRange
+{
+	date begin, end;
+};
 struct Account {
     string username;
     string password;

@@ -207,11 +207,7 @@ void Student_Export(string semester_path,string faculty)
     if (choice == 0) return;
     //Tạo đường dẫn đến file môn học
     string course_string = File_Line_Seek(courses, 2, choice);
-    string info[7];
-    Course c = String_ToCourse(course_string,info);
-    string course_folder = ".\\Courses\\" + faculty + "\\";
-    string course_name = c.name + "_" + c.teacher;
-    string course_path = Make_Path(course_folder, course_name);
+    string course_path = Get_Course_Path(course_string,faculty);
     //Copy file đến tại đường dẫn cần export
     string new_course_path = File_Copy(course_path,".\\Students\\Students' ScoreBoard\\Export\\");
 

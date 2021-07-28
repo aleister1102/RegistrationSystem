@@ -74,19 +74,12 @@ string Date_toString(date dmy)
 date String_ToDate(string dmy)
 {
 	date result;
-	int length = dmy.length();
-	int i = 1;
-	string arr[3];
-	while(i < 2)
-	{
-		int pos = dmy.find_first_of("/", 0);
-		string temp = dmy.substr(0, pos);
-		arr[i++]= temp;
-		dmy = dmy.substr((uint64_t)pos + 1, length);
-	}
-	result.day=String_ToInt(arr[0]);
-	result.month=String_ToInt(arr[1]);
-	result.year=String_ToInt(arr[2]);
+	int pos = dmy.find_first_of("/",0);
+	int pos2 = dmy.find_first_of("/",pos+1);
+	int pos3 = dmy.find_first_of("/",pos2+1);
+	result.day = String_ToInt(dmy.substr(0,pos));
+	result.month = String_ToInt(dmy.substr(pos+1,pos2-pos-1));
+	result.year = String_ToInt(dmy.substr(pos2+1,pos3-pos2-1));
 	return result;
 }
 
@@ -170,18 +163,6 @@ string Course_ToString(Course c)
 		   to_string(c.cre) + "," + to_string(c.capacity) + "," + c.day + "," + 
 		   c.session;
 }
-//*Lấy ra tên môn học từ Chuỗi môn học
-//@param course_string Chuỗi môn học
-//@return Tên môn học
-string CourseString_To_CourseName(string course_string)
-{
-	int pos = course_string.find_first_of(",",0);
-	course_string.replace(pos,1,"/");
-	int pos2 = course_string.find_first_of(",",0);
-	course_string.replace(pos2,1,"_");
-	int pos3 = course_string.find_first_of(",",0);
-	return course_string.substr((double)pos+1,(double)pos3-pos-1);
-}
 //*Thay đổi 1 ký tự trong chuỗi thành ký tự khác
 //@param &s chuỗi cần thay thế ký tự
 //@param target Chuỗi được thay 
@@ -218,23 +199,4 @@ strings File_to_LinkList(string path)
 	return l;
 }
 
-//*Ghi dữ liệu từ file sang mảng string
-//@param path Đường dẫn file
-//@return Vector chứa string
-vector<string> File_toStringArray(string path)
-{
-	vector<string> s;
-	int n = Count_line(path);
-	fstream file;
-	file.open(path);
-	int i = 0;
-	while (!file.eof())
-	{
-		string s1;
-		getline(file, s1);
-		s.push_back(s1);
-	}
-	file.close();
-	return s;
-}
 
