@@ -36,7 +36,7 @@ string *Split_String_4(string name)
 		if (k == 0 && name[i] != '_')
 		{
 			s1 += name[i];
-			if (name[i + 1] == '_')
+			if (name[(uint64_t)i + 1] == '_')
 			{
 				i++;
 				k = 1;
@@ -45,7 +45,7 @@ string *Split_String_4(string name)
 		else if (k == 1 && name[i] != '_')
 		{
 			s2 += name[i];
-			if (name[i + 1] == '_')
+			if (name[(uint64_t)i + 1] == '_')
 			{
 				i++;
 				k = 2;
@@ -54,7 +54,7 @@ string *Split_String_4(string name)
 		else if (k == 2 && name[i] != '_')
 		{
 			s3 += name[i];
-			if (name[i + 1] == '_')
+			if (name[(uint64_t)i + 1] == '_')
 			{
 				i++;
 				k = 3;
@@ -72,12 +72,15 @@ string *Split_String_4(string name)
 	return s;
 }
 
-//Tiết học của môn học dạng int
-//Chuỗi ký tự tiết học
-//Mảng int chứa thông tin tiết học dạng int
+//*Tiết học của môn học dạng int
+//@param s Chuỗi ký tự tiết học
+//@return Tiết học bắt đầu và kết thúc
 int *Sessesion(string s)
 {
 	int *num = new int[2];
+	//init num array
+	num[0] = -1;
+	num[1] = -1;
 	int k = 0;
 	for (int i = 0; i < size(s); i++)
 	{
