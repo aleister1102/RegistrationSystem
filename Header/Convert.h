@@ -12,6 +12,6 @@ Course String_ToCourse(string info, string arr[7]);
 string Course_ToString(Course c);
 string CourseString_To_CourseName(string course_string);
 void String_Replace(string &s,string target,string change);
-string* File_toStringArray(string path);
+vector<string> File_toStringArray(string path);
 strings File_to_LinkList(string path);
 
