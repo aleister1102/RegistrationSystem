@@ -1,65 +1,18 @@
-﻿  Class.cpp
+﻿  Course.cpp
   The contents of <filesystem> are available only with C++17 or later.
-  Convert.cpp
-  The contents of <filesystem> are available only with C++17 or later.
-C:\Users\thanh\OneDrive\Tài liệu\University\HK2\KTLT\Project\registration_system\Convert.cpp(77,27): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\thanh\OneDrive\Tài liệu\University\HK2\KTLT\Project\registration_system\Convert.cpp(82,38): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\thanh\OneDrive\Tài liệu\University\HK2\KTLT\Project\registration_system\Convert.cpp(100,28): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\thanh\OneDrive\Tài liệu\University\HK2\KTLT\Project\registration_system\Convert.cpp(106,39): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\thanh\OneDrive\Tài liệu\University\HK2\KTLT\Project\registration_system\Convert.cpp(119,47): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\thanh\OneDrive\Tài liệu\University\HK2\KTLT\Project\registration_system\Convert.cpp(140,26): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\thanh\OneDrive\Tài liệu\University\HK2\KTLT\Project\registration_system\Convert.cpp(144,45): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\thanh\OneDrive\Tài liệu\University\HK2\KTLT\Project\registration_system\Convert.cpp(178,46): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\thanh\OneDrive\Tài liệu\University\HK2\KTLT\Project\registration_system\Convert.cpp(180,47): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\thanh\OneDrive\Tài liệu\University\HK2\KTLT\Project\registration_system\Convert.cpp(182,47): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\thanh\OneDrive\Tài liệu\University\HK2\KTLT\Project\registration_system\Convert.cpp(183,60): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
-C:\Users\thanh\OneDrive\Tài liệu\University\HK2\KTLT\Project\registration_system\Convert.cpp(183,41): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
-C:\Users\thanh\OneDrive\Tài liệu\University\HK2\KTLT\Project\registration_system\Convert.cpp(195,38): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-  Course.cpp
-  The contents of <filesystem> are available only with C++17 or later.
-  Date.cpp
-  The contents of <filesystem> are available only with C++17 or later.
+B:\PROJECTS\Project1\Course.cpp(187,48): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+B:\PROJECTS\Project1\Course.cpp(188,53): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   Enroll.cpp
-  The contents of <filesystem> are available only with C++17 or later.
-  File.cpp
-  The contents of <filesystem> are available only with C++17 or later.
-  Login.cpp
-  The contents of <filesystem> are available only with C++17 or later.
-C:\Users\thanh\OneDrive\Tài liệu\University\HK2\KTLT\Project\registration_system\Login.cpp(8,21): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\thanh\OneDrive\Tài liệu\University\HK2\KTLT\Project\registration_system\Login.cpp(118,15): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  MainSource.cpp
   The contents of <filesystem> are available only with C++17 or later.
   Menu.cpp
   The contents of <filesystem> are available only with C++17 or later.
-  Node Process.cpp
-  The contents of <filesystem> are available only with C++17 or later.
-  Password.cpp
-  The contents of <filesystem> are available only with C++17 or later.
-C:\Users\thanh\OneDrive\Tài liệu\University\HK2\KTLT\Project\registration_system\Password.cpp(7,18): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\thanh\OneDrive\Tài liệu\University\HK2\KTLT\Project\registration_system\Password.cpp(8,18): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\thanh\OneDrive\Tài liệu\University\HK2\KTLT\Project\registration_system\Password.cpp(26,17): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\thanh\OneDrive\Tài liệu\University\HK2\KTLT\Project\registration_system\Password.cpp(142,23): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  Score.cpp
-  The contents of <filesystem> are available only with C++17 or later.
-  Semester.cpp
-  The contents of <filesystem> are available only with C++17 or later.
-C:\Users\thanh\OneDrive\Tài liệu\University\HK2\KTLT\Project\registration_system\Semester.cpp(13,37): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\thanh\OneDrive\Tài liệu\University\HK2\KTLT\Project\registration_system\Semester.cpp(21,37): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   Student.cpp
   The contents of <filesystem> are available only with C++17 or later.
-C:\Users\thanh\OneDrive\Tài liệu\University\HK2\KTLT\Project\registration_system\Student.cpp(239,49): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\thanh\OneDrive\Tài liệu\University\HK2\KTLT\Project\registration_system\Student.cpp(259,36): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\thanh\OneDrive\Tài liệu\University\HK2\KTLT\Project\registration_system\Student.cpp(260,51): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  Vector.cpp
-  The contents of <filesystem> are available only with C++17 or later.
+B:\PROJECTS\Project1\Student.cpp(239,47): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+B:\PROJECTS\Project1\Student.cpp(240,54): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   Year.cpp
   The contents of <filesystem> are available only with C++17 or later.
   Generating Code...
-C:\Users\thanh\OneDrive\Tài liệu\University\HK2\KTLT\Project\registration_system\Semester.cpp(182): warning C4715: 'Semester_Selection': not all control paths return a value
-C:\Users\thanh\OneDrive\Tài liệu\University\HK2\KTLT\Project\registration_system\Menu.cpp(339): warning C4715: 'Main_Menu_Proc': not all control paths return a value
-C:\Users\thanh\OneDrive\Tài liệu\University\HK2\KTLT\Project\registration_system\Login.cpp(187): warning C4715: 'login_as_student': not all control paths return a value
-C:\Users\thanh\OneDrive\Tài liệu\University\HK2\KTLT\Project\registration_system\Login.cpp(179): warning C4715: 'check_acc_student': not all control paths return a value
-C:\Users\thanh\OneDrive\Tài liệu\University\HK2\KTLT\Project\registration_system\Login.cpp(244): warning C4715: 'login_as_admin': not all control paths return a value
-C:\Users\thanh\OneDrive\Tài liệu\University\HK2\KTLT\Project\registration_system\Login.cpp(236): warning C4715: 'check_acc_ad': not all control paths return a value
-C:\Users\thanh\OneDrive\Tài liệu\University\HK2\KTLT\Project\registration_system\Course.cpp(201): warning C4715: 'Course_Find_in_Student': not all control paths return a value
-  Main Source.vcxproj -> C:\Users\thanh\OneDrive\Tài liệu\University\HK2\KTLT\Project\registration_system\x64\Debug\Main Source.exe
+B:\PROJECTS\Project1\Menu.cpp(339): warning C4715: 'Main_Menu_Proc': not all control paths return a value
+B:\PROJECTS\Project1\Course.cpp(199): warning C4715: 'Course_Find_in_Student': not all control paths return a value
+  Main Source.vcxproj -> B:\PROJECTS\Project1\x64\Debug\Main Source.exe
