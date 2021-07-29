@@ -45,7 +45,7 @@ void split_string(string s, string& s1, string& s2)
 bool check_usrname(string name, string path,int &count)
 {
 	ifstream file;
-	file.open(path.c_str());
+	file.open(path, ios::in);
 	while (!file.eof())
 	{
 		count++;
@@ -117,14 +117,14 @@ bool check_newpass(string pass)
 //Change Password & Recover Password
 void change_pass_in_file(string username, string pass)
 {
-	names list;
+	strings list;
 	fstream f;
 	int k = 0;
 	list = Init_List();
 	string acc_name = "acc_sv";
 	string acc_path = ".\\Accounts\\";
 	acc_path += (acc_name + ".csv");
-	f.open(acc_path.c_str(), ios::in | ios::out);
+	f.open(acc_path, ios::in | ios::out);
 	while (!f.eof())
 	{
 		string f1;
@@ -148,13 +148,13 @@ void change_pass_in_file(string username, string pass)
 				k = 1;
 			}
 		}
-		name* n1 = new name;
+		str* n1 = new str;
 		n1 = Create_Node(f1);
 		Add_Last(list, n1);
 	}
 	f.close();
 	remove(acc_path.c_str());
-	f.open(acc_path.c_str(), ios::out);
+	f.open(acc_path, ios::out);
 	ReInput_fromList(acc_path,list);
 	cout << "\t\t New password has been updated !!!" << endl;
 }

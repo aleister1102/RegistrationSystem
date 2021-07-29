@@ -12,6 +12,7 @@
 #include "Header\Student.h"
 #include "Header\Date.h"
 #include "Header\Vector.h"
+#include "Header\Score.h"
 
 int Valid_Data(int limit)
 {
@@ -86,6 +87,14 @@ bool Display_Mode_Admin(Account info, date dmy)
 		return Admin_Proc(Admin_Disp(), info, dmy);
 	}
 }
+void TimeLine_Disp()
+{
+	system("cls");
+	cout<<"\t\t TIME LINE "<<endl;
+	cout << "\t\t [1/9 - 14/9] [16/12 - 26/12] [16/4 - 26/4]: Registration Time" << endl;
+	cout << "\t\t [15/9 - 15/12] [1/1 - 15/4] [1/5 - 31/7]: Semester Time " << endl;
+	cout<<endl;
+}
 //*Các thao tác của admin
 int Admin_Disp()
 {
@@ -94,12 +103,13 @@ int Admin_Disp()
 	cout << "\t\t Choose your option: " << endl;
 	cout << "\t\t 1. Year Section" << endl;
 	cout << "\t\t 2. Class Section" << endl;
-	cout << "\t\t 3. Semester Section" << endl;
-	cout << "\t\t 4. Student Section" << endl;
+	cout << "\t\t 3. Student Section" << endl;
+	cout << "\t\t 4. Semester Section" << endl;
 	cout << "\t\t 5. Course Section" << endl;
-	cout << "\t\t 6. Log Out" << endl;
+	cout << "\t\t 6. Score Board" << endl;
+	cout << "\t\t 7. Log Out" << endl;
 	cout << "\t\t Select option: ";
-	return Valid_Data(6);
+	return Valid_Data(7);
 }
 //*Year Menu
 int Year_Menu_Disp()
@@ -119,7 +129,6 @@ int Year_Menu_Disp()
 int Class_Menu_Disp()
 {
 	cout << "\t\t Choose your option: " << endl;
-	cout << "\t\t 0. Back " << endl;
 	cout << "\t\t 1. Add new class" << endl;
 	cout << "\t\t 2. Delete class" << endl;
 	cout << "\t\t 3. Clear class(es)" << endl;
@@ -172,7 +181,6 @@ int Training_System_Menu_Disp()
 int Semester_Menu_Disp()
 {
 	cout << "\t\t Choose your option: " << endl;
-	cout << "\t\t 0. Back " << endl;
 	cout << "\t\t 1. Add new semester" << endl;
 	cout << "\t\t 2. Delete semesters" << endl;
 	cout << "\t\t 3. Exit" << endl;
@@ -184,23 +192,14 @@ int Semester_Menu_Disp()
 //@param info Thông tin học sinh
 //@param dmy Thời gian hiện tại
 //@return True nếu cần recycle
-bool Display_Mode_Student(Student info, date dmy)
+bool Display_Mode_Student(Student &info, date dmy)
 {
-	if (dmy.month == 9)
-	{
-		return Student_Proc_Passive(Student_Menu_Passive(), info, dmy);
-	}
-	else if (dmy.month == 7)
-	{
-		cout << "\t\t Insert grade function here" << endl;
-		cout << "\t\t "; system("pause");
-		return false;
+	if(check_registration_date(dmy)){
+		return Student_Proc_Passive(Student_Menu_Passive(), info, dmy,1);
 	}
 	else
 	{
-		cout << "\t\t You can not do anything this time" << endl;
-		cout << "\t\t "; system("pause");
-		return false;
+		return Student_Proc_Passive(Student_Menu_Passive(), info, dmy, 0);
 	}
 }
 //*Student Menu
@@ -274,9 +273,9 @@ int Course_Update_Menu(vector<string> &choices)
 	int count=0;
 	do{
 		system("cls");
-		cout<<"\t\t You have choosen: "; String_Vector_Display(choices);
 		cout<<"\t\t UPDATE TABLE"<<endl;
-		cout<<"\t\t 0. Back"<<endl;
+		cout<<"\t\t You have choosen: "; String_Vector_Display(choices);
+		cout<<endl<<"\t\t 0. Back"<<endl;
 		cout<<"\t\t 1. ID"<<endl;
 		cout<<"\t\t 2. Teacher"<<endl;
 		cout<<"\t\t 3. Number of credits"<<endl;
@@ -303,6 +302,17 @@ int Course_Update_Menu(vector<string> &choices)
 	else{
 		return 0;
 	}
+}
+int Score_Menu()
+{
+	cout << "\t\t Score Board Menu: " << endl;
+	cout << "\t\t 1. Export Student in a Course" << endl;
+	cout << "\t\t 2. Import Score Board" << endl;
+	cout << "\t\t 3. View Score Board" << endl;
+	cout << "\t\t 4. Update Score Board" << endl;
+	cout << "\t\t 5. View Score Board of a class" << endl;
+	cout << "\t\t Select session: ";
+	return Valid_Data(5);
 }
 //*Xử lý menu chính
 bool Main_Menu_Proc(int option)
@@ -333,14 +343,12 @@ bool Login_Proc(int option)
 	bool run = true;
 	Account user; date dmy;
 	Student info;
-	info.faculty = "CNTT";
-	info.id = 20120386;
-	info.name = "Le Phuoc Toan";
 	//If user is administrator
 	if (option == 1)
 	{
 		/*run = login_as_admin(info);*/
-		////////////Login system: off/////////////////
+		//!Login system: off
+		TimeLine_Disp();
 		if(run){
 			enter_dmy(dmy);		
 		}
@@ -388,6 +396,8 @@ bool Login_Proc(int option)
 //*Xử lý menu admin
 bool Admin_Proc(int option,Account info,date dmy)
 {
+	//!Ngoài Year ra thì các option khác đều bị giới hạn trong năm nhập vào
+	string year_name = to_string(dmy.year) + "-"+to_string(dmy.year+1);
 	if (option == 1)
 	{
 		bool run = true;
@@ -404,11 +414,7 @@ bool Admin_Proc(int option,Account info,date dmy)
 		while (run)
 		{
 			//Khởi tạo và tạo thư mục cho lớp học
-			string year_name = Class_Init();
-			if(year_name=="OUT"){
-				run = false;
-				continue;
-			}
+			Class_Init(year_name);
 			//Xử lý các tính năng lớp học
 			run = Class_Proc(year_name,Class_Menu_Disp());
 		}
@@ -417,23 +423,9 @@ bool Admin_Proc(int option,Account info,date dmy)
 	else if (option == 3)
 	{
 		bool run = true;
-		while(run)
-		{
-			string year_name = Semester_Init();
-			if(year_name=="OUT") {
-				run = false;
-				continue;
-			}
-			run = Semester_Proc(year_name,dmy,Semester_Menu_Disp());
-		}
-		return true;
-	}
-	else if (option == 4)
-	{
-		bool run = true;
 		while (run)
 		{
-			string class_path = Student_Init();
+			string class_path = Student_Init(year_name);
 			if(class_path=="OUT") {
 				run = false;
 				continue;
@@ -442,12 +434,39 @@ bool Admin_Proc(int option,Account info,date dmy)
 		}
 		return true;
 	}
+	else if (option == 4)
+	{
+		bool run = true;
+		while(run)
+		{
+			Semester_Display(year_name);
+			run = Semester_Proc(year_name,dmy,Semester_Menu_Disp());
+		}
+		return true;
+	}
 	else if (option == 5)
 	{
 		bool run = true;
 		while (run)
 		{
-			run = Course_Proc(Course_Menu_Disp(),dmy);
+			//Chọn năm học và học kỳ
+			string semester_path;
+			run = Course_Init(semester_path,dmy);
+			if(run == false) continue;
+			run = Course_Proc(Course_Menu_Disp(),semester_path);
+		}
+		return true;
+	}
+	else if (option == 6)
+	{
+		bool run = true;
+		while (run)
+		{
+			//Chọn năm học và học kỳ
+			string semester_path;
+			run = Course_Init(semester_path,dmy);
+			if(run == false) continue;
+			run = Score_Proc(Score_Menu(),semester_path);
 		}
 		return true;
 	}
@@ -458,12 +477,12 @@ bool Admin_Proc(int option,Account info,date dmy)
 	}
 }
 //*Xử lý menu của học sinh
-bool Student_Proc_Passive(int option,Student info,date dmy)
+bool Student_Proc_Passive(int option,Student info,date dmy,int mod)
 {
 	if(option == 1){
 		bool run = true;
 		while(run){
-			run = Enroll_MenuProc(Enroll_MenuDisp(info),info);
+			run = Enroll_MenuProc(Enroll_MenuDisp(info),info,dmy,mod);
 		}
 		return true;
 	}
@@ -471,3 +490,4 @@ bool Student_Proc_Passive(int option,Student info,date dmy)
 		return false;
 	}
 }
+

@@ -4,7 +4,7 @@
 bool compare(string s1, string s2);
 void split_string(string s, string& s1, string& s2);
 //Account checking
-bool check_usrname(string name, string path, int& count);
+bool check_usrname(string str, string path, int& count);
 bool check_pass(string pass,int count);
 bool check_key(string key, int count);
 bool check_newpass(string pass);

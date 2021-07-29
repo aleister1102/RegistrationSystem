@@ -1,0 +1,5 @@
+﻿  Semester.cpp
+  The contents of <filesystem> are available only with C++17 or later.
+B:\PROJECTS\Project1\Semester.cpp(25,37): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+B:\PROJECTS\Project1\Semester.cpp(164): warning C4715: 'Semester_Select': not all control paths return a value
+  Main Source.vcxproj -> B:\PROJECTS\Project1\x64\Debug\Main Source.exe

@@ -123,7 +123,6 @@ int Years_Display()
 	system("cls");
 	Year_Sort("Years.csv");
 	cout << "\t\t CREATED YEARS: " << endl;
-	cout << "\t\t 0. Back" << endl;
 	fstream f("Years.csv", ios::in);
 	int i = 1;
 	//Đọc các năm từ file "Years.csv"

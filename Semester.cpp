@@ -5,104 +5,79 @@
 #include "Header\File.h"
 #include "Header\Convert.h"
 #include "Header\Node Process.h"
-
+#include "Header\Date.h"
 //*Xem ngày tháng của học kỳ
 //@param time Chuỗi ngày tháng
-void View_Semester_Time(string time) 
+void View_Semester_Time(string semester_path) 
 {
-	int pos = time.find_first_of(",",0);
-	cout<<"\t\t Begining time: "<<time.substr(0,pos)<<endl;
-	cout<<"\t\t Ending time: "<<time.substr(pos+1,time.size())<<endl;
+	cout<<"\t\t Semester time: "<<endl;
+	ifstream f(semester_path);
+	string reader;
+	getline(f, reader);
+	cout<<"\t\t Begining time: "<<reader<<endl;
+	getline(f, reader);
+	cout<<"\t\t Ending time: "<<reader<<endl;
 }
 //*Xem ngày tháng đăng ký học phần
 //@param time Chuỗi ngày tháng
-void View_Registration_Time(string time) 
+void View_Registration_Time(string semester_path)
 {
-	int pos = time.find_first_of(",",0);
-	cout<<"\t\t Opening time: "<<time.substr(0,pos)<<endl;
-	cout<<"\t\t Closing time: "<<time.substr(pos+1,time.size())<<endl;
-}
-//*Lấy tên của season từ dữ liệu thời gian hiện tại
-//@param dmy Dữ liệu thời gian (tháng)
-//@return Chuỗi tên season
-string Season_Name(date dmy)	
-{
-	if(dmy.month>=9 &&dmy.month<=12){
-		return "-Autumn";
+	cout<<"\t\t Registration time: "<<endl;
+	ifstream f(semester_path);
+	string reader;
+	for(int i=0;i<2;i++){
+		getline(f,reader);
 	}
-	else if(dmy.month>=1 && dmy.month<=4){
-		return "-Spring";
-	}
-	return "-Summer";
-}
-//*Tạo ra ngày tháng của semester và ngày tháng ĐKHP 
-//*và ghi vào file semester (dòng đầu của file semester mới tạo)
-//@param year_name Năm học hiện tại 
-//@param semester_suffix Hậu tố season của semester
-//@param semester_path Đường dẫn đến file semester
-void Semester_Time_Create(string year_name,string semester_suffix,string semester_path)
-{
-	int start_year = Year_ToInt(year_name);
-	date semester_start,semester_end;
-	date registration_start,registration_end;
-	ofstream f(semester_path,ios::out);
-	if(semester_suffix == "-Autumn")
-	{
-		semester_start = {15,9,start_year};
-		semester_end = {15,12,start_year};
-		registration_start = {1,9,start_year};
-		registration_end = {10,9,start_year};
-	}
-	else if(semester_suffix == "-Summer")
-	{
-		semester_start={1,5,start_year+1};
-		semester_end={31,7,start_year+1};
-		registration_start={16,4,start_year+1};
-		registration_end={26,4,start_year+1};
-	}
-	else{
-		semester_start={1,1,start_year+1};
-		semester_end={15,4,start_year+1};
-		registration_start={16,12,start_year};
-		registration_end={26,12,start_year};
-	}
-	string semester_time = Date_toString(semester_start)+","+ Date_toString(semester_end);
-	string registration_time = Date_toString(registration_start)+","+Date_toString(registration_end);
-	f<<semester_time<<endl;
-	f<<registration_time<<endl;
-	f.close();
+	getline(f,reader);
+	cout << "\t\t Begining time: " << reader << endl;
+	getline(f, reader);
+	cout << "\t\t Ending time: " << reader << endl;
 }
 //*Tạo học kỳ
 //@param year_name Năm hiện tại cần tạo học kỳ
 //@param dmy Thời gian hiện tại
-void Semester_Create(string year_name,date dmy)
+//!Chỉ có thể tạo một lần 3 học kỳ
+void Semester_Create(string year_name, date dmy)
 {
-	cout<<"\t\t Current month: "<<dmy.month<<endl;
-	//Tạo tên của học kỳ dựa vào thời gian hiện tại
-	string season = Season_Name(dmy);
+	//Tạo tên của các học kỳ
 	string semester_folder = ".\\Semesters\\" + year_name + "\\";
-	string semester_path = semester_folder + Extension(year_name + season,1);
-	//Loại trừ trường hợp semester đã tồn tại
-	if(File_Exist(semester_path))
-	{
-		cout<<"\t\t Semester is existed!"<<endl;
-		cout<<"\t\t ";system("pause");
-		return;
-	}
+	string autumn_path = semester_folder + Extension(year_name + "-Autumn",1);
+	string spring_path = semester_folder + Extension(year_name + "-Spring",1);
+	string summer_path = semester_folder + Extension(year_name + "-Summer",1);
+	if(File_Exist(autumn_path)==true && File_Exist(spring_path)==true && File_Exist(summer_path)==true) return;
 	//Nếu không thì tạo file semester
-	else File_Create(semester_path);
-	//Tạo các thời gian liên quan cho semester
-	Semester_Time_Create(year_name,season,semester_path);
-	cout<<"\t\t ";system("pause");
+	File_Create(autumn_path);
+	File_Create(spring_path);
+	File_Create(summer_path);
+	//Tạo các thời gian liên quan
+	TimeRange semTime[3];
+	init_SemesterTime(semTime);
+	enter_SemesterTime(semTime,dmy);
+	string seasons[3] = {autumn_path,spring_path,summer_path};
+	for(int i = 0; i < 3; i++)
+	{
+	//Tạo thời gian cho semester
+		File_Append(seasons[i],Date_toString(semTime[i].begin));
+		File_Append(seasons[i],Date_toString(semTime[i].end));
+	}
+	TimeRange regTime[3];
+	enter_RegsTime(regTime,seasons);
+	for(int i = 0; i < 3; i++)
+	{
+	//Tạo thời gian đăng ký học phần
+		File_Append(seasons[i],Date_toString(regTime[i].begin));
+		File_Append(seasons[i],Date_toString(regTime[i].end));
+	}
 }
 //*Xóa một học kỳ
 //@param limited_semester Số học kỳ giới hạn
 //@param year_name Năm hiện tại cần xóa học kỳ
 //@return True nếu cần dùng lại hàm, false nếu không
+//!Chỉ xóa được một học kỳ mỗi lần
 bool Semester_Delete(string year_name)
 {
 	//Chọn học kỳ cần xóa
-	string semester_path = Semester_Selection(year_name);
+	string semester_path = Semester_Select(year_name);
 	if(semester_path=="OUT") return false;
 	remove(semester_path.c_str());
 	//Kiểm tra xem nếu đã xóa hết học kỳ của năm thì xóa luôn thư mục
@@ -129,6 +104,7 @@ int Semester_Display(string year_name)
 	bool check=false;
 	
 	cout<<"\t\t CREATED SEMESTER OF "<<year_name<<endl;
+	cout<<"\t\t 0. Back"<<endl;
 	for(int i=1;i<=3;i++)
 	{
 		//Tạo tên và đường dẫn để kiểm tra sự tồn tại của học kỳ
@@ -150,13 +126,12 @@ int Semester_Display(string year_name)
 //*Hàm chọn semester để thao tác
 //@param limited_semester Số semester hiện có trong năm @param year_name năm hiện tại
 //@return Đường dẫn semester hoặc "OUT" (nếu không có sem nào hoặc muốn thoát ra)
-string Semester_Selection(string year_name)
+string Semester_Select(string year_name)
 {
 	//Hiển thị semester
 	int limited_semester = Semester_Display(year_name);
 	if(limited_semester==0) return "OUT";
 	//Chọn lựa semester
-	cout<<"\t\t Press '-1' if you want to exit"<<endl;
 	cout<<"\t\t Choose semester to modify: ";
 	int option  = Valid_Data(limited_semester);
 	if(option <1) return "OUT";
@@ -180,22 +155,20 @@ string Semester_Selection(string year_name)
 		}
 	}
 }
-//*Hàm khởi tạo đường dẫn cho semester
-//@return Đường dẫn của năm học
-string Semester_Init()
-{
-	string year_name = Year_Select();
-	if(year_name=="OUT") return "OUT";
-	Semester_Display(year_name);
-	return year_name;
-}
 //*Xử lý các tính năng của semester	
 //@param year_name Năm hiện tại @param dmy Dữ liệu thời gian hiện tại
 //@param option Sự lựa chọn tính năng 
 //@return True nếu cần dùng tiếp, false nếu ngược lại
-bool Semester_Proc(string year_name,date dmy,int option)
+bool Semester_Proc(string year_name, date dmy, int option)
 {
 	//!Năm học này là năm học hiện tại (không phải được chọn)
+	string year_path = Make_Path(".\\Years\\",year_name);
+	if(File_Exist(year_path)==false && option !=3)
+	{
+		cout<<"\t\t This year was not created"<<endl;
+		cout<<"\t\t ";system("pause");
+		return false;
+	}
 	if (option == 1)
 	{
 		//Kiểm tra năm học có tồn và tạo ra thư mục con của Semester chứa năm học đó
@@ -215,11 +188,6 @@ bool Semester_Proc(string year_name,date dmy,int option)
 		
 			run  = Semester_Delete(year_name);
 		}
-		system("cls");
-		return true;
-	}
-	else if(option==0)
-	{
 		system("cls");
 		return true;
 	}

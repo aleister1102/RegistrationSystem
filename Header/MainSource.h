@@ -13,17 +13,21 @@ using namespace std;
 struct date {
     int day, month, year;
 };
+struct TimeRange
+{
+	date begin, end;
+};
 struct Account {
     string username;
     string password;
 };
-struct name {
+struct str {
 	string info;
-	name* next;
+	str* next;
 };
-struct names {
-	name* head;
-	name* tail;
+struct strings {
+	str* head;
+	str* tail;
 };
 struct Course {
 	string id,name,teacher;
@@ -37,11 +41,11 @@ struct Student {
 	int socialID;
 	Account user;
 };
-struct Student_node{
+struct Student_node {
 	Student info;
 	Student_node*next;
 };
-struct Class{
+struct Class {
 	Student_node* head;
 	Student_node* tail;
 };

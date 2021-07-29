@@ -6,7 +6,7 @@
 //Kiểm tra danh sách liên kết rỗng
 //Param: một DSLK
 //Return: true nếu list rỗng, false nếu list có phần tử
-bool CheckEmpty(names list)
+bool CheckEmpty(strings list)
 {
 	if (list.head == nullptr)
 		return true;
@@ -14,9 +14,9 @@ bool CheckEmpty(names list)
 }
 //Khởi tạo danh sách liên kết
 //Return: danh sách liên kết đã khởi tạo
-names Init_List()
+strings Init_List()
 {
-	names l;
+	strings l;
 	l.head = nullptr;
 	l.tail = nullptr;
 	return l;
@@ -24,16 +24,16 @@ names Init_List()
 //Khởi tạo node
 //Param: thông tin của node, ở đây là một chuỗi chứa tên
 //Return: con trỏ node chứa name
-name* Create_Node(string info)
+str* Create_Node(string info)
 {
-	name* s = new name;
+	str* s = new str;
 	s->info = info;
 	s->next = nullptr;
 	return s;
 }
 //Thêm node vào cuối list
 //Param: một danh sách chứa name, một con trỏ trỏ đến stuct name
-void Add_Last(names& list, name* node)
+void Add_Last(strings& list, str* node)
 {
 	if (CheckEmpty(list))
 	{
@@ -48,9 +48,9 @@ void Add_Last(names& list, name* node)
 }
 //Xóa node ở đầu
 //Param: một danh sách liên kết chứa tên
-void removeHead(names& l)
+void removeHead(strings& l)
 {
-	name* p = l.head;
+	str* p = l.head;
 	l.head = p->next;
 	p->next = nullptr;
 	delete p;
@@ -58,10 +58,10 @@ void removeHead(names& l)
 }
 //Xóa node ở cuối
 //Param: một dánh sách liên kết chứa tên
-void removeTail(names& l)
+void removeTail(strings& l)
 {
-	name* p = l.head;
-	name* pDel = l.tail;
+	str* p = l.head;
+	str* pDel = l.tail;
 	while (p->next->next != nullptr)
 	{
 		p = p->next;
@@ -73,7 +73,7 @@ void removeTail(names& l)
 }
 //Xóa một node bất kỳ
 //Param: danh sách liên kết chứa tên, một node chứa tên
-void removeNode(names& l, name* pDel)
+void removeNode(strings& l, str* pDel)
 {
 	if (pDel == l.head)
 	{
@@ -85,7 +85,7 @@ void removeNode(names& l, name* pDel)
 	}
 	else
 	{
-		name* nptr = l.head;
+		str* nptr = l.head;
 		while (nptr->next != pDel)
 		{
 			nptr = nptr->next;
@@ -99,13 +99,13 @@ void removeNode(names& l, name* pDel)
 //Sao chép thông tin danh sách liên kết sang một danh sách khác không cùng địa chỉ
 //Param: một list name
 //Return: một list name khác đã copy
-names Copy_List(names l)
+strings Copy_List(strings l)
 {
-	name* move = l.head;
-	names temp = Init_List();
+	str* move = l.head;
+	strings temp = Init_List();
 	while (move != nullptr)
 	{
-		name* add = Create_Node({ move->info });
+		str* add = Create_Node({ move->info });
 		Add_Last(temp, add);
 		move = move->next;
 	}
@@ -113,9 +113,9 @@ names Copy_List(names l)
 }
 //Truyền thông tin từ list vào file
 //Param: file cần truyển thông tin, danh sách liên kết chứa thông tin
-void ReInput_fromList(string store, names list)
+void ReInput_fromList(string store, strings list)
 {
-	name* move = list.head;
+	str* move = list.head;
 	fstream f(store, ios::in | ios::app);
 	while (move->next != nullptr)
 	{
@@ -130,13 +130,13 @@ void ReInput_fromList(string store, names list)
 
 //Sắp xếp tăng dần cho năm
 //Param: DSLK chứa tên năm cần sort
-void SortAscen_YearList(names & list)
+void SortAscen_YearList(strings & list)
 {
 	//Create new list with different address
-	names result = Copy_List(list);
-	name * curr = result.head;
+	strings result = Copy_List(list);
+	str * curr = result.head;
 
-	name* move = list.head;
+	str* move = list.head;
 	//Create flags
 	int min;
 	int before = 0;
@@ -179,7 +179,7 @@ void SortAscen_YearList(names & list)
 //Xuất danh sách liên kết
 //Param: list
 //Return: trả về false nếu danh sách rỗng
-bool Output_List(names l)
+bool Output_List(strings l)
 {
 	if (CheckEmpty(l))
 	{
@@ -190,7 +190,7 @@ bool Output_List(names l)
 	cout << "List of Node: " << endl;
 	cout << "----------------------------------------------------------------------------" << endl;
 
-	name* move = l.head;
+	str* move = l.head;
 	int count = 1;
 	while (move != nullptr)
 	{
