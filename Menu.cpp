@@ -414,7 +414,7 @@ bool Admin_Proc(int option,Account info,date dmy)
 		while (run)
 		{
 			//Khởi tạo và tạo thư mục cho lớp học
-			Class_Init(year_name);
+			//Class_Init(year_name);
 			//Xử lý các tính năng lớp học
 			run = Class_Proc(year_name,Class_Menu_Disp());
 		}

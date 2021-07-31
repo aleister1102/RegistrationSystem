@@ -47,19 +47,20 @@ Student *Get_Students_Info(string course_path, int lines)
     while (!f.eof())
     {
         string ID;
-        getline(f, ID);
+        getline(f, ID, '\n');
         if (ID == "")
             continue;
         //Lấy MSSV
         ID = ID.substr(0, 8);
         //Dò trong file tài khoản để lấy đường dẫn đến lớp
         ifstream acc(".\\Accounts\\acc_sv.csv");
-        while (!f.eof())
+        string path;
+        while (getline(acc, path, '\n'))
         {
-            string path;
-            getline(acc, path);
-            if (path.substr(0, 8) != ID || path == "")
+            if (path.substr(0, 8) != ID || path == "") {
+                path = "";
                 continue;
+            }
             //Lấy đường dẫn
             string class_path = split_acc_stu(path);
             //Lấy thông tin đầy đủ của một học sinh
@@ -206,10 +207,10 @@ void Student_Export(string semester_path,string faculty)
     int choice = Course_Select(faculty);
     if (choice == 0) return;
     //Tạo đường dẫn đến file môn học
-    string course_string = File_Line_Seek(courses, 2, choice);
+    string course_string = File_Line_Seek(courses, 0, choice);
     string course_path = Get_Course_Path(course_string,faculty);
     //Copy file đến tại đường dẫn cần export
-    string new_course_path = File_Copy(course_path,".\\Students\\Students' ScoreBoard\\Export\\");
+    string new_course_path = File_Copy(course_path,".\\Students\\Students_Export\\");
 
     //Tìm thông tin đầy đủ của từng học sinh
     int lines = Count_line(course_path);
@@ -218,7 +219,7 @@ void Student_Export(string semester_path,string faculty)
     //Chép danh sách sinh viên vào file mới tạo
     ofstream write(new_course_path);
     for(int i=0; i<lines; i++){
-        write <<Student_ToString(list[i]) <<endl;
+        write << list[i].number << "," << list[i].id << "," << list[i].name << endl;
     }
     write.close();
     
