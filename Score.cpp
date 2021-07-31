@@ -41,3 +41,5 @@ bool Score_Proc(int option, string semester_path)
         return false;
     }
 }
+
+//void Admin_ViewScoreBoard()
