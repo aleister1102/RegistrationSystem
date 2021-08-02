@@ -1,8 +1,18 @@
-﻿#include "Menu.h"
-#include "Year.h"
-#include "Class.h"
-#include "Node Process.h"
-#include "LOGIN.h"
+﻿#include "Header\Menu.h"
+#include "Header\Year.h"
+#include "Header\Class.h"
+#include "Header\Node Process.h"
+#include "Header\Login.h"
+#include "Header\Password.h"
+#include "Header\Course.h"
+#include "Header\Convert.h"
+#include "Header\File.h"
+#include "Header\Semester.h"
+#include "Header\Enroll.h"
+#include "Header\Student.h"
+#include "Header\Date.h"
+#include "Header\Vector.h"
+#include "Header\Score.h"
 
 int Valid_Data(int limit)
 {
@@ -18,14 +28,22 @@ int Valid_Data(int limit)
 		}
 		else {
 			cin >> n;
+			cin.ignore();
+		}
+		if (n > limit)
+		{
+			cout << "\t\t Input data is Over Limited" << endl;
+			cout<<"\t\t ";
+		}
+		if (n == -1) {
+			cout << "\t\t You have pressed the hidden button to stop the proccess " << endl;
+			cout << "\t\t "; system("pause");
+			return n;
 		}
 	} while (n > limit || n < 0);
 	cout << endl;
 	return n;
 }
-
-//Display main menu
-//Return: Choice (int type) of user
 int Main_Menu_Disp()
 {
 	system("cls");
@@ -36,6 +54,260 @@ int Main_Menu_Disp()
 	cout << "\t\t Your choice is (choose from 1 to 4): ";
 	return Valid_Data(3);
 }
+int Login_Disp()
+{
+	system("cls");
+	cout << "\t\t LOGIN" << endl;
+	cout << "\t\t 1. As Admin" << endl;
+	cout << "\t\t 2. As Student" << endl;
+	cout << "\t\t 3. Change Password(Only student)" << endl;
+	cout << "\t\t 4. Forgot password(Only student)" << endl;
+	cout << "\t\t 5. Exit" << endl;
+	cout << "\t\t Select option: ";
+	return Valid_Data(5);
+}
+void AboutUs()
+{
+	cout << "About Us" << endl;
+	system("pause");
+}
+//*Phân loại tính năng có thể thực thi dựa vào thời gian
+//@param info Thông tin admin
+//@param dmy ngày tháng hiện tại
+bool Display_Mode_Admin(Account info, date dmy)
+{
+	if (dmy.month ==8)
+	{
+		cout << "\t\t Insert grade function here" << endl;
+		cout << "\t\t "; system("pause");
+		return false;
+	}
+	else
+	{
+		return Admin_Proc(Admin_Disp(), info, dmy);
+	}
+}
+
+//*Các thao tác của admin
+int Admin_Disp()
+{
+	system("cls");
+	cout << "\t\t YOU ARE ADMIN NOW	" << endl;
+	cout << "\t\t Choose your option: " << endl;
+	cout << "\t\t 1. Year Section" << endl;
+	cout << "\t\t 2. Class Section" << endl;
+	cout << "\t\t 3. Student Section" << endl;
+	cout << "\t\t 4. Semester Section" << endl;
+	cout << "\t\t 5. Course Section" << endl;
+	cout << "\t\t 6. Score Board" << endl;
+	cout << "\t\t 7. Log Out" << endl;
+	cout << "\t\t Select option: ";
+	return Valid_Data(7);
+}
+//*Year Menu
+int Year_Menu_Disp()
+{
+	//system("cls");
+	cout << "\t\t YEAR SECTION" << endl;
+	cout << "\t\t Choose your option: " << endl;
+	cout << "\t\t 1. Create new year" << endl;
+	cout << "\t\t 2. Delete year" << endl;
+	cout << "\t\t 3. Delete all years" << endl;
+	cout << "\t\t 4. Exit" << endl;
+	cout << "\t\t ----------------------------" << endl;
+	cout << "\t\t Select option: ";
+	return Valid_Data(4);
+}
+//*Class Menu
+int Class_Menu_Disp()
+{
+	cout << "\t\t Choose your option: " << endl;
+	cout << "\t\t 1. Add new class" << endl;
+	cout << "\t\t 2. Delete class" << endl;
+	cout << "\t\t 3. Clear class(es)" << endl;
+	cout << "\t\t 4. Exit" << endl;
+	cout << "\t\t Select option: ";
+	return Valid_Data(4);
+}
+//*Phân loại cách tạo lớp học
+int Class_Create_Mod_Menu()
+{
+	system("cls");
+	cout << "\t\t CREATE CLASS SECTION " << endl;
+	cout << "\t\t 1. Import classes from files" << endl;
+	cout << "\t\t 2. Add single class" << endl;
+	cout << "\t\t 3. Exit" << endl;
+	cout << "\t\t ----------------------------" << endl;
+	cout << "\t\t Select option: ";
+	return Valid_Data(3);
+}
+//*Department
+int Department_Menu_Disp()
+{
+	cout << "\t\t Choose your option: " << endl;
+	cout << "\t\t 1. Information Technology" << endl;
+	cout << "\t\t 2. Geology" << endl;
+	cout << "\t\t 3. Electronics & Telecommunication" << endl;
+	cout << "\t\t 4. Chemistry" << endl;
+	cout << "\t\t 5. Material Science & Technology" << endl;
+	cout << "\t\t 6. Environment" << endl;
+	cout << "\t\t 7. Biology" << endl;
+	cout << "\t\t 8. Mathematics" << endl;
+	cout << "\t\t 9. Physics" << endl;
+	cout << "\t\t 10. Exit" << endl;
+	cout << "\t\t ----------------------------" << endl;
+	cout << "\t\t Select option: ";
+	return Valid_Data(10);
+}
+//*Training System 
+int Training_System_Menu_Disp()
+{
+	system("cls");
+	cout << "\t\t Choose your training system: " << endl;
+	cout << "\t\t 1. Popular" << endl;
+	cout << "\t\t 2. High Quality" << endl;
+	cout << "\t\t ----------------------------" << endl;
+	cout << "\t\t Select option: ";
+	return Valid_Data(2);
+}
+//*Semester Menu
+int Semester_Menu_Disp()
+{
+	cout << "\t\t Choose your option: " << endl;
+	cout << "\t\t 1. Add new semester" << endl;
+	cout << "\t\t 2. Delete semesters" << endl;
+	cout << "\t\t 3. Exit" << endl;
+	cout << "\t\t ----------------------------" << endl;
+	cout << "\t\t Select option: ";
+	return Valid_Data(3);
+}
+//*Phân loại tính năng của học sinh 
+//@param info Thông tin học sinh
+//@param dmy Thời gian hiện tại
+//@return True nếu cần recycle
+bool Display_Mode_Student(Student &info, date dmy)
+{
+	if(check_registration_date(dmy)){
+		return Student_Proc_Passive(Student_Menu_Passive(), info, dmy,1);
+	}
+	else
+	{
+		return Student_Proc_Passive(Student_Menu_Passive(), info, dmy, 0);
+	}
+}
+//*Student Menu
+int Student_Menu_Active()
+{
+	cout << "\t\t Choose your option: " << endl;
+	cout << "\t\t 1. Add new student(s)" << endl;
+	cout << "\t\t 2. Delete student(s)" << endl;
+	cout << "\t\t 3. View student(s)" << endl;
+	cout << "\t\t 4. Exit" << endl;
+	cout << "\t\t ----------------------------" << endl;
+	cout << "\t\t Select option: ";
+	return Valid_Data(4);
+}
+//*Menu tính năng của học sinh
+int Student_Menu_Passive()
+{
+	//system("cls");
+	cout << "\t\t YOU ARE STUDENT NOW	" << endl;
+	cout << "\t\t Choose your option: " << endl;
+	cout << "\t\t 1. Enrollment" << endl;
+	cout << "\t\t 2. Log out" << endl;
+	cout << "\t\t ----------------------------" << endl;
+	cout << "\t\t Select option: ";
+	return Valid_Data(2);
+}
+//*Course Menu
+int Course_Menu_Disp() 
+{
+	cout << "\t\t Choose your option: " << endl;
+	cout << "\t\t 1. Add new course" << endl;
+	cout << "\t\t 2. Delete course" << endl;
+	cout << "\t\t 3. Update course" << endl;
+	cout << "\t\t 4. View course" << endl;
+	cout << "\t\t 5. Exit" << endl;
+	cout << "\t\t ----------------------------" << endl;
+	cout << "\t\t Select option: ";
+	return Valid_Data(5);
+}
+//*Menu chọn ngày cho môn học
+int Course_Day()
+{
+	cout << "\t\t Day of the week: " << endl;
+	cout << "\t\t 1. Monday " << endl;
+	cout << "\t\t 2. Tuesday" << endl;
+	cout << "\t\t 3. Wednesday" << endl;
+	cout << "\t\t 4. Thursday" << endl;
+	cout << "\t\t 5. Friday" << endl;
+	cout << "\t\t 6. Saturday" << endl;
+	cout << "\t\t Select day: ";
+	return Valid_Data(6);
+}
+//*Menu chọn tiết học cho môn học
+int Course_Session()
+{
+	cout << "\t\t Session: " << endl;
+	cout << "\t\t 1. S1 (07:30)" << endl;
+	cout << "\t\t 2. S2 (09:30)" << endl;
+	cout << "\t\t 3. S3 (13:30)" << endl;
+	cout << "\t\t 4. S4 (15:30)" << endl;
+	cout << "\t\t Select session: ";
+	return Valid_Data(4);
+}
+//*Menu cập nhật môn học
+//@param choices Mảng các chọn lựa cập nhật
+//@return Số lựa chọn đã chọn hoặc số 0 khi muốn thoát ra
+int Course_Update_Menu(vector<string> &choices)
+{
+	system("cls");
+	string choice;
+	int count=0;
+	do{
+		system("cls");
+		cout<<"\t\t UPDATE TABLE"<<endl;
+		cout<<"\t\t You have choosen: "; String_Vector_Display(choices);
+		cout<<endl<<"\t\t 0. Back"<<endl;
+		cout<<"\t\t 1. ID"<<endl;
+		cout<<"\t\t 2. Teacher"<<endl;
+		cout<<"\t\t 3. Number of credits"<<endl;
+		cout<<"\t\t 4. Capacity"<<endl;
+		cout<<"\t\t 5. Day"<<endl;
+		cout<<"\t\t 6. Session"<<endl;
+		cout<<"\t\t If you want to apply update(s), press 'Y'."<<endl;
+		cout<<"\t\t Select field for update: ";
+		getline(cin,choice);
+		if(choice!="0" && choice!="Y")
+		{
+			if(String_Vector_Duplicate(choices,choice)==false)
+			{
+				choices.push_back(choice);
+				count+=1;
+			}
+		}
+	}while(choice !="Y" && choice !="0" && count<6);
+
+	if(choice =="Y" || count==6)
+	{
+		return count;
+	}
+	else{
+		return 0;
+	}
+}
+int Score_Menu()
+{
+	cout << "\t\t Score Board Menu: " << endl;
+	cout << "\t\t 1. Export Student in a Course" << endl;
+	cout << "\t\t 2. Import Score Board" << endl;
+	cout << "\t\t 3. View Score Board" << endl;
+	cout << "\t\t 4. Update Score Board" << endl;
+	cout << "\t\t 5. View Score Board of a class" << endl;
+	cout << "\t\t Select session: ";
+	return Valid_Data(5);
+}
+//*Xử lý menu chính
 bool Main_Menu_Proc(int option)
 {
 	if (option == 1)//Login
@@ -59,186 +331,101 @@ bool Main_Menu_Proc(int option)
 	}
 }
 
-//Sub menu (display and proccess)
-bool Login_Proc(int option)
+//*Xử lý menu admin
+bool Admin_Proc(int option,Account info,date dmy)
 {
-	bool run = false;
-	user info; date dmy;
-	//If user is administrator
-	if (option == 1)
-	{
-		run = login_as_admin(info,dmy);
-		system("cls");
-
-		while (run)
-		{
-			run = Admin_Proc(Admin_Disp(),info,dmy);
-		}
-		return true;
-	}
-	else if (option == 2)
-	{
-		run = login_as_student(info,dmy);
-		system("cls");
-
-		while (run)
-		{
-			run = Student_Proc(Student_Disp(),info,dmy);
-		}
-		return true;
-	}
-	else if (option == 3)
-	{
-		cout << "\t\t Call Change Pass Function Here" << endl;
-		cout << "\t\t ";
-		system("pasue");
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-int Login_Disp()
-{
-	system("cls");
-	cout << "\t\t LOGIN" << endl;
-	cout << "\t\t 1. As Admin" << endl;
-	cout << "\t\t 2. As Student" << endl;
-	cout << "\t\t 3. Change Password" << endl;
-	cout << "\t\t 4. Exit" << endl;
-	cout << "\t\t Select option: ";
-	return Valid_Data(4);
-}
-void AboutUs()
-{
-	cout << "About Us" << endl;
-	system("pause");
-}
-
-//Admin Menu
-int Admin_Disp()
-{
-	//system("cls");
-	cout << "\t\t YOU ARE ADMIN NOW	" << endl;
-	cout << "\t\t Choose your option: " << endl;
-	cout << "\t\t 1. Year Section" << endl;
-	cout << "\t\t 2. Class Section" << endl;
-	cout << "\t\t 3. Log Out" << endl;
-	cout << "\t\t Select option: ";
-	return Valid_Data(3);
-}
-bool Admin_Proc(int option,user info,date dmy)
-{
+	//!Ngoài Year ra thì các option khác đều bị giới hạn trong năm nhập vào
+	string year_name = to_string(dmy.year) + "-"+to_string(dmy.year+1);
 	if (option == 1)
 	{
 		bool run = true;
 		while (run)
 		{
 			Years_Display();
-			run = Year_Proc_Active(Year_Menu_Disp(),dmy.year);
+			run = Year_Proc(dmy.year,Year_Menu_Disp());
 		}
 		return true;
 	}
 	else if (option == 2)
 	{
 		bool run = true;
-		
 		while (run)
 		{
-			string year_name = Year_Selection();
-			string year_path = ".\\Years\\" + year_name;
-			Classes_Display(year_path);
-			run = Class_Proc_Active(year_name,Class_Menu_Disp(),dmy.year);
+			//Khởi tạo và tạo thư mục cho lớp học
+			Class_Init(year_name);
+			//Xử lý các tính năng lớp học
+			run = Class_Proc(year_name,Class_Menu_Disp());
 		}
 		return true;
 	}
+	else if (option == 3)
+	{
+		bool run = true;
+		while (run)
+		{
+			string class_path = Student_Init(year_name);
+			if(class_path=="OUT") {
+				run = false;
+				continue;
+			}
+			run = Student_Proc_Active(Student_Menu_Active(),class_path);
+		}
+		return true;
+	}
+	else if (option == 4)
+	{
+		bool run = true;
+		while(run)
+		{
+			Semester_Display(year_name);
+			run = Semester_Proc(year_name,dmy,Semester_Menu_Disp());
+		}
+		return true;
+	}
+	//else if (option == 5)
+	//{
+	//	bool run = true;
+	//	while (run)
+	//	{
+	//		//Chọn năm học và học kỳ
+	//		string semester_path;
+	//		run = Course_Init(semester_path,dmy);
+	//		if(run == false) continue;
+	//		run = Course_Proc(Course_Menu_Disp(),semester_path);
+	//	}
+	//	return true;
+	//}
+	// else if (option == 6)
+	// {
+	// 	bool run = true;
+	// 	while (run)
+	// 	{
+	// 		//Chọn năm học và học kỳ
+	// 		string semester_path;
+	// 		run = Course_Init(semester_path,dmy);
+	// 		if(run == false) continue;
+	// 		run = Score_Proc(Score_Menu(),semester_path);
+	// 	}
+	// 	return true;
+	// }
 	else
 	{
 		return false;
 		system("cls");
 	}
 }
-//Student Menu
-int Student_Disp()
+//*Xử lý menu của học sinh
+bool Student_Proc_Passive(int option,Student info,date dmy,int mod)
 {
-	//system("cls");
-	cout << "\t\t YOU ARE STUDENT NOW	" << endl;
-	cout << "\t\t Choose your option: " << endl;
-	cout << "\t\t 1. Log out" << endl;
-	cout << "\t\t Select option: ";
-	return Valid_Data(1);
+	if(option == 1){
+		bool run = true;
+		while(run){
+			run = Enroll_MenuProc(Enroll_MenuDisp(info),info,dmy,mod);
+		}
+		return true;
+	}
+	else{
+		return false;
+	}
 }
-bool Student_Proc(int option,user info,date dmy)
-{
-	if(option ==1) return false;
-}
-//Year Menu
-int Year_Menu_Disp()
-{
-	//system("cls");
-	cout << "\t\t YEAR SECTION" << endl;
-	cout << "\t\t Choose your option: " << endl;
-	cout << "\t\t 1. Create new year" << endl;
-	cout << "\t\t 2. Delete year" << endl;
-	cout << "\t\t 3. Delete all years" << endl;
-	cout << "\t\t 4. Exit" << endl;
-	cout << "\t\t Select option: ";
-	return Valid_Data(4);
-}
-//Class Menu
-int Class_Menu_Disp()
-{
-	cout << "\t\t Choose your option: " << endl;
-	cout << "\t\t 1. Add new class" << endl;
-	cout << "\t\t 2. Delete class" << endl;
-	cout << "\t\t 3. Clear classes" << endl;
-	cout << "\t\t 4. Exit" << endl;
-	cout << "\t\t Select option: ";
-	return Valid_Data(4);
-}
-//Semester Menu
-int Semester_Menu_Disp()
-{
-	cout << "\t\t Choose your option: " << endl;
-	cout << "\t\t 1. Add new semester" << endl;
-	cout << "\t\t 2. Select semester" << endl;
-	cout << "\t\t 3. Exit" << endl;
-	cout << "\t\t Select option: ";
-	return Valid_Data(3);
-}
-//Student Menu
-int Student_Menu_Disp()
-{
-	cout << "\t\t Choose your option: " << endl;
-	cout << "\t\t 1. Add new student(s)" << endl;
-	cout << "\t\t 2. Delete student(s)" << endl;
-	cout << "\t\t 3. Watch student(s)" << endl;
-	cout << "\t\t 4. Exit" << endl;
-	cout << "Select option: ";
-	return Valid_Data(3);
-}
-//Department
-int Department_Menu_Disp()
-{
-	cout << "\t\t Choose your option: " << endl;
-	cout << "\t\t 1. Information Technology" << endl;
-	cout << "\t\t 2. Geology" << endl;
-	cout << "\t\t 3. Electronics & Telecommunication" << endl;
-	cout << "\t\t 4. Chemistry" << endl;
-	cout << "\t\t 5. Material Science & Technology" << endl;
-	cout << "\t\t 6. Environment" << endl;
-	cout << "\t\t 7. Biology" << endl;
-	cout << "\t\t 8. Mathematics" << endl;
-	cout << "\t\t 9. Physics" << endl;
-	cout << "\t\t Select option: ";
-	return Valid_Data(9);
-}
-//Training System 
-int Training_System_Menu_Disp()
-{
-	cout << "\t\t Choose your training system: " << endl;
-	cout << "\t\t 1.Popular" << endl;
-	cout << "\t\t 2.High Quality" << endl;
-	cout << "\t\t Select option: ";
-	return Valid_Data(2);
-}
+
