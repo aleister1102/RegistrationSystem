@@ -28,7 +28,6 @@ bool Class_Import(string year_name)
 	//Lưu danh sách lớp vào vector
 	ifstream file(import);
 	vector <string> class_list;
-	
 	while (!file.eof())
 	{
 		string class_name;
@@ -44,7 +43,6 @@ bool Class_Import(string year_name)
 		File_Create(class_path);
 	}
 	file.close();
-	
 	//Thêm tên lớp vào file CSV của năm
 	string year_path = ".\\Years\\" + Extension(year_name, 1);
 	Vector_ToFile(year_path,class_list);
@@ -58,16 +56,16 @@ string Faculty_Name(int depart, int system)
 	string faculty_name;
 	switch (depart)
 	{
-	case 1: {faculty_name = "CTT"; break; }
-	case 2: {faculty_name = "DCH"; break; }
-	case 3: {faculty_name = "DTV"; break; }
-	case 4: {faculty_name = "HOH"; break; }
-	case 5: {faculty_name = "KVL"; break; }
-	case 6: {faculty_name = "KMT"; break; }
-	case 7: {faculty_name = "SHH"; break; }
-	case 8: {faculty_name = "TTH"; break; }
-	case 9: {faculty_name = "VLH"; break; }
-	default: {faculty_name = "OUT"; break; }
+	case 1: {faculty_name= "CTT"; break; }
+	case 2: {faculty_name= "DCH"; break; }
+	case 3: {faculty_name= "DTV"; break; }
+	case 4: {faculty_name= "HOH"; break; }
+	case 5: {faculty_name= "KVL"; break; }
+	case 6: {faculty_name= "KMT"; break; }
+	case 7: {faculty_name= "SHH"; break; }
+	case 8: {faculty_name= "TTH"; break; }
+	case 9: {faculty_name= "VLH"; break; }
+	default: {faculty_name="OUT"; break; }
 	}
 	if (system == 2)
 	{
@@ -157,12 +155,11 @@ int Class_Display(string year_path)
 	fstream f(year_path, ios::in);
 	int count = 1;
 
-	cout << "\t\t CREATED CLASS OF "<<Path_ToName(year_path)<< endl;
-	if(!f.is_open()) return 0;
+	cout << "\t\t CREATED CLASS: " << endl;
 	while (!f.eof())
 	{
 		string reader;
-		getline(f, reader);
+		f >> reader;
 		if (reader != "")
 		{
 			cout << "\t\t " << count++ << ". " << reader << endl;
@@ -194,43 +191,41 @@ string Class_Select(string year_name, int &line_number)
     line_number =  Valid_Data(limited_classes);
 	if(line_number<1) return "OUT";
 	//Tạo đường dẫn tới lớp
-	string class_name = File_Line_Seek(year_path, 0, line_number);
+	string class_name = File_Line_Seek(year_path,0,line_number);
 	string class_path = Make_Path(class_folder, class_name);
 	return class_path;
 }
 
 //*Khởi tạo các đường dẫn cần thiết cho các tính năng của class
 //@return Đường dẫn tới năm học hoặc "OUT" nếu muốn thoát ra
-void Class_Init(string year_name)
+string Class_Init()
 {
 	string year_folder = ".\\Years\\";
 	string class_folder = ".\\Classes\\";
-	string year_path = Make_Path(year_folder,  year_name);
+	//Lựa chọn và khởi tạo đường dẫn tới năm
+	string year_name = Year_Select();
+	if (year_name == "OUT") return "OUT";
+	string year_path = Make_Path(year_folder, year_name);
 	//Hiển thị các lớp có trong năm đó
 	Class_Display(year_path);
 	//Tạo thư mục cho lớp
-	if(String_InFile("Years.csv", year_name))
+	if(String_InFile("Years.csv",year_name))
 	{
 		string dir = class_folder + year_name + "\\";
 		Directory_Create(dir);//Dir đã tồn tại thì không tạo
 	}
+	return year_name;
 }
 
 //*Xử lý và điều hướng các hàm tính năng của lớp
 //@param option Lựa chọn tính năng
-//@return True nếu hàm cần recycle,  false nếu ngược lại
-bool Class_Proc(string year_name, int option)
+//@return True nếu hàm cần recycle, false nếu ngược lại
+bool Class_Proc(string year_name,int option)
 {
 	//Khởi tạo các đường dẫn & thư mục cần thiết
-	//!Năm học này là năm học cần chọn,  có thể không phải năm học hiện tại
-	string year_path = Make_Path(".\\Years\\", year_name);
-	if(File_Exist(year_path) == false && option != 4) 
-	{
-		cout<<"\t\t This year was not created"<<endl;
-		cout<<"\t\t ";
-		system("pause");
-		return false;
-	}
+	//!Năm học này là năm học cần chọn, có thể không phải năm học hiện tại
+	string year_path = Make_Path(".\\Years\\",year_name);
+
 	if (option == 1){
 		bool run = true;
 		while(run)

@@ -163,7 +163,7 @@ void enter_RegistTime(string semester_path, TimeRange &dmy)
 	cin>>dmy.begin.day;
 	cout<<"end at: ";
 	cin>>dmy.end.day;
-	}while(check_dmy(dmy.begin)!=true||check_dmy(dmy.end)!=true || dmy.begin.day<=dmy.end.day);
+	}while(check_dmy(dmy.begin)!=true||check_dmy(dmy.end)!=true || dmy.begin.day>=dmy.end.day);
 }
 //*Nhập thời gian đăng ký học phần cho cả năm
 void enter_RegsTime(TimeRange regtime[3],string seasons[3])

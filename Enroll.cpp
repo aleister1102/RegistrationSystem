@@ -433,8 +433,7 @@ bool Enroll_Proc(int option, Student sv,date dmy)
 		//
 		vector <string> list  = File_ToVector(courses);
 		string course_info = list[option-1];
-		string arr[7];
-		Course c = String_ToCourse(course_info,arr);
+		Course c = String_ToCourse(course_info);
 		//
 		string folder = ".\\Students\\Students for Enrollment\\";
 		string filename = to_string(sv.id) + "_" + sv.name;

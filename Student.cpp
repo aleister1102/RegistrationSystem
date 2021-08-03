@@ -16,7 +16,6 @@
 Student Get_Student_Info(string class_path, Account user)
 {
     Student s;
-	string arr[7];
 	fstream f(class_path, ios::in);
 	if(File_Exist(class_path))
 	{
@@ -28,7 +27,7 @@ Student Get_Student_Info(string class_path, Account user)
 			string id = reader.substr(2,8);
 			if(id == user.username)
 			{
-                s = String_ToStudent(reader,arr);
+                s = String_ToStudent(reader);
                 break;
 			}
 		}
@@ -89,13 +88,16 @@ void Student_Import(string class_path)
         //Đọc file import
         string student;
         getline(read,student);
+        cout<<student<<endl;
+        system("pause");
         if(student=="") continue;
         //Tạo file học sinh
-        string arr[8];
-        Student s = String_ToStudent(student,arr);
+        Student s = String_ToStudent(student);
         string student_folder = ".\\Students\\Students for Enrollment\\";
-        string student_file_name = arr[1]+"_"+arr[2];
+        string student_file_name = to_string(s.id)+"_"+s.name;
         string student_file_path = Make_Path(student_folder,student_file_name);
+        cout<<student_file_path<<endl;
+        system("pause");
         if(File_Exist(student_file_path)) continue;
         File_Create(student_file_path);
         //Ghi học sinh vào file lớp
@@ -104,7 +106,7 @@ void Student_Import(string class_path)
         Student_Arrange(class_path);
         //Ghi tài khoản mật khẩu vào file Account
         string account=".\\Accounts\\acc_sv.csv";
-        string user_pass_path = arr[1] +","+ arr[7] + ","+class_path;
+        string user_pass_path = to_string(s.id) +","+ s.user.password + ","+class_path;
         File_Append(account,user_pass_path);
     }
     read.close();
@@ -118,7 +120,6 @@ bool Student_Delete(string class_path){
     int limited_student = Student_Display(class_path);
     if(limited_student<1) return false;
     //Chọn học sinh để xóa
-    cout<<"\t\t Press '-1' if you want to exit!"<<endl;
     cout<<"\t\t Choose student to modify: ";
     int choice = Valid_Data(limited_student);
     if(choice<1) return false;
@@ -143,10 +144,9 @@ bool Student_Delete(string class_path){
     f.close();
     File_Line_Delete(account,0,line);
     //Xóa file học sinh
-    string arr[8];
-    Student s = String_ToStudent(student_string,arr);
+    Student s = String_ToStudent(student_string);
     string student_folder = ".\\Students\\Students for Enrollment\\";
-    string student_file_path = Make_Path(student_folder,arr[1]+"_"+arr[2]);
+    string student_file_path = Make_Path(student_folder,s.id+"_"+s.name);
     remove(student_file_path.c_str());
 
     return true;
@@ -179,6 +179,7 @@ int Student_Display(string class_path)
     cout<<"\t\t (No-ID-Name-Gender-Faculty-Birthdate-Social ID)"<<endl;
     cout<<"\t\t -----------------------------------------------"<<endl;
     
+    cout << "\t\t 0. Back" << endl;
     int count=0; 
     fstream f(class_path,ios::in);
     while(!f.eof())

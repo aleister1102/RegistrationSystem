@@ -11,3 +11,4 @@ bool login_as_admin(Account& info);
 bool check_acc_student(Account user,Student &info);
 bool login_as_student(Account &user,Student &info);
 string split_acc_stu(string &s);
+bool Login_Proc(int option);
