@@ -55,3 +55,7 @@ struct Score {
 	string name;
 	double total_mark, final_mark, midterm_mark, other_mark;
 };
+struct List_score {
+	Score* data;
+	int capacity;
+};

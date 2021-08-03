@@ -39,7 +39,16 @@ bool Score_Proc(int option, string semester_path)
     }
     else if (option == 3)
     {
-        Admin_ViewScoreBoard();
+        List_score subject_score;
+        string course_file = "";
+        subject_score = Admin_ViewScoreBoard(course_file);
+        Display_ScoreList(subject_score);
+        cout << "\t\t "; system("pause");
+        return true;
+    }
+    else if (option == 4) {
+        string course_file = "";
+        Admin_UpdateScore();
         cout << "\t\t "; system("pause");
         return true;
     }
@@ -49,14 +58,15 @@ bool Score_Proc(int option, string semester_path)
         return false;
     }
 }
-
-void Admin_ViewScoreBoard() {
+//return: number of courses
+List_score Admin_ViewScoreBoard(string& course_file) {
     //make path
     string path = "./Students/Students' ScoreBoard/Import/Import Scoreboard.csv";
     //read file and save it to list of string
     vector<string> courses = File_ToVector(path);
+    List_score scores = init_ListScore();
     //print avalable course out, let user choose which courses
-    int choice = Choose_Courses(courses);
+    size_t choice = Choose_Courses(courses);
     while (choice > courses.size() || choice < 0 || cin.fail()) {
         cout << "You don't type a number or your number is over the limit. Try again";
         if (cin.fail()) {
@@ -65,19 +75,20 @@ void Admin_ViewScoreBoard() {
         }
         choice = Choose_Courses(courses);
     }
-    if (choice == 0) return;
-    else {
-        string course = courses[size_t(choice - 1)];
-        string course_file = "./Students/Students' ScoreBoard/Import/" + course;
+    if (choice != 0) {
+        string course = courses[choice - 1];
+        course_file = "./Students/Students' ScoreBoard/Import/" + course;
         if (File_Exist(course_file)) {
             vector<string> list = File_ToVector(course_file);
             Score* score_list = Vector_toScore(list);
-            Display_ScoreList(score_list, list.size());
+            scores.capacity = list.size();
+            scores.data = score_list;
         }
         else {
             cout << "Cannot find the course file." << endl;
         }
     }
+    return scores;
 }
 
 int Choose_Courses(vector<string> courses) {
@@ -169,11 +180,90 @@ Score* Vector_toScore(vector<string> list) {
     return my_score;
 }
 
-void Display_ScoreList(Score* score_list, int capacity) {
-    cout << "No \t ID \t\t Full Name \t\t\t Total Mark \t Final Mark \t Midterm Mark \t Other Mark \t" << endl;
-    for (int i = 0; i < capacity; i++) {
-        cout << score_list[i].number << "\t" << score_list[i].id << "\t\t" << score_list[i].name << "\t\t\t\t" <<
-            score_list[i].total_mark << "\t\t" << score_list[i].final_mark << "\t\t" << score_list[i].midterm_mark << "\t\t" <<
-            score_list[i].other_mark << endl;
+void Display_ScoreList(List_score score_list) {
+    if (score_list.capacity == 0) {
+        return;
+    }
+    else {
+        cout << "No \t ID \t\t Full Name \t\t\t Total Mark \t Final Mark \t Midterm Mark \t Other Mark \t" << endl;
+        for (int i = 0; i < score_list.capacity; i++) {
+            cout << score_list.data[i].number << "\t" << score_list.data[i].id << "\t\t" << score_list.data[i].name << "\t\t\t" <<
+                score_list.data[i].total_mark << "\t\t" << score_list.data[i].final_mark << "\t\t" << score_list.data[i].midterm_mark << "\t\t" <<
+                score_list.data[i].other_mark << endl;
+        }
+    }
+
+}
+//====================//
+void Admin_UpdateScore() {
+    List_score subject_score;
+    string course_path = "";
+    subject_score = Admin_ViewScoreBoard(course_path);
+    if (subject_score.capacity == 0) {
+        cout << "Nothing to change!" << endl;
+    }
+    else {
+        cout << "The score list of subject: " << endl;
+        Display_ScoreList(subject_score);
+        cout << "Choose the student's no. to change her/his result. Choose 0 to exit." << endl;
+        //Choose and process
+        cout << "You choose: ";
+        int choice = -1;
+        cin >> choice;
+        while (cin.fail() || choice < 0 || choice > subject_score.capacity) {
+            cin.clear();
+            cin.ignore();
+            cout << "You didn't choose the right number or you chose over the limit. Try again!";
+            cin >> choice;
+        }
+        if (choice == 0) return;
+        else {
+            //After chosen, get the data
+            Score chosen_score = subject_score.data[choice - 1];
+            //Update the data
+            Update_Score(chosen_score);
+            cout << "Update successfully!";
+            //Write to file
+            string new_line = Score_toString(chosen_score);
+            File_Line_Update(course_path, 1, choice, new_line);
+        }
     }
 }
+
+void Input_Valid(double& num) {
+    num = -1;
+    cin >> num;
+    while (cin.fail()) {
+        cin.clear();
+        cin.ignore();
+        cout << "Invalid number. Try again!";
+        cin >> num;
+    }
+}
+
+void Update_Score(Score& chosen_score) {
+    cout << "Type the new result." << endl;
+    double input_score = -1;
+
+    cout << "Total Mark: "; 
+    Input_Valid(input_score);
+    chosen_score.total_mark = input_score;
+
+    cout << "Final Mark: "; 
+    Input_Valid(input_score);
+    chosen_score.final_mark = input_score;
+
+    cout << "Midterm Mark: "; 
+    Input_Valid(input_score);
+    chosen_score.midterm_mark = input_score;
+
+    cout << "Other Mark: "; 
+    Input_Valid(input_score);
+    chosen_score.other_mark = input_score;
+}
+
+string Score_toString(Score my_score) {
+    return to_string(my_score.number) + "," + my_score.id + "," + my_score.name + "," + to_string(my_score.total_mark) + "," + to_string(my_score.final_mark) + "," + to_string(my_score.midterm_mark) + "," + to_string(my_score.other_mark);
+}
+
+//============================================//

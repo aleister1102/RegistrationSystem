@@ -62,7 +62,7 @@ void File_Create(string file_path)
 void File_Clear(string file_path)
 {
 	remove(file_path.c_str());
-	ofstream f(file_path);
+	ofstream f(file_path, ios::out);
 	f.close();
 }
 
@@ -197,14 +197,15 @@ void File_Line_Update(string path,int start,int line,string update)
 	fstream f(path,ios::in|ios::out);
 	int count=1;
 	vector<string> list;
+	string reader;
 	if(f.is_open()){
-		while(!f.eof()){
-			string reader;
-			getline(f,reader);
+		while(getline(f, reader)){
 			if(count-start==line){
 				list.push_back(update);
 			}
-			list.push_back(reader);
+			else {
+				list.push_back(reader);
+			}
 			count+=1;
 		}
 	}

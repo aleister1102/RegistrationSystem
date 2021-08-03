@@ -21,10 +21,11 @@ vector<string> File_ToVector(string file_path)
 {
 	vector<string> string_list;
 	fstream file(file_path,ios::in);
+	string reader;
+	getline(file, reader);
 	if(file.is_open())
 	{
 		while(!file.eof()){
-			string reader;
 			getline(file,reader);
 			if (reader == "" || reader == "OUT") continue;
 			string_list.push_back(reader);

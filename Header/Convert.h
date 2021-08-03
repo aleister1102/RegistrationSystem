@@ -14,4 +14,4 @@ string CourseString_To_CourseName(string course_string);
 void String_Replace(string &s,string target,string change);
 vector<string> File_toStringArray(string path);
 strings File_to_LinkList(string path);
-
+string Score_toString(Score my_score);

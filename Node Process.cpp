@@ -202,4 +202,9 @@ bool Output_List(strings l)
 	return true;
 }
 
-
+List_score init_ListScore() {
+	List_score mylist;
+	mylist.data = NULL;
+	mylist.capacity = 0;
+	return mylist;
+}
