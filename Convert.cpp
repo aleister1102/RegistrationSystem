@@ -7,28 +7,32 @@
 //@return kết quả của chuỗi sau khi thêm/cắt
 string Extension(string name, int option)
 {
-	if (option == 1) {
+	if (option == 1)
+	{
 		size_t found = name.find(".csv");
-		if (found == -1) {
+		if (found == -1)
+		{
 			return name + ".csv";
 		}
-		else {
+		else
+		{
 			return name;
 		}
 	}
-	else {
+	else
+	{
 		size_t pos = 0;
 		pos = name.find_last_of(".");
 		return name.substr(0, pos);
 	}
 }
 
-//*Tạo ra một đường dẫn từ đường dẫn thư mục chứa nó và tên file (ko có đuôi ".csv")  
+//*Tạo ra một đường dẫn từ đường dẫn thư mục chứa nó và tên file (ko có đuôi ".csv")
 //@param pre_folder một đường dẫn thư mục @param file_name một tên của file
 //@return Đường dẫn hoàn chỉnh
 string Make_Path(string pre_folder, string file_name)
 {
-	return  pre_folder + Extension(file_name, 1);
+	return pre_folder + Extension(file_name, 1);
 }
 
 //*Cắt ra một tên (không có đuôi ".csv") từ một đường dẫn hoàn chỉnh
@@ -67,9 +71,7 @@ int Year_ToInt(string year_name)
 //@return Chuỗi ngày tháng năm
 string Date_toString(date dmy)
 {
-	return to_string(dmy.day)   + "/"
-		  +to_string(dmy.month) + "/"
-		  +to_string(dmy.year);
+	return to_string(dmy.day) + "/" + to_string(dmy.month) + "/" + to_string(dmy.year);
 }
 
 //*Chuyển đổi từ chuỗi ngày tháng sang kiểu ngày tháng
@@ -78,12 +80,12 @@ string Date_toString(date dmy)
 date String_ToDate(string dmy)
 {
 	date result;
-	int pos = dmy.find_first_of("/",0);
-	int pos2 = dmy.find_first_of("/",pos+1);
-	int pos3 = dmy.find_first_of("/",pos2+1);
-	result.day = String_ToInt(dmy.substr(0,pos));
-	result.month = String_ToInt(dmy.substr(pos+1,pos2-pos-1));
-	result.year = String_ToInt(dmy.substr(pos2+1,pos3-pos2-1));
+	int pos = dmy.find_first_of("/", 0);
+	int pos2 = dmy.find_first_of("/", pos + 1);
+	int pos3 = dmy.find_first_of("/", pos2 + 1);
+	result.day = String_ToInt(dmy.substr(0, pos));
+	result.month = String_ToInt(dmy.substr(pos + 1, pos2 - pos - 1));
+	result.year = String_ToInt(dmy.substr(pos2 + 1, pos3 - pos2 - 1));
 	return result;
 }
 
@@ -137,25 +139,26 @@ Course String_ToCourse(string info, string arr[7])
 	int length = info.size();
 	int i = 0;
 	while (i <= 6)
-    {
-        int pos = info.find_first_of(",", 0);
-        string temp = info.substr(0, pos);
-		if(i<6)
+	{
+		int pos = info.find_first_of(",", 0);
+		string temp = info.substr(0, pos);
+		if (i < 6)
 		{
 			info = info.substr((uint64_t)pos + 1, length);
 			arr[i++] = temp;
 		}
-		else{
+		else
+		{
 			arr[i++] = info;
 		}
-    }
-	c.id=arr[0];
-	c.name=arr[1];
-	c.teacher=arr[2];
-	c.cre=String_ToInt(arr[3]);
-	c.capacity=String_ToInt(arr[4]);
-	c.day=arr[5];
-	c.session=arr[6];
+	}
+	c.id = arr[0];
+	c.name = arr[1];
+	c.teacher = arr[2];
+	c.cre = String_ToInt(arr[3]);
+	c.capacity = String_ToInt(arr[4]);
+	c.day = arr[5];
+	c.session = arr[6];
 	return c;
 }
 //*Chuyển từ môn học sang kiểu chuỗi
@@ -163,22 +166,23 @@ Course String_ToCourse(string info, string arr[7])
 //@return Chuỗi môn học
 string Course_ToString(Course c)
 {
-	return c.id + "," + c.name + "," + c.teacher + "," + 
-		   to_string(c.cre) + "," + to_string(c.capacity) + "," + c.day + "," + 
+	return c.id + "," + c.name + "," + c.teacher + "," +
+		   to_string(c.cre) + "," + to_string(c.capacity) + "," + c.day + "," +
 		   c.session;
 }
 //*Thay đổi 1 ký tự trong chuỗi thành ký tự khác
 //@param &s chuỗi cần thay thế ký tự
-//@param target Chuỗi được thay 
-//@param change Chuỗi cần thay 
+//@param target Chuỗi được thay
+//@param change Chuỗi cần thay
 void String_Replace(string &s, string target, string change)
 {
 	string temp = s;
 	int pos = 0;
-	while(pos != string::npos)
+	while (pos != string::npos)
 	{
 		pos = temp.find_first_of(target, 0);
-		if(pos == string::npos) break;
+		if (pos == string::npos)
+			break;
 		temp.replace(pos, 1, change);
 	}
 	s = temp;
@@ -192,15 +196,15 @@ strings File_to_LinkList(string path)
 	strings l = Init_List();
 	ifstream f;
 	f.open(path);
+	string string_name;
+	getline(f, string_name, '\n');
 	while (!f.eof())
 	{
 		string f1;
 		getline(f, f1);
-		str* p = Create_Node(f1);
+		str *p = Create_Node(f1);
 		Add_Last(l, p);
 	}
 	f.close();
 	return l;
 }
-
-
