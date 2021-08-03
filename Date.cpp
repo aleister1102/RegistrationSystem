@@ -3,7 +3,7 @@
 #include "Header\Convert.h"
 void output_dmy(date dmy)
 {
-	cout<<dmy.day<<"/"<<dmy.month<<"/"<<dmy.year;
+	cout << dmy.day << "/" << dmy.month << "/" << dmy.year;
 }
 
 //*Kiểm tra năm nhuận
@@ -16,14 +16,26 @@ int day_of_month(int month, int year)
 {
 	switch (month)
 	{
-	case 1:case 3:case 5:case 7:case 8:case 10:case 12:	return 31;
-	case 4:case 6:case 9:case 11: return 30;
+	case 1:
+	case 3:
+	case 5:
+	case 7:
+	case 8:
+	case 10:
+	case 12:
+		return 31;
+	case 4:
+	case 6:
+	case 9:
+	case 11:
+		return 30;
 	default:
 		if (check_leap_year(year))
 		{
 			return 29;
 		}
-		else return 28;
+		else
+			return 28;
 		break;
 	}
 }
@@ -34,7 +46,7 @@ bool check_dmy(date dmy)
 	{
 		return false;
 	}
-	if (dmy.month < 1 || dmy.month>12)
+	if (dmy.month < 1 || dmy.month > 12)
 	{
 		return false;
 	}
@@ -45,29 +57,32 @@ bool check_dmy(date dmy)
 	return true;
 }
 //*Nhập ngày tháng
-void enter_dmy(date& dmy)
+void enter_dmy(date &dmy)
 {
-	do {
+	do
+	{
 		cout << "\t\t Enter day / month / year: " << endl;
 		cout << "\t\t ";
-		cin >> dmy.day; cout << "\t\t ";
-		cin >> dmy.month; cout << "\t\t ";
+		cin >> dmy.day;
+		cout << "\t\t ";
+		cin >> dmy.month;
+		cout << "\t\t ";
 		cin >> dmy.year;
 		cin.ignore();
 	} while (check_dmy(dmy) != true);
-	
 }
 bool check_registration_date(date dmy)
 {
-	if(dmy.month == 9){
-		if(dmy.day>=1 && dmy.day <=14)
+	if (dmy.month == 9)
+	{
+		if (dmy.day >= 1 && dmy.day <= 14)
 		{
 			return true;
 		}
 	}
-	else if(dmy.month==12 ||dmy.month==4)
+	else if (dmy.month == 12 || dmy.month == 4)
 	{
-		if(dmy.day>=16 && dmy.day<=26)
+		if (dmy.day >= 16 && dmy.day <= 26)
 		{
 			return true;
 		}
@@ -115,17 +130,18 @@ void enter_MonthRange(TimeRange semTime[3], int index)
 		cin >> dmy.begin.month;
 		cout << "to: ";
 		cin >> dmy.end.month;
-	} while (check_duplicated_range(semTime, dmy, index) || (dmy.begin.month>dmy.end.month));
+	} while (check_duplicated_range(semTime, dmy, index) || (dmy.begin.month > dmy.end.month));
 	semTime[index] = dmy;
 }
 //*Nhập thời gian của các học kỳ
-void enter_SemesterTime(TimeRange semTime[3],date dmy)
+void enter_SemesterTime(TimeRange semTime[3], date dmy)
 {
 	for (int i = 0; i < 3; i++)
 	{
 		//Nhập tháng
 		enter_MonthRange(semTime, i);
-		do{
+		do
+		{
 			//Nhập ngày cho các tháng giới hạn
 			cout << "Month " << semTime[i].begin.month << " start at day: ";
 			cin >> semTime[i].begin.day;
@@ -134,7 +150,7 @@ void enter_SemesterTime(TimeRange semTime[3],date dmy)
 			//Gán năm
 			semTime[i].begin.year = dmy.year;
 			semTime[i].end.year = dmy.year;
-		}while(check_dmy(semTime[i].begin)!=true || check_dmy(semTime[i].end)!=true);
+		} while (check_dmy(semTime[i].begin) != true || check_dmy(semTime[i].end) != true);
 	}
 }
 //*Khởi tạo thời gian trong năm
@@ -151,6 +167,8 @@ void init_SemesterTime(TimeRange semTime[3])
 void enter_RegistTime(string semester_path, TimeRange &dmy)
 {
 	ifstream f(semester_path);
+	string string_name;
+	getline(f, string_name, '\n');
 	string reader;
 	getline(f, reader);
 	date begin = String_ToDate(reader);
@@ -158,17 +176,18 @@ void enter_RegistTime(string semester_path, TimeRange &dmy)
 	dmy.begin.month = dmy.end.month = begin.month;
 	dmy.begin.year = dmy.end.year = begin.year;
 	//Nhập ngày của đkhp
-	do{
-	cout<<"Registration start at: ";
-	cin>>dmy.begin.day;
-	cout<<"end at: ";
-	cin>>dmy.end.day;
-	}while(check_dmy(dmy.begin)!=true||check_dmy(dmy.end)!=true || dmy.begin.day<=dmy.end.day);
+	do
+	{
+		cout << "Registration start at: ";
+		cin >> dmy.begin.day;
+		cout << "end at: ";
+		cin >> dmy.end.day;
+	} while (check_dmy(dmy.begin) != true || check_dmy(dmy.end) != true || dmy.begin.day <= dmy.end.day);
 }
 //*Nhập thời gian đăng ký học phần cho cả năm
-void enter_RegsTime(TimeRange regtime[3],string seasons[3])
+void enter_RegsTime(TimeRange regtime[3], string seasons[3])
 {
-	for(int i=0; i < 3; i++)
+	for (int i = 0; i < 3; i++)
 	{
 		View_Semester_Time(seasons[i]);
 		enter_RegistTime(seasons[i], regtime[i]);

@@ -105,6 +105,8 @@ bool Conflicted_Course(string store, string name)
 {
 	fstream f;
 	f.open(store, ios::in);
+	string string_name;
+	getline(f, string_name, '\n');
 	int n = Count_line(store);
 	int k = 0;
 	while (!f.eof())
@@ -168,6 +170,8 @@ void View_Enrolled_Courses(Student sv)
 	int n = Count_line(path);
 	ifstream f;
 	f.open(path);
+	string string_name;
+	getline(f, string_name, '\n');
 	int i = 0;
 	while (!f.eof())
 	{
