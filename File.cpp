@@ -146,7 +146,7 @@ int Count_line(string path)
 	while (!f.eof())
 	{
 		string s1 = "";
-		getline(f,s1);
+		getline(f, s1, '\n');
 		c++;
 	}
 	f.close();

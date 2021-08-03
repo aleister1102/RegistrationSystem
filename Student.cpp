@@ -54,18 +54,19 @@ Student *Get_Students_Info(string course_path, int lines)
         ID = ID.substr(0, 8);
         //Dò trong file tài khoản để lấy đường dẫn đến lớp
         ifstream acc(".\\Accounts\\acc_sv.csv");
-        while (!f.eof())
+        string path;
+        while (getline(acc, path, '\n'))
         {
-            string path;
-            getline(acc, path);
-            if (path.substr(0, 8) != ID || path == "")
+            if (path.substr(0, 8) != ID)
                 continue;
-            //Lấy đường dẫn
-            string class_path = split_acc_stu(path);
-            //Lấy thông tin đầy đủ của một học sinh
-            Student sv = Get_Student_Info(path, {ID, ""});
-            list[k++] = sv;
-            break;
+            else {
+                //Lấy đường dẫn
+                string class_path = split_acc_stu(path);
+                //Lấy thông tin đầy đủ của một học sinh
+                Student sv = Get_Student_Info(path, { ID, "" });
+                list[k++] = sv;
+                break;
+            }
         }
         acc.close();
     }
@@ -200,25 +201,26 @@ int Student_Display(string class_path)
 }
 //*Xuất danh sách học sinh có trong môn học
 //@param semester_path Đường dẫn đến học kỳ @param faculty Khoa đang chọn hiện tại
-void Student_Export(string semester_path,string faculty)
+void Student_Export(string semester_path, string faculty)
 {
     string courses = ".\\Courses\\" + faculty + "\\Courses.csv";
     int choice = Course_Select(faculty);
     if (choice == 0) return;
     //Tạo đường dẫn đến file môn học
-    string course_string = File_Line_Seek(courses, 2, choice);
-    string course_path = Get_Course_Path(course_string,faculty);
+    string course_string = File_Line_Seek(courses, 0, choice);
+    string course_path = Get_Course_Path(course_string, faculty);
     //Copy file đến tại đường dẫn cần export
-    string new_course_path = File_Copy(course_path,".\\Students\\Students' ScoreBoard\\Export\\");
+    string new_course_path = File_Copy(course_path, ".\\Students\\Students' ScoreBoard\\Export\\");
 
     //Tìm thông tin đầy đủ của từng học sinh
     int lines = Count_line(course_path);
-    Student *list = Get_Students_Info(course_path,lines);
+    Student *list = Get_Students_Info(course_path, lines);
 
     //Chép danh sách sinh viên vào file mới tạo
-    ofstream write(new_course_path);
-    for(int i=0; i<lines; i++){
-        write <<Student_ToString(list[i]) <<endl;
+    ofstream write;
+    write.open(new_course_path, ios::out);
+    for(int i = 0; i < lines; i++){
+        write << Student_ToString(list[i]) << endl;
     }
     write.close();
     
