@@ -26,9 +26,12 @@ vector<string> File_ToVector(string file_path)
 		while(!file.eof()){
 			string reader;
 			getline(file,reader);
-			if(reader=="") continue;
+			if (reader == "" || reader == "OUT") continue;
 			string_list.push_back(reader);
 		}
+	}
+	else {
+		cout << "Cannot open file. Try again!";
 	}
 	file.close();
 	return string_list;
@@ -51,6 +54,7 @@ void String_Vector_Display(vector<string> arr)
 {
 	for(int i=0;i<arr.size();i++)
 	{
+		if (arr[i] == "OUT") continue;
 		if(stoi(arr[i])>0)
 			cout<<arr[i] <<"  ";
 	}

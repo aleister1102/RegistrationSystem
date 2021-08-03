@@ -49,4 +49,9 @@ struct Class {
 	Student_node* head;
 	Student_node* tail;
 };
-
+struct Score {
+	int number;
+	string id;
+	string name;
+	double total_mark, final_mark, midterm_mark, other_mark;
+};

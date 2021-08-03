@@ -1,5 +1,0 @@
-﻿  Student.cpp
-  The contents of <filesystem> are available only with C++17 or later.
-C:\Users\thanh\OneDrive\Tài liệu\University\HK2\KTLT\Project\registration_system\Student.cpp(237,47): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\thanh\OneDrive\Tài liệu\University\HK2\KTLT\Project\registration_system\Student.cpp(238,54): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  Main Source.vcxproj -> C:\Users\thanh\OneDrive\Tài liệu\University\HK2\KTLT\Project\registration_system\x64\Debug\Main Source.exe

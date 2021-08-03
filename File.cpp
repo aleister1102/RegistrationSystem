@@ -78,12 +78,14 @@ string File_Import(string folder)
 		cout <<"\t\t Press '!' if you want to exit"<<endl;
 		cout <<"\t\t Enter file str for importing: ";
 		string str;
-		getline(cin,str);
+		getline(cin, str);
 		if(str=="!") return "OUT";
 		//Tạo đường dẫn file import
 		path = folder + Extension(str, 1);
 		cout << "\t\t Import file from: " << path << endl;
-		
+		if (!File_Exist(path)) {
+			cout << "Cannot open file. Try again, make sure you type right filename" << endl;
+		}
 	} while (File_Exist(path)==false);
 	if(File_isEmpty(path)) return "OUT";
 	cout << "\t\t "; system("pause");
@@ -146,7 +148,7 @@ int Count_line(string path)
 	while (!f.eof())
 	{
 		string s1 = "";
-		getline(f, s1, '\n');
+		getline(f,s1);
 		c++;
 	}
 	f.close();
