@@ -97,13 +97,10 @@ int Courses_Display(string semester_path,string faculty)
 		//Bỏ qua thông tin về thời gian
 		for(int i=0;i<4;i++)
 		{
-			getline(f,reader);
-		}
+		getline(f,reader);
 		cout<<"\t\t -----------------------"<<endl;
 		cout<<"\t\t -----------------------"<<endl;
 		cout<<"\t\t LIST OF CREATED COURSES"<<endl;
-		cout<<"\t\t 0. Back"<<endl;
-		while(!f.eof())
 		{
 			getline(f,reader,'\n');
 			if(reader=="") break;

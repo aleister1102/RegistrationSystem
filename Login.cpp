@@ -17,8 +17,8 @@ string delete_last(string s)
 }
 int pass_mode()
 {
-	cout << "\t\t 1.Show your password !!!" << endl;
-	cout << "\t\t 2.Hide your password !!!" << endl;
+	cout << "\t\t 1. Show your password !!!" << endl;
+	cout << "\t\t 2. Hide your password !!!" << endl;
 	cout << "\t\t ";
 	return Valid_Data(2);
 }
@@ -216,7 +216,7 @@ bool check_acc_ad(Account info)
 					cout << "\t\t Wrong password or username !!!" << endl;
 					cout << "\t\t"; system("pause");
 					return false;
-					
+
 				}
 			}
 			else
