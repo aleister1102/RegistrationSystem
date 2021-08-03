@@ -25,7 +25,7 @@ bool Score_Proc(int option, string semester_path)
         string faculty = Faculty_Name(Department_Menu_Disp(), 1);
         if (faculty == "OUT")
             return false;
-        Student_Export(semester_path,faculty);
+        //Student_Export(semester_path,faculty);
         cout<<"\t\t ";system("pause");
         return true;
     }
@@ -41,5 +41,3 @@ bool Score_Proc(int option, string semester_path)
         return false;
     }
 }
-
-//void Admin_ViewScoreBoard()

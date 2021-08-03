@@ -6,7 +6,6 @@ int Login_Disp();
 void AboutUs();
 
 bool Display_Mode_Admin(Account info, date dmy);
-void TimeLine_Disp();
 int Admin_Disp();
 
 int Year_Menu_Disp();

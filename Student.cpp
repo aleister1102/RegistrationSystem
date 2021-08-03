@@ -16,7 +16,6 @@
 Student Get_Student_Info(string class_path, Account user)
 {
     Student s;
-	string arr[7];
 	fstream f(class_path, ios::in);
 	if(File_Exist(class_path))
 	{
@@ -28,50 +27,13 @@ Student Get_Student_Info(string class_path, Account user)
 			string id = reader.substr(2,8);
 			if(id == user.username)
 			{
-                s = String_ToStudent(reader,arr);
+                s = String_ToStudent(reader);
                 break;
 			}
 		}
 	}
 	f.close();
 	return s;
-}
-//*Tìm thông tin đầy đủ của học sinh
-//@param course_path Đường dẫn file môn học @param lines Số dòng (số học sinh) có trong môn học
-//@return Mảng các thông tin của học sinh
-Student *Get_Students_Info(string course_path, int lines)
-{
-    Student *list = new Student[lines];
-    int k = 0;
-    ifstream f(course_path);
-    while (!f.eof())
-    {
-        string ID;
-        getline(f, ID, '\n');
-        if (ID == "")
-            continue;
-        //Lấy MSSV
-        ID = ID.substr(0, 8);
-        //Dò trong file tài khoản để lấy đường dẫn đến lớp
-        ifstream acc(".\\Accounts\\acc_sv.csv");
-        string path;
-        while (getline(acc, path, '\n'))
-        {
-            if (path.substr(0, 8) != ID || path == "") {
-                path = "";
-                continue;
-            }
-            //Lấy đường dẫn
-            string class_path = split_acc_stu(path);
-            //Lấy thông tin đầy đủ của một học sinh
-            Student sv = Get_Student_Info(path, {ID, ""});
-            list[k++] = sv;
-            break;
-        }
-        acc.close();
-    }
-    f.close();
-    return list;
 }
 //*Nhập học sinh vào danh sách lớp và các thư mục cần thiết
 //@param class_path Đường dẫn đến file lớp học
@@ -89,13 +51,16 @@ void Student_Import(string class_path)
         //Đọc file import
         string student;
         getline(read,student);
+        cout<<student<<endl;
+        system("pause");
         if(student=="") continue;
         //Tạo file học sinh
-        string arr[8];
-        Student s = String_ToStudent(student,arr);
+        Student s = String_ToStudent(student);
         string student_folder = ".\\Students\\Students for Enrollment\\";
-        string student_file_name = arr[1]+"_"+arr[2];
+        string student_file_name = to_string(s.id)+"_"+s.name;
         string student_file_path = Make_Path(student_folder,student_file_name);
+        cout<<student_file_path<<endl;
+        system("pause");
         if(File_Exist(student_file_path)) continue;
         File_Create(student_file_path);
         //Ghi học sinh vào file lớp
@@ -104,7 +69,7 @@ void Student_Import(string class_path)
         Student_Arrange(class_path);
         //Ghi tài khoản mật khẩu vào file Account
         string account=".\\Accounts\\acc_sv.csv";
-        string user_pass_path = arr[1] +","+ arr[7] + ","+class_path;
+        string user_pass_path = to_string(s.id) +","+ s.user.password + ","+class_path;
         File_Append(account,user_pass_path);
     }
     read.close();
@@ -118,7 +83,6 @@ bool Student_Delete(string class_path){
     int limited_student = Student_Display(class_path);
     if(limited_student<1) return false;
     //Chọn học sinh để xóa
-    cout<<"\t\t Press '-1' if you want to exit!"<<endl;
     cout<<"\t\t Choose student to modify: ";
     int choice = Valid_Data(limited_student);
     if(choice<1) return false;
@@ -143,10 +107,9 @@ bool Student_Delete(string class_path){
     f.close();
     File_Line_Delete(account,0,line);
     //Xóa file học sinh
-    string arr[8];
-    Student s = String_ToStudent(student_string,arr);
+    Student s = String_ToStudent(student_string);
     string student_folder = ".\\Students\\Students for Enrollment\\";
-    string student_file_path = Make_Path(student_folder,arr[1]+"_"+arr[2]);
+    string student_file_path = Make_Path(student_folder,s.id+"_"+s.name);
     remove(student_file_path.c_str());
 
     return true;
@@ -179,6 +142,7 @@ int Student_Display(string class_path)
     cout<<"\t\t (No-ID-Name-Gender-Faculty-Birthdate-Social ID)"<<endl;
     cout<<"\t\t -----------------------------------------------"<<endl;
     
+    cout << "\t\t 0. Back" << endl;
     int count=0; 
     fstream f(class_path,ios::in);
     while(!f.eof())
@@ -198,67 +162,6 @@ int Student_Display(string class_path)
     }
     cout<<"\t\t ";system("pause");
     return count;
-}
-//*Xuất danh sách học sinh có trong môn học
-//@param semester_path Đường dẫn đến học kỳ @param faculty Khoa đang chọn hiện tại
-void Student_Export(string semester_path,string faculty)
-{
-    string courses = ".\\Courses\\" + faculty + "\\Courses.csv";
-    int choice = Course_Select(faculty);
-    if (choice == 0) return;
-    //Tạo đường dẫn đến file môn học
-    string course_string = File_Line_Seek(courses, 0, choice);
-    string course_path = Get_Course_Path(course_string,faculty);
-    //Copy file đến tại đường dẫn cần export
-    string new_course_path = File_Copy(course_path,".\\Students\\Students_Export\\");
-
-    //Tìm thông tin đầy đủ của từng học sinh
-    int lines = Count_line(course_path);
-    Student *list = Get_Students_Info(course_path,lines);
-
-    //Chép danh sách sinh viên vào file mới tạo
-    ofstream write(new_course_path);
-    for(int i=0; i<lines; i++){
-        write << list[i].number << "," << list[i].id << "," << list[i].name << endl;
-    }
-    write.close();
-    
-    Student_Arrange(new_course_path);
-}
-//*Cập nhật môn học có trong file sinh viên (lấy DS SV từ file môn học).
-//!Hàm này giữ cho thứ tự môn học không đổi
-//@param course_path Đường dẫn đến học kỳ.
-//@param new_course_teacher Giáo viên mới của môn học.
-void Student_Course_Update(string new_course_path,string new_string)
-{
-	//Lấy ra tên môn học
-	string student_folder = ".\\Students\\Students for Enrollment\\";
-    int pos = new_string.find_first_of(",", 0);
-    int pos2 = new_string.find_first_of(",", pos + 1);
-    string course_name = new_string.substr(pos + 1, pos2 - pos - 1);
-    //
-    ifstream f(new_course_path);
-    if(f.is_open()){
-		while(!f.eof())
-		{
-			//Đọc sinh viên từ file môn học
-			string student;
-			getline(f,student);
-			//Nếu như chuỗi rỗng thì bỏ qua đoạn dưới
-            if(student=="") continue;
-			string student_path = Make_Path(student_folder,student);
-			//Tìm môn học trong file student
-			int line = Course_Find_in_Student(student_path,course_name);
-			if(line!=0)
-			{
-				//Xóa dòng môn học cũ trong file student
-				string course_string = File_Line_Delete(student_path,0,line);
-				//Cập nhật (nói khác đi là chèn) vào tên môn học cũ
-				File_Line_Update(student_path,0,line,new_string);
-            }
-		}
-	}
-	f.close();
 }
 //*Khởi tạo đường dẫn cần thiết cho các tính năng của students
 //@return Đường dẫn của lớp học

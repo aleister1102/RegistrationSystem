@@ -2,6 +2,8 @@
 #include "Header\Student.h"
 #include "Header\File.h"
 #include "Header\Login.h"
+#include "Header\Date.h"
+#include "Header\Password.h"
 string delete_last(string s)
 {
 	string ss = s;
@@ -15,8 +17,8 @@ string delete_last(string s)
 }
 int pass_mode()
 {
-	cout << "\t\t 1.Show your password !!!" << endl;
-	cout << "\t\t 2.Hide your password !!!" << endl;
+	cout << "\t\t 1. Show your password !!!" << endl;
+	cout << "\t\t 2. Hide your password !!!" << endl;
 	cout << "\t\t ";
 	return Valid_Data(2);
 }
@@ -240,5 +242,66 @@ bool login_as_admin(Account& info)
 	if (enter_acc(info))
 	{
 		return check_acc_ad(info);
+	}
+}
+//*Xử lý menu đăng nhập
+bool Login_Proc(int option)
+{
+	bool run = true;
+	Account user;
+	date dmy;
+	Student info;
+	//If user is administrator
+	if (option == 1)
+	{
+		/*run = login_as_admin(info);*/
+		//!Login system: off
+		if (run)
+		{
+			enter_dmy(dmy);
+		}
+		system("cls");
+
+		while (run)
+		{
+			run = Display_Mode_Admin(user, dmy);
+		}
+		return true;
+	}
+	else if (option == 2)
+	{
+		run = login_as_student(user, info);
+		//Login system: on
+		if (run)
+		{
+			enter_dmy(dmy);
+		}
+		system("cls");
+
+		while (run)
+		{
+			run = Display_Mode_Student(info, dmy);
+		}
+		return true;
+	}
+	else if (option == 3)
+	{
+		cin.ignore();
+		change_pass();
+		cout << "\t\t ";
+		system("pause");
+		return true;
+	}
+	else if (option == 4)
+	{
+		cin.ignore();
+		forgot_pass();
+		cout << "\t\t ";
+		system("pause");
+		return true;
+	}
+	else
+	{
+		return false;
 	}
 }

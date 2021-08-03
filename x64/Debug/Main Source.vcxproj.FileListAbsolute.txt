@@ -1,4 +1,1 @@
-B:\PROJECTS\Project1\x64\Debug\Main Source.exe
-C:\Users\thanh\OneDrive\Tài liệu\University\HK2\KTLT\Project\registration_system\x64\Debug\Main Source.exe
-B:\PROJECTS\Git Repo\Đồ án\registration_system\x64\Debug\Main Source.exe
-C:\Users\thanh\OneDrive\Tài liệu\Github\registration_system\x64\Debug\Main Source.exe
+D:\Projects\Registration_system\x64\Debug\Main Source.exe
