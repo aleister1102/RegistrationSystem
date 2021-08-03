@@ -10,3 +10,5 @@ void ReInput_fromList(string store, strings list);
 void removeHead(strings& l);
 void removeTail(strings& l);
 void removeNode(strings& l, str* pDel);
+Score* init(int number);
+void Display_ScoreList(Score* score_list, int capacity);

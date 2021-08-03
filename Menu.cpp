@@ -87,7 +87,14 @@ bool Display_Mode_Admin(Account info, date dmy)
 		return Admin_Proc(Admin_Disp(), info, dmy);
 	}
 }
-
+void TimeLine_Disp()
+{
+	system("cls");
+	cout<<"\t\t TIME LINE "<<endl;
+	cout << "\t\t [1/9 - 14/9] [16/12 - 26/12] [16/4 - 26/4]: Registration Time" << endl;
+	cout << "\t\t [15/9 - 15/12] [1/1 - 15/4] [1/5 - 31/7]: Semester Time " << endl;
+	cout<<endl;
+}
 //*Các thao tác của admin
 int Admin_Disp()
 {
@@ -330,7 +337,62 @@ bool Main_Menu_Proc(int option)
 		return false;
 	}
 }
+//*Xử lý menu đăng nhập
+bool Login_Proc(int option)
+{
+	bool run = true;
+	Account user; date dmy;
+	Student info;
+	//If user is administrator
+	if (option == 1)
+	{
+		/*run = login_as_admin(info);*/
+		//!Login system: off
+		TimeLine_Disp();
+		if(run){
+			enter_dmy(dmy);		
+		}
+		system("cls");
 
+		while (run)
+		{
+			run = Display_Mode_Admin(user, dmy);
+		}
+		return true;
+	}
+	else if (option == 2)
+	{
+		run = login_as_student(user,info);
+		//Login system: on
+		if(run){
+			enter_dmy(dmy);		
+		}
+		system("cls");
+
+		while (run)
+		{
+			run = Display_Mode_Student(info,dmy);
+		}
+		return true;
+	}
+	else if (option == 3)
+	{
+		cin.ignore();
+		change_pass();
+		cout << "\t\t "; system("pause");
+		return true;
+	}
+	else if (option == 4)
+	{
+		cin.ignore();
+		forgot_pass();
+		cout << "\t\t "; system("pause");
+		return true;
+	}
+	else {
+		return false;
+	}
+}
 //*Xử lý menu admin
 bool Admin_Proc(int option,Account info,date dmy)
 {
@@ -352,7 +414,7 @@ bool Admin_Proc(int option,Account info,date dmy)
 		while (run)
 		{
 			//Khởi tạo và tạo thư mục cho lớp học
-			Class_Init(year_name);
+			//Class_Init(year_name);
 			//Xử lý các tính năng lớp học
 			run = Class_Proc(year_name,Class_Menu_Disp());
 		}
@@ -382,32 +444,32 @@ bool Admin_Proc(int option,Account info,date dmy)
 		}
 		return true;
 	}
-	//else if (option == 5)
-	//{
-	//	bool run = true;
-	//	while (run)
-	//	{
-	//		//Chọn năm học và học kỳ
-	//		string semester_path;
-	//		run = Course_Init(semester_path,dmy);
-	//		if(run == false) continue;
-	//		run = Course_Proc(Course_Menu_Disp(),semester_path);
-	//	}
-	//	return true;
-	//}
-	// else if (option == 6)
-	// {
-	// 	bool run = true;
-	// 	while (run)
-	// 	{
-	// 		//Chọn năm học và học kỳ
-	// 		string semester_path;
-	// 		run = Course_Init(semester_path,dmy);
-	// 		if(run == false) continue;
-	// 		run = Score_Proc(Score_Menu(),semester_path);
-	// 	}
-	// 	return true;
-	// }
+	else if (option == 5)
+	{
+		bool run = true;
+		while (run)
+		{
+			//Chọn năm học và học kỳ
+			string semester_path;
+			run = Course_Init(semester_path,dmy);
+			if(run == false) continue;
+			run = Course_Proc(Course_Menu_Disp(),semester_path);
+		}
+		return true;
+	}
+	else if (option == 6)
+	{
+		bool run = true;
+		while (run)
+		{
+			//Chọn năm học và học kỳ
+			string semester_path;
+			run = Course_Init(semester_path,dmy);
+			if(run == false) continue;
+			run = Score_Proc(Score_Menu(),semester_path);
+		}
+		return true;
+	}
 	else
 	{
 		return false;
