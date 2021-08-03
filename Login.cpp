@@ -98,6 +98,8 @@ int count_acc(string acc_path)
 {
 	ifstream f;
 	f.open(acc_path);
+	string string_name;
+	getline(f, string_name, '\n');
 	int c = 0;
 	while (!f.eof())
 	{
@@ -141,6 +143,8 @@ bool check_acc_student(Account user, Student &info)
 	string acc_path = ".\\Accounts\\";
 	acc_path += (acc_name + ".csv");
 	f.open(acc_path);
+	string string_name;
+	getline(f, string_name, '\n');
 	string acc = account(user);
 	int c = 0;
 	int n = Count_line(acc_path);
@@ -195,6 +199,8 @@ bool check_acc_ad(Account info)
 		string acc_path = ".\\Accounts\\";
 		acc_path += (acc_name + ".csv");
 		f.open(acc_path);
+		string string_name;
+		getline(f, string_name, '\n');
 		string acc = account(info);
 		int c = 0;
 		int n = Count_line(acc_path);

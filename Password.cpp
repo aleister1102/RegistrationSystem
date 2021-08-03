@@ -46,6 +46,8 @@ bool check_usrname(string name, string path,int &count)
 {
 	ifstream file;
 	file.open(path, ios::in);
+	string string_name;
+	getline(f, string_name, '\n');
 	while (!file.eof())
 	{
 		count++;
@@ -69,6 +71,8 @@ bool check_pass(string pass,int count)
 	string acc_path = ".\\Accounts\\";
 	acc_path += (acc_name + ".csv");
 	f.open(acc_path, ios::in | ios::out);
+	string string_name;
+	getline(f, string_name, '\n');
 	while (!f.eof())
 	{
 		k++;
@@ -88,6 +92,8 @@ bool check_key(string key,int count)
 	ifstream f;
 	int k = 0;
 	f.open("Key.csv");
+	string string_name;
+	getline(f, string_name, '\n');
 	while (!f.eof())
 	{
 		k++;
@@ -125,6 +131,8 @@ void change_pass_in_file(string username, string pass)
 	string acc_path = ".\\Accounts\\";
 	acc_path += (acc_name + ".csv");
 	f.open(acc_path, ios::in | ios::out);
+	string string_name;
+	getline(f, string_name, '\n');
 	while (!f.eof())
 	{
 		string f1;
@@ -155,6 +163,8 @@ void change_pass_in_file(string username, string pass)
 	f.close();
 	remove(acc_path.c_str());
 	f.open(acc_path, ios::out);
+	string string_name;
+	getline(f, string_name, '\n');
 	ReInput_fromList(acc_path,list);
 	cout << "\t\t New password has been updated !!!" << endl;
 }

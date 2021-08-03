@@ -18,7 +18,9 @@ Student Get_Student_Info(string class_path, Account user)
     Student s;
 	string arr[7];
 	fstream f(class_path, ios::in);
-	if(File_Exist(class_path))
+    string string_name;
+    getline(f, string_name, '\n');
+    if(File_Exist(class_path))
 	{
 		while(!f.eof())
 		{
@@ -44,6 +46,8 @@ Student *Get_Students_Info(string course_path, int lines)
     Student *list = new Student[lines];
     int k = 0;
     ifstream f(course_path);
+    string string_name;
+    getline(f, string_name, '\n');
     while (!f.eof())
     {
         string ID;
@@ -84,6 +88,8 @@ void Student_Import(string class_path)
     if(import=="OUT") return;
     
     ifstream read(import);
+    string string_name;
+    getline(read, string_name, '\n');
     while(!read.eof())
     {
         //Đọc file import
@@ -127,6 +133,8 @@ bool Student_Delete(string class_path){
     //Xóa học sinh trong file account
     string account = ".\\Accounts\\acc_sv.csv";
     ifstream f (account,ios::in);
+    string string_name;
+    getline(f, string_name, '\n');
     int count = 1;
     int line = -1;
     while(!f.eof())
@@ -181,6 +189,8 @@ int Student_Display(string class_path)
     
     int count=0; 
     fstream f(class_path,ios::in);
+    string string_name;
+    getline(f, string_name, '\n');
     while(!f.eof())
     {
         string reader;
@@ -238,6 +248,8 @@ void Student_Course_Update(string new_course_path,string new_string)
     string course_name = new_string.substr(pos + 1, pos2 - pos - 1);
     //
     ifstream f(new_course_path);
+    string string_name;
+    getline(f, string_name, '\n');
     if(f.is_open()){
 		while(!f.eof())
 		{

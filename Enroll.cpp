@@ -211,7 +211,7 @@ bool Delete_course_Proc(Student sv, int option)
 	string filename = to_string(sv.id) + "_" + sv.name;
 	string path = Make_Path(folder, filename);
 	strings list = File_to_LinkList(path);
-	if (option == Count_line(path) + 1 || option <1)
+	if (option == Count_line(path) + 1 || option < 1)
 	{
 		return false;
 	}
@@ -266,7 +266,8 @@ string Year_ToString(int year)
 	string s;
 	ss << year;
 	ss >> s;
-	ss.str(""); ss.clear();
+	ss.str("");
+	ss.clear();
 	return s;
 }
 
@@ -289,7 +290,8 @@ string Date_to_Sems(date dmy)
 		{
 			return "Autumn";
 		}
-		else{
+		else
+		{
 			return "Spring";
 		}
 	}
@@ -311,7 +313,8 @@ string Date_to_Sems(date dmy)
 		{
 			return "Spring";
 		}
-		else{
+		else
+		{
 			return "Summer";
 		}
 	}
@@ -339,20 +342,20 @@ string Date_to_Sems(date dmy)
 //Hiển thị các môn học được đăng ký hiện tại
 //Dữ liệu sinh viên
 //Số thứ tự của môn học đã chọn
-int Enroll_Dis(Student sv,date dmy)
+int Enroll_Dis(Student sv, date dmy)
 {
 	sv.faculty = "CTT";
 	string sems = Date_to_Sems(dmy);
-	if(sems=="OUT")
+	if (sems == "OUT")
 	{
-		cout<<"It is not registration time!"<<endl;
+		cout << "It is not registration time!" << endl;
 		return 0;
 	}
 	string y = Year_ToString(dmy.year);
 	string y1 = Year_ToString(dmy.year + 1);
 	string years = y + '-' + y1;
 	string path = ".\\Semesters\\";
-	path += years+"\\";
+	path += years + "\\";
 	string filename = Make_Path(path, years + "-" + sems);
 	int n;
 	if (File_Exist(filename))
@@ -369,13 +372,13 @@ int Enroll_Dis(Student sv,date dmy)
 	return Valid_Data(n);
 }
 
-string* Split_manyCourse(string path, int k)
+string *Split_manyCourse(string path, int k)
 {
 	fstream f;
 	f.open(path, ios::in | ios::out);
 	int c = 0;
 	int n = Count_line(path);
-	string* ss = new string[n];
+	string *ss = new string[n];
 	int u = 0;
 	while (!f.eof())
 	{
@@ -406,21 +409,22 @@ string* Split_manyCourse(string path, int k)
 							break;
 						}
 					}
-					else break;
+					else
+						break;
 				}
 			}
 			ss[u++] = s1;
 		}
-		else if(c>n) break;
+		else if (c > n)
+			break;
 	}
 	f.close();
 	return ss;
-
 }
 //*Xử lý đăng ký môn học
 //Số thứ tự của môn học đã lựa chọn, dữ liệu sinh viên
 //Sẽ có hàm gọi hàm này: True sẽ chạy tiếp, False thì không chạy
-bool Enroll_Proc(int option, Student sv,date dmy)
+bool Enroll_Proc(int option, Student sv, date dmy)
 {
 	string pre_folder = ".\\Courses\\" + sv.faculty + "\\";
 	if (option == 0)
@@ -433,12 +437,12 @@ bool Enroll_Proc(int option, Student sv,date dmy)
 		string y = Year_ToString(dmy.year);
 		string y1 = Year_ToString(dmy.year + 1);
 		string years = y + '-' + y1;
-		string courses = ".\\Courses\\"+sv.faculty+"\\Courses.csv";
+		string courses = ".\\Courses\\" + sv.faculty + "\\Courses.csv";
 		//
-		vector <string> list  = File_ToVector(courses);
-		string course_info = list[option-1];
+		vector<string> list = File_ToVector(courses);
+		string course_info = list[option - 1];
 		string arr[7];
-		Course c = String_ToCourse(course_info,arr);
+		Course c = String_ToCourse(course_info, arr);
 		//
 		string folder = ".\\Students\\Students for Enrollment\\";
 		string filename = to_string(sv.id) + "_" + sv.name;
@@ -447,7 +451,7 @@ bool Enroll_Proc(int option, Student sv,date dmy)
 		//
 		string path1 = pre_folder + c.name + "_" + c.teacher + ".csv";
 		int k1 = Count_line(path1);
-		
+
 		//
 		if (k < 5)
 		{
@@ -499,19 +503,21 @@ int Enroll_MenuDisp(Student sv)
 //Menu xử lý các tính năng ĐKHP
 //Sự lựa chọn tính năng, dữ liệu sinh viên
 //True nếu dùng lại hàm, false nếu không
-bool Enroll_MenuProc(int option, Student sv,date dmy,int mod)
+bool Enroll_MenuProc(int option, Student sv, date dmy, int mod)
 {
 	if (option == 1)
 	{
-		if(mod==0){
-			cout<<"\t\tYou can not register during this time!"<<endl;
-			cout<<"\t\t";system("pause");
+		if (mod == 0)
+		{
+			cout << "\t\tYou can not register during this time!" << endl;
+			cout << "\t\t";
+			system("pause");
 			return true;
 		}
 		bool run = true;
 		while (run)
 		{
-			run = Enroll_Proc(Enroll_Dis(sv,dmy), sv,dmy);
+			run = Enroll_Proc(Enroll_Dis(sv, dmy), sv, dmy);
 		}
 		return true;
 	}
@@ -527,7 +533,8 @@ bool Enroll_MenuProc(int option, Student sv,date dmy,int mod)
 		if (mod == 0)
 		{
 			cout << "\t\tYou can not delete course(s) during this time!" << endl;
-			cout<<"\t\t";system("pause");
+			cout << "\t\t";
+			system("pause");
 			return true;
 		}
 		bool run = true;
