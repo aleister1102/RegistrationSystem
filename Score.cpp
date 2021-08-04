@@ -188,8 +188,8 @@ void Display_ScoreList(List_score score_list) {
         cout << "No \t ID \t\t Full Name \t\t\t Total Mark \t Final Mark \t Midterm Mark \t Other Mark \t" << endl;
         for (int i = 0; i < score_list.capacity; i++) {
             cout << score_list.data[i].number << "\t" << score_list.data[i].id << "\t\t" << score_list.data[i].name << "\t\t\t" <<
-                score_list.data[i].total_mark << "\t\t" << score_list.data[i].final_mark << "\t\t" << score_list.data[i].midterm_mark << "\t\t" <<
-                score_list.data[i].other_mark << endl;
+                setw(2) << score_list.data[i].total_mark << "\t\t" << setw(2) << score_list.data[i].final_mark << "\t\t" <<
+                setw(2) << score_list.data[i].midterm_mark << "\t\t" << setw(2) << score_list.data[i].other_mark << endl;
         }
     }
 
