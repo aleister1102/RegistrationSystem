@@ -68,7 +68,9 @@ int Login_Disp()
 }
 void AboutUs()
 {
-	cout << "About Us" << endl;
+	cout << "\t\t Do an ky thuat lap trinh - Registration System" << endl;
+	cout << "\t\t Cac thanh vien: " << endl;
+	cout << "\t\t 20120344 - Vuong Tan Phat - vuongtanphat139@gmail.com\n\t\t 20120356 - Le Minh Quan - marucube@gmail.com\n\t\t 20120369 - Nguyen Thanh Tan - tan.personal.mail@gmail.com\n\t\t 20120386 - Le Phuoc Toan - toanle3122002@gmail.com" << endl;
 	system("pause");
 }
 //*Phân loại tính năng có thể thực thi dựa vào thời gian
