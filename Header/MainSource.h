@@ -9,6 +9,7 @@
 #include <sstream>
 #include <vector>
 #include <algorithm>
+#include <iomanip>
 using namespace std;
 struct date {
     int day, month, year;
@@ -54,4 +55,21 @@ struct Score {
 	string id;
 	string name;
 	double total_mark, final_mark, midterm_mark, other_mark;
+};
+struct List_score {
+	Score* data;
+	int capacity;
+};
+struct List_course {
+	Course* data;
+	int number;
+};
+struct Course_info {
+	string id;
+	int credits;
+	double total_mark;
+};
+struct Semester_CourseInfo {
+	Course_info* GPA;
+	int number;
 };

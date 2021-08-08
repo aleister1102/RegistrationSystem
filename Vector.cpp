@@ -4,8 +4,6 @@
 void Vector_ToFile(string file_path,vector<string>list)
 {
 	fstream file(file_path,ios::app);
-	string string_name;
-	getline(file, string_name, '\n');
 	if(file.is_open())
 	{
 		for(int i=0;i<list.size();i++)
@@ -23,12 +21,11 @@ vector<string> File_ToVector(string file_path)
 {
 	vector<string> string_list;
 	fstream file(file_path,ios::in);
-	string string_name;
-	getline(file, string_name, '\n');
+	string reader;
+	getline(file, reader);
 	if(file.is_open())
 	{
 		while(!file.eof()){
-			string reader;
 			getline(file,reader);
 			if (reader == "" || reader == "OUT") continue;
 			string_list.push_back(reader);

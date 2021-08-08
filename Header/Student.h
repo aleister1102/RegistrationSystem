@@ -1,5 +1,7 @@
 #include "Header/MainSource.h"
-string Student_Init(string year_name);
+string Student_Init(string 
+
+);
 void Student_Arrange(string class_path);
 int Student_Display(string class_path);
 bool Student_Proc_Active(int option,string class_path);

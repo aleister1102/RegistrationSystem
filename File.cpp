@@ -10,14 +10,12 @@
 bool File_Exist_Display(string path)
 {
 	fstream file(path);
-	if (file.fail())
-	{
+	if (file.fail()) {
 		cout << "\t\t File does not exist" << endl;
 		file.close();
 		return false;
 	}
-	else
-	{
+	else {
 		cout << "\t\t File exists" << endl;
 		file.close();
 		return true;
@@ -40,8 +38,8 @@ bool File_isEmpty(string path)
 {
 	ifstream file(path);
 	string checker;
-	getline(file, checker);
-	if (checker == "")
+	getline(file,checker);
+	if(checker=="")
 	{
 		file.close();
 		return true;
@@ -52,11 +50,10 @@ bool File_isEmpty(string path)
 
 //*Tạo file mới
 //@param file_path Đường dẫn file
-void File_Create(string file_path)
+void File_Create(string file_path) 
 {
-	if (File_Exist(file_path))
-		return;
-	FILE *fileInput = fopen(file_path.c_str(), "a+");
+	if(File_Exist(file_path)) return;
+	FILE* fileInput = fopen(file_path.c_str(), "a+");
 	fclose(fileInput);
 }
 
@@ -65,38 +62,33 @@ void File_Create(string file_path)
 void File_Clear(string file_path)
 {
 	remove(file_path.c_str());
-	ofstream f(file_path);
+	ofstream f(file_path, ios::out);
 	f.close();
 }
 
-//*Nhập file
+//*Nhập file 
 //@param folder Thư mục chứa file
 //@return Đường dẫn file cần import hoặc "OUT" (nếu không có file hoặc muốn thoát ra)
 string File_Import(string folder)
 {
 	string path;
-	bool flag = false;
-	do
-	{
+	bool flag =false;
+	do {
 		//Nhập tên file cần import
-		cout << "\t\t Press '!' if you want to exit" << endl;
-		cout << "\t\t Enter file str for importing: ";
+		cout <<"\t\t Press '!' if you want to exit"<<endl;
+		cout <<"\t\t Enter file str for importing: ";
 		string str;
 		getline(cin, str);
-		if (str == "!")
-			return "OUT";
+		if(str=="!") return "OUT";
 		//Tạo đường dẫn file import
 		path = folder + Extension(str, 1);
 		cout << "\t\t Import file from: " << path << endl;
-		if (!File_Exist(path))
-		{
+		if (!File_Exist(path)) {
 			cout << "Cannot open file. Try again, make sure you type right filename" << endl;
 		}
-	} while (File_Exist(path) == false);
-	if (File_isEmpty(path))
-		return "OUT";
-	cout << "\t\t ";
-	system("pause");
+	} while (File_Exist(path)==false);
+	if(File_isEmpty(path)) return "OUT";
+	cout << "\t\t "; system("pause");
 	return path;
 }
 //*Sao chép file sang một thư mục khác
@@ -108,22 +100,27 @@ string File_Copy(string path, string dest)
 	list = File_ToVector(path);
 	//Tạo file mới với tên tương tự
 	string file = Path_ToName(path);
-	string copy_path = Make_Path(dest, file);
+	string copy_path = Make_Path(dest,file);
 	File_Create(copy_path);
-	Vector_ToFile(copy_path, list);
+	Vector_ToFile(copy_path,list);
 	return copy_path;
 }
 
 //*Thêm chuỗi mới vào cuối file
 //@param file_path đường dẫn tới file @param newstring chuỗi cần thêm
-void File_Append(string file_path, string newstring)
+void File_Append(string file_path,string newstring)
 {
-	fstream f(file_path, ios::app);
-
-	if (File_Exist(file_path))
+	fstream f(file_path,ios::app);
+	if(!File_Exist(file_path))
 	{
-		f << newstring << endl;
+		cout << "Create file completely!" << endl;
+		f.close();
+		f.open(file_path, ios::out);
 	}
+	else {
+		cout << "Appended to file completely" << endl;
+	}
+	f << newstring << endl;
 	f.close();
 }
 //*Kiểm tra chuỗi ký tự có trong file chưa
@@ -131,13 +128,11 @@ void File_Append(string file_path, string newstring)
 //@return true Chuỗi bị trùng
 bool String_InFile(string file_path, string check_string)
 {
-	string string_name;
-	getline(<streeam>, string_name, '\n');
 	fstream file(file_path, ios::in);
 	while (!file.eof())
 	{
 		string reader;
-		getline(file, reader);
+		getline(file,reader);
 		if (reader == check_string)
 		{
 			file.close();
@@ -155,13 +150,11 @@ int Count_line(string path)
 {
 	ifstream f;
 	f.open(path);
-	string string_name;
-	getline(f, string_name, '\n');
 	int c = 0;
 	while (!f.eof())
 	{
 		string s1 = "";
-		getline(f, s1);
+		getline(f,s1);
 		c++;
 	}
 	f.close();
@@ -169,92 +162,84 @@ int Count_line(string path)
 }
 
 //*Xóa một dòng với số thứ tự dòng cho trước trong file
-//@param path Đường dẫn file
+//@param path Đường dẫn file 
 //@param start Số dòng bỏ qua (tức là vị trí dòng bắt đầu)
 //@param line Số thứ tự dòng cần xóa
 //@return Chuỗi của dòng bị xóa
-string File_Line_Delete(string path, int start, int line)
+string File_Line_Delete(string path,int start,int line)
 {
-	int count = 1;
+	int count=1;
 	vector<string> list;
 	string returner;
 	ifstream f(path);
-	string string_name;
-	getline(f, string_name, '\n');
-	if (f.is_open())
+
+	if(f.is_open())
 	{
-		while (!f.eof())
+		while(!f.eof())
 		{
 			string reader;
-			getline(f, reader);
-			if (count - start != line)
+			getline(f,reader);
+			if(count-start!=line)
 			{
 				list.push_back(reader);
 			}
-			else
-			{
+			else{
 				returner = reader;
 			}
-			count += 1;
+			count+=1;
 		}
 	}
 	f.close();
 	File_Clear(path);
-	Vector_ToFile(path, list);
+	Vector_ToFile(path,list);
 	return returner;
 }
 //*Cập nhật thông tin cho một dòng (thật ra là chèn)
-//@param path Đường dẫn file
+//@param path Đường dẫn file 
 //@param start Số dòng bỏ qua (tức là vị trí dòng bắt đầu)
 //@param line Số thứ tự dòng cần chèn
-void File_Line_Update(string path, int start, int line, string update)
+void File_Line_Update(string path,int start,int line,string update)
 {
-	fstream f(path, ios::in | ios::out);
-	string string_name;
-	getline(f, string_name, '\n');
-	int count = 1;
+	fstream f(path,ios::in|ios::out);
+	int count=1;
 	vector<string> list;
-	if (f.is_open())
-	{
-		while (!f.eof())
-		{
-			string reader;
-			getline(f, reader);
-			if (count - start == line)
-			{
+	string reader;
+	if(f.is_open()){
+		while(getline(f, reader)){
+			if(count-start==line){
 				list.push_back(update);
 			}
-			list.push_back(reader);
-			count += 1;
+			else {
+				list.push_back(reader);
+			}
+			count+=1;
 		}
 	}
 	f.close();
 	File_Clear(path);
-	Vector_ToFile(path, list);
+	Vector_ToFile(path,list);
 }
 //*Lấy ra một chuỗi trong file từ số dòng cho trước
-//@param path Đường dẫn file
+//@param path Đường dẫn file 
 //@param start Số dòng bỏ qua (tức là vị trí dòng bắt đầu)
 //@param line Số thứ tự dòng cần tìm
 //@return Chuỗi của dòng cần tìm - Không tìm được sẽ là chuỗi null
-string File_Line_Seek(string path, int start, int line)
+string File_Line_Seek(string path,int start,int line)
 {
-	int count = 1;
+	int count=1;
 	ifstream f(path);
-	string string_name;
-	getline(f, string_name, '\n');
-	if (f.is_open())
+	if(f.is_open())
 	{
-		while (!f.eof())
+		while(!f.eof())
 		{
 			string reader;
-			getline(f, reader);
-			if (count - start == line)
+			getline(f,reader);
+			if(count-start==line)
 			{
 				f.close();
 				return reader;
 			}
-			count += 1;
+			count+=1;
 		}
 	}
 	f.close();
@@ -264,7 +249,7 @@ string File_Line_Seek(string path, int start, int line)
 //@param: dir Thư mục cần xóa
 void Directory_Delete(string dir)
 {
-
+	
 	dir = "rmdir /s /q " + dir;
 	system(dir.c_str());
 }
@@ -280,3 +265,10 @@ void Directory_Create(string dir)
 	// else
 	// 	cout << "\t\t Directory created" << endl;
 }
+
+
+
+
+
+
+
