@@ -6,35 +6,37 @@
 #include "Header/Convert.h"
 #include "Header/Score.h"
 #include "Header/Node Process.h"
+#include "Header/Course.h"
 //*Nhập tên môn học có bảng điểm vào hệ thống
 
-void Score_Import()
+void Score_Import(string semester_path)
 {
     cout << "WARNING: The score file must be in the direction: .\\Students\\Students' ScoreBoard\\Import\\" << endl;
     string folder = ".\\Students\\Students' ScoreBoard\\Import\\";
+    string destination = ".\\Semester\\" + semester_path;
     string import = File_Import(folder);
     vector<string> list = File_ToVector(import);
     string course_name = Path_ToName(import);
-    File_Append(Make_Path(folder, "Import ScoreBoard"),course_name);
+    File_Append(destination, course_name);
 }
 //*Xử lý và điều hướng các hàm tính năng của năm
 //@param option Lựa chọn tính năng @param semester_path đường dẫn tới học kỳ
 //@return True nếu cần dùng tiếp, false nếu muốn thoát ra hẳn
-bool Score_Proc(int option, string semester_path)
+bool Score_Proc(int option, string semester_path, string year_name)
 {
     if (option == 1)
     {
         string faculty = Faculty_Name(Department_Menu_Disp(), 1);
         if (faculty == "OUT")
             return false;
-        Student_Export(semester_path,faculty);
-        cout<<"\t\t ";system("pause");
+        Student_Export(semester_path, faculty);
+        cout << "\t\t "; system("pause");
         return true;
     }
     else if (option == 2)
     {
-        Score_Import();
-        cout<<"\t\t ";system("pause");
+        Score_Import(year_name);
+        cout << "\t\t "; system("pause");
         return true;
     }
     else if (option == 3)
@@ -52,11 +54,25 @@ bool Score_Proc(int option, string semester_path)
         cout << "\t\t "; system("pause");
         return true;
     }
+    else if (option == 5) {
+        view_ClassScoreBoard(year_name, semester_path);
+        cout << "\t\t "; system("pause");
+        return true;
+    }
     else
     {
         system("cls");
         return false;
     }
+}
+
+List_score get_ListScore(string course_file) {
+    List_score scores = init_ListScore();
+    vector<string> list = File_ToVector(course_file);
+    Score* score_list = Vector_toScore(list);
+    scores.capacity = list.size();
+    scores.data = score_list;
+    return scores;
 }
 //return: number of courses
 List_score Admin_ViewScoreBoard(string& course_file) {
@@ -79,10 +95,7 @@ List_score Admin_ViewScoreBoard(string& course_file) {
         string course = courses[choice - 1];
         course_file = "./Students/Students' ScoreBoard/Import/" + course;
         if (File_Exist(course_file)) {
-            vector<string> list = File_ToVector(course_file);
-            Score* score_list = Vector_toScore(list);
-            scores.capacity = list.size();
-            scores.data = score_list;
+            scores = get_ListScore(course_file);
         }
         else {
             cout << "Cannot find the course file." << endl;
@@ -266,4 +279,77 @@ string Score_toString(Score my_score) {
     return to_string(my_score.number) + "," + my_score.id + "," + my_score.name + "," + to_string(my_score.total_mark) + "," + to_string(my_score.final_mark) + "," + to_string(my_score.midterm_mark) + "," + to_string(my_score.other_mark);
 }
 
+void delete_List_Course(List_course& courses) {
+    delete[] courses.data;
+    courses.number = 0;
+}
+
 //============================================//
+void view_ClassScoreBoard(string year_name, string semester_path) {
+    int line_number = -1;
+    string selection = Class_Select(year_name, line_number);
+    size_t falcuty_pos = selection.find_last_of(".csv");
+    //get falcuty
+    string falcuty = selection.substr(falcuty_pos-7, 3);
+    //Get list course data
+    List_course Courses = get_ListCourse(semester_path);
+    //Get list of score
+    string score_path = "./Students/Students'ScoreBoard/Import ScoreBoard.csv";
+    List_score Scores = get_ListScore(score_path);
+
+}
+
+List_course get_ListCourse(string path) {
+    List_course courses = init_ListCourse();
+
+    fstream file;
+    file.open(path, ios::in);
+    if (File_Exist(path)) {
+
+        size_t number = Count_line(path);
+        courses.number = number;
+        courses.data = new Course[number-1];
+        string line = "";
+        for (int i = 0; i < 4; i++) {
+            getline(file, line, '\n');
+            line = "";
+        }
+        int i = 0;
+        while (!file.eof()) {
+            Course course;
+            line = "";
+            getline(file, line, '\n');
+            course = String_ToCourse(line);
+            courses.data[i] = course;
+            i++;
+        }
+    }
+    else {
+        cout << "Cannot open course file. Check again!" << endl;
+    }
+    return courses;
+}
+
+//Function that get the short form of course uses to 
+Semester_CourseInfo get_CourseShorInfo(List_course courses, List_score scores) {
+    //init GPA list
+    Semester_CourseInfo GPA_data;
+    GPA_data.number = courses.number;
+    GPA_data.GPA = new Course_info[courses.number];
+    //get GPA info
+    for (int i = 0, k = 0; i < courses.number; i++) {
+        for (int j = 0; j < scores.capacity; j++) {
+            if (courses.data[i].id == scores.data[i].id) {
+                GPA_data.GPA[k].id = courses.data[i].id;
+                GPA_data.GPA[k].credits = courses.data[i].cre;
+                GPA_data.GPA[k].total_mark = scores.data[i].total_mark;
+                k++;
+                break;
+            }
+        }
+    }
+    return GPA_data;
+}
+//GPA of a semester
+//courses: courses of this students
+//

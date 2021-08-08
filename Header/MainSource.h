@@ -60,3 +60,16 @@ struct List_score {
 	Score* data;
 	int capacity;
 };
+struct List_course {
+	Course* data;
+	int number;
+};
+struct Course_info {
+	string id;
+	int credits;
+	double total_mark;
+};
+struct Semester_CourseInfo {
+	Course_info* GPA;
+	int number;
+};

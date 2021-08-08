@@ -208,3 +208,10 @@ List_score init_ListScore() {
 	mylist.capacity = 0;
 	return mylist;
 }
+
+List_course init_ListCourse() {
+	List_course my_list;
+	my_list.data = NULL;
+	my_list.number = 0;
+	return my_list;
+}

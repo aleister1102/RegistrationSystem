@@ -111,10 +111,16 @@ string File_Copy(string path, string dest)
 void File_Append(string file_path,string newstring)
 {
 	fstream f(file_path,ios::app);
-	if(File_Exist(file_path))
+	if(!File_Exist(file_path))
 	{
-		f<<newstring<<endl;
+		cout << "Create file completely!" << endl;
+		f.close();
+		f.open(file_path, ios::out);
 	}
+	else {
+		cout << "Appended to file completely" << endl;
+	}
+	f << newstring << endl;
 	f.close();
 }
 //*Kiểm tra chuỗi ký tự có trong file chưa

@@ -131,31 +131,27 @@ string Student_ToString(Student s)
 //@param info Dữ liệu môn học dạng chuỗi
 //@param arr[7] Mảng lưu dữ liệu khi tách ra nếu cần dùng
 //@return Kiểu dữ liệu môn học
-Course String_ToCourse(string info, string arr[7])
+Course String_ToCourse(string info)
 {
 	Course c;
 	int length = info.size();
 	int i = 0;
-	while (i <= 6)
-    {
-        int pos = info.find_first_of(",", 0);
-        string temp = info.substr(0, pos);
-		if(i<6)
-		{
-			info = info.substr((uint64_t)pos + 1, length);
-			arr[i++] = temp;
-		}
-		else{
-			arr[i++] = info;
-		}
-    }
-	c.id=arr[0];
-	c.name=arr[1];
-	c.teacher=arr[2];
-	c.cre=String_ToInt(arr[3]);
-	c.capacity=String_ToInt(arr[4]);
-	c.day=arr[5];
-	c.session=arr[6];
+	string a[7];
+	string temp = info;
+	while (i < 7)
+	{
+		int pos = info.find_first_of(",", 0);
+		string temp2 = info.substr(0, pos);
+		info = info.substr((uint64_t)pos + 1, length);
+		a[i++] = temp2;
+	}
+	c.id = a[0];
+	c.name = a[1];
+	c.teacher = a[2];
+	c.cre = String_ToInt(a[3]);
+	c.capacity = String_ToInt(a[4]);
+	c.day = a[5];
+	c.session = a[6];
 	return c;
 }
 //*Chuyển từ môn học sang kiểu chuỗi

@@ -13,3 +13,4 @@ void removeNode(strings& l, str* pDel);
 Score* init(int number);
 void Display_ScoreList(List_score score_list);
 List_score init_ListScore();
+List_course init_ListCourse();

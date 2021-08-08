@@ -394,10 +394,10 @@ bool Login_Proc(int option)
 	}
 }
 //*Xử lý menu admin
-bool Admin_Proc(int option,Account info,date dmy)
+bool Admin_Proc(int option, Account info, date dmy)
 {
 	//!Ngoài Year ra thì các option khác đều bị giới hạn trong năm nhập vào
-	string year_name = to_string(dmy.year) + "-"+to_string(dmy.year+1);
+	string year_name = to_string(dmy.year) + "-" + to_string(dmy.year+1);
 	if (option == 1)
 	{
 		bool run = true;
@@ -466,7 +466,7 @@ bool Admin_Proc(int option,Account info,date dmy)
 			string semester_path;
 			run = Course_Init(semester_path,dmy);
 			if(run == false) continue;
-			run = Score_Proc(Score_Menu(),semester_path);
+			run = Score_Proc(Score_Menu(),semester_path, year_name);
 		}
 		return true;
 	}

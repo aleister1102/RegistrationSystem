@@ -85,38 +85,42 @@ void Course_Create(string semester_path,string faculty)
 //@param semester_path Đường dẫn tới học kỳ
 //@param faculty Khoa hiện hành
 //@return Số môn học đếm được
-int Courses_Display(string semester_path,string faculty)
+int Courses_Display(string semester_path, string faculty)
 {
 	system("cls");
 	//Mở file semester lên và đọc chuỗi
-	string courses_path = ".\\Courses\\" + faculty + "\\Courses.csv";
-	ifstream f(courses_path);
-	int count=1;
-	if(f.is_open())
+	ifstream f(semester_path);
+	int count = 1;
+	if (f.is_open())
 	{
 		string reader;
-		cout<<"\t\t -----------------------"<<endl;
-		cout<<"\t\t -----------------------"<<endl;
-		cout<<"\t\t LIST OF CREATED COURSES"<<endl;
-		cout<<"\t\t 0. Back"<<endl;
-		while(!f.eof())
+		//Bỏ qua thông tin về thời gian
+		for (int i = 0; i < 4; i++)
 		{
-			getline(f,reader,'\n');
-			if(reader=="") break;
+			getline(f, reader);
+		}
+		cout << "\t\t -----------------------" << endl;
+		cout << "\t\t -----------------------" << endl;
+		cout << "\t\t LIST OF CREATED COURSES" << endl;
+		cout << "\t\t 0. Back" << endl;
+		while (!f.eof())
+		{
+			getline(f, reader, '\n');
+			if (reader == "") break;
 			//Thay dấu để xuất ra trông đẹp hơn
-			String_Replace(reader,",","  -  ");
-			cout<<"\t\t "<<count<<". "<<reader<<endl;
-			count+=1;
-		}	
+			String_Replace(reader, ",", "  -  ");
+			cout << "\t\t " << count << ". " << reader << endl;
+			count += 1;
+		}
 	}
 	f.close();
 	//Nếu không có môn học nào thì xuất thông báo
-	if(count<2) {
-		cout<<"\t\t -----------------------------------------"<<endl;
-		cout<<"\t\t Wrong Faculty or this Faculty does not have any courses !!!!!!!"<<endl;
-		cout<<"\t\t ";system("pause");
+	if (count < 2) {
+		cout << "\t\t -----------------------------------------" << endl;
+		cout << "\t\t Wrong Faculty or this Faculty does not have any courses !!!!!!!" << endl;
+		cout << "\t\t "; system("pause");
 	}
-	return count-1;
+	return count - 1;
 }
 //*Chọn lựa môn học
 //@param semester_path Đường dẫn tới học kỳ
@@ -137,10 +141,14 @@ int Course_Select(string faculty)
 string Get_Course_Path(string course_string, string faculty)
 {
 	string course_folder = ".\\Courses\\" + faculty + "\\";
-	string arr[7];
-	Course info = String_ToCourse(course_string, arr);
+	Course info = String_ToCourse(course_string);
 	string course_name = info.name + "_" + info.teacher;
 	return Make_Path(course_folder, course_name);
+}
+string Get_Course_Faculty(string course)
+{
+	size_t pos = course.find_last_of(",", course.length());
+	return course.substr(pos + 1, course.length() - pos - 1);
 }
 bool Course_Delete(string faculty)
 {
@@ -211,9 +219,8 @@ void Course_Update(string semester_path,string faculty)
 	string course_string = File_Line_Delete(courses, 0, choice);
 	cout<<"\t\t ---------------------------------"<<endl;
 	cout<<"\t\t Old Course Name:  "<<course_string<<endl;
-	string course_info[7];
-	Course c = String_ToCourse(course_string,course_info);
-	string teacher_temp = course_info[2];//Lưu tên giáo viên cũ
+	Course c = String_ToCourse(course_string);
+	string teacher_temp = c.teacher;//Lưu tên giáo viên cũ
 	
 	//Thực thi việc cập nhật
 	
