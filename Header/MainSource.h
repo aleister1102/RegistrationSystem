@@ -13,6 +13,8 @@
 using namespace std;
 struct date {
     int day, month, year;
+	string semester;
+	string schoolyear;
 };
 struct TimeRange
 {
