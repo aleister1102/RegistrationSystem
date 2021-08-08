@@ -78,6 +78,8 @@ void Year_Clear()
 	if (n == 0)
 	{
 		fstream f("Years.csv", ios::in | ios::out);
+		string string_name;
+		getline(f, string_name, '\n');
 		int i = 1;
 
 		while (!f.eof()) {
@@ -124,6 +126,8 @@ int Years_Display()
 	Year_Sort("Years.csv");
 	cout << "\t\t CREATED YEARS: " << endl;
 	fstream f("Years.csv", ios::in);
+	string string_name;
+	getline(f, string_name, '\n');
 	int i = 1;
 	//Đọc các năm từ file "Years.csv"
 	while (!f.eof()) {
@@ -147,6 +151,8 @@ string Year_Select()
 	if(choice==0) return "OUT";
 
 	ifstream f("Years.csv");
+	string string_name;
+	getline(f, string_name, '\n');
 	string year_name;
 	int i = 1;
 

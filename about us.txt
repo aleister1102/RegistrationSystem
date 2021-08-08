@@ -1,0 +1,6 @@
+Để thực hiện đồ án "A Course Registration System" của học phần "Kỹ thuật lập trình", chúng tôi, 4 con người xa lạ đã kết nối với nhau từ những dòng code đầu tiên cho đến khi hoàn thành đồ án. 
+Thông tin từng thành viên:
+	20120344 - Vương Tấn Phát - vuongtanphat139@gmail.com
+	20120356 - Lê Minh Quân - marucube35@gmail.com
+	20120369 - Nguyễn Thanh Tân - tan.personal.mail@gmail.com
+	20120386 - Lê Phước Toàn - toanle3122002@gmail.com 

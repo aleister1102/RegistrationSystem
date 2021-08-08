@@ -12,6 +12,8 @@ void View_Semester_Time(string semester_path)
 {
 	cout<<"\t\t Semester time: "<<endl;
 	ifstream f(semester_path);
+	string string_name;
+	getline(f, string_name, '\n');
 	string reader;
 	getline(f, reader);
 	cout<<"\t\t Begining time: "<<reader<<endl;
@@ -24,6 +26,8 @@ void View_Registration_Time(string semester_path)
 {
 	cout<<"\t\t Registration time: "<<endl;
 	ifstream f(semester_path);
+	string string_name;
+	getline(f, string_name, '\n');
 	string reader;
 	for(int i=0;i<2;i++){
 		getline(f,reader);
