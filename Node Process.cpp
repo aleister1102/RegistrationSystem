@@ -1,39 +1,29 @@
-﻿#include "Header\Node Process.h"
-#include "Header\Semester.h"
-#include "Header\Convert.h"
-#include "Header\File.h"
+#include "Node Process.h"
 
-//Kiểm tra danh sách liên kết rỗng
-//Param: một DSLK
-//Return: true nếu list rỗng, false nếu list có phần tử
-bool CheckEmpty(strings list)
+bool CheckEmpty(paths list)
 {
 	if (list.head == nullptr)
 		return true;
 	return false;
 }
-//Khởi tạo danh sách liên kết
-//Return: danh sách liên kết đã khởi tạo
-strings Init_List()
+
+paths Init_List()
 {
-	strings l;
+	paths l;
 	l.head = nullptr;
 	l.tail = nullptr;
 	return l;
 }
-//Khởi tạo node
-//Param: thông tin của node, ở đây là một chuỗi chứa tên
-//Return: con trỏ node chứa name
-str* Create_Node(string info)
+
+path* Create_Node(string info)
 {
-	str* s = new str;
+	path* s = new path;
 	s->info = info;
 	s->next = nullptr;
 	return s;
 }
-//Thêm node vào cuối list
-//Param: một danh sách chứa name, một con trỏ trỏ đến stuct name
-void Add_Last(strings& list, str* node)
+
+void Add_Last(paths& list, path* node)
 {
 	if (CheckEmpty(list))
 	{
@@ -46,97 +36,83 @@ void Add_Last(strings& list, str* node)
 		list.tail = node;
 	}
 }
-//Xóa node ở đầu
-//Param: một danh sách liên kết chứa tên
-void removeHead(strings& l)
+void Remove_Info(paths& list, string info)
 {
-	str* p = l.head;
-	l.head = p->next;
-	p->next = nullptr;
-	delete p;
-	p = nullptr;
-}
-//Xóa node ở cuối
-//Param: một dánh sách liên kết chứa tên
-void removeTail(strings& l)
-{
-	str* p = l.head;
-	str* pDel = l.tail;
-	while (p->next->next != nullptr)
+	path* move = list.head;
+	if (move->info == info)
 	{
-		p = p->next;
+		path* temp = move;
+		list.head = list.head->next;
+		delete temp;
+		return;
 	}
-	l.tail = p;
-	p->next = nullptr;
-	delete pDel;
-	pDel = nullptr;
-}
-//Xóa một node bất kỳ
-//Param: danh sách liên kết chứa tên, một node chứa tên
-void removeNode(strings& l, str* pDel)
-{
-	if (pDel == l.head)
+	while (move->next->next != nullptr)
 	{
-		removeHead(l);
-	}
-	else if (pDel == l.tail)
-	{
-		removeTail(l);
-	}
-	else
-	{
-		str* nptr = l.head;
-		while (nptr->next != pDel)
+		if (move->next->info == info)
 		{
-			nptr = nptr->next;
+			path* temp = move;
+			move->next = move->next->next;
+			delete temp;
+			return;
 		}
-		nptr->next = pDel->next;
-		pDel->next = nullptr;
-		delete pDel;
-		pDel = nullptr;
+		move = move->next;
+	}
+	if (move->next->info == info)
+	{
+		path* temp = move->next;
+		move->next = nullptr;
+		list.tail = move;
+		delete temp;
+		return;
 	}
 }
-//Sao chép thông tin danh sách liên kết sang một danh sách khác không cùng địa chỉ
-//Param: một list name
-//Return: một list name khác đã copy
-strings Copy_List(strings l)
+bool Output_List(paths l)
 {
-	str* move = l.head;
-	strings temp = Init_List();
+	if (CheckEmpty(l))
+	{
+		cout << "Danh sach rong" << endl;
+		return false;
+	}
+
+	cout << "List of Node: " << endl;
+	cout << "----------------------------------------------------------------------------" << endl;
+
+	path* move = l.head;
+	int count = 1;
+	while (move->next != nullptr)
+	{
+		cout << "\tThe " << count++ << " object: ";
+		cout << move->info << " " << endl;
+		move = move->next;
+	}
+	return true;
+}
+paths Copy_List(paths l)
+{
+	path* move = l.head;
+	paths temp = Init_List();
 	while (move != nullptr)
 	{
-		str* add = Create_Node({ move->info });
+		path* add = Create_Node({ move->info });
 		Add_Last(temp, add);
 		move = move->next;
 	}
 	return temp;
 }
-//Truyền thông tin từ list vào file
-//Param: file cần truyển thông tin, danh sách liên kết chứa thông tin
-void ReInput_fromList(string store, strings list)
+int Year_ToNumber(string year)
 {
-	str* move = list.head;
-	fstream f(store, ios::in | ios::app);
-	while (move->next != nullptr)
-	{
-		if (!String_InFile(store, move->info))
-		{
-			f << move->info << endl;
-		}
-		move = move->next;
-	}
-	f.close();
+	stringstream ss; int n;
+	ss <<  year.substr(0, 4);
+	ss >> n;
+	return n;
 }
-
-//Sắp xếp tăng dần cho năm
-//Param: DSLK chứa tên năm cần sort
-void SortAscen_YearList(strings & list)
+void SortAscen_List(paths & list)
 {
 	//Create new list with different address
-	strings result = Copy_List(list);
-	str * curr = result.head;
+	paths result = Copy_List(list);
+	path * curr = result.head;
 
-	str* move = list.head;
+	path* move = list.head;
 	//Create flags
 	int min;
 	int before = 0;
@@ -147,7 +123,7 @@ void SortAscen_YearList(strings & list)
 		//Set up the flag of smallest number
 		while (move != nullptr)
 		{
-			int num = Year_ToInt(move->info);
+			int num = Year_ToNumber(move->info);
 			if (num < min && num> before)
 			{
 				min = num;
@@ -160,7 +136,7 @@ void SortAscen_YearList(strings & list)
 		//Compare node with flag and copy to new list
 		while (move != nullptr)
 		{
-			int num = Year_ToInt(move->info);
+			int num = Year_ToNumber(move->info);
 			if (num == min)
 			{
 				curr->info = move->info;
@@ -176,30 +152,3 @@ void SortAscen_YearList(strings & list)
 	}
 	list = result;
 }
-//Xuất danh sách liên kết
-//Param: list
-//Return: trả về false nếu danh sách rỗng
-bool Output_List(strings l)
-{
-	if (CheckEmpty(l))
-	{
-		cout << "Empty List !!" << endl;
-		return false;
-	}
-
-	cout << "List of Node: " << endl;
-	cout << "----------------------------------------------------------------------------" << endl;
-
-	str* move = l.head;
-	int count = 1;
-	while (move != nullptr)
-	{
-		if(move->info=="") break;
-		cout << "\tThe " << count++ << " object: ";
-		cout << move->info << " " << endl;
-		move = move->next;
-	}
-	return true;
-}
-
-
