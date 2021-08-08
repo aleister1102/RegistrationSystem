@@ -13,11 +13,15 @@ void Score_Import(string semester_path)
 {
     cout << "WARNING: The score file must be in the direction: .\\Students\\Students' ScoreBoard\\Import\\" << endl;
     string folder = ".\\Students\\Students' ScoreBoard\\Import\\";
-    string destination = ".\\Semester\\" + semester_path;
+    string destination = ".\\Semesters\\" + semester_path + "\\Scoreboard";
+    string library_file = destination + "\\Library.csv";
     string import = File_Import(folder);
     vector<string> list = File_ToVector(import);
     string course_name = Path_ToName(import);
-    File_Append(destination, course_name);
+    Directory_Create(destination);
+    destination += "\\";
+    File_Copy(import, destination);
+    File_Append(library_file, course_name);
 }
 //*Xử lý và điều hướng các hàm tính năng của năm
 //@param option Lựa chọn tính năng @param semester_path đường dẫn tới học kỳ
@@ -29,7 +33,7 @@ bool Score_Proc(int option, string semester_path, string year_name)
         string faculty = Faculty_Name(Department_Menu_Disp(), 1);
         if (faculty == "OUT")
             return false;
-        // Student_Export(semester_path, faculty);
+        Student_Export(semester_path, faculty);
         cout << "\t\t "; system("pause");
         return true;
     }
@@ -43,21 +47,22 @@ bool Score_Proc(int option, string semester_path, string year_name)
     {
         List_score subject_score;
         string course_file = "";
-        subject_score = Admin_ViewScoreBoard(course_file);
+        subject_score = Admin_ViewScoreBoard(course_file, year_name);
         Display_ScoreList(subject_score);
         cout << "\t\t "; system("pause");
         return true;
     }
     else if (option == 4) {
         string course_file = "";
-        Admin_UpdateScore();
+        Admin_UpdateScore(year_name);
         cout << "\t\t "; system("pause");
         return true;
     }
     else if (option == 5) {
-        view_ClassScoreBoard(year_name, semester_path);
+        cout << "This is on developing";
+       /* view_ClassScoreBoard(year_name, semester_path);
         cout << "\t\t "; system("pause");
-        return true;
+        return true;*/
     }
     else
     {
@@ -75,11 +80,12 @@ List_score get_ListScore(string course_file) {
     return scores;
 }
 //return: number of courses
-List_score Admin_ViewScoreBoard(string& course_file) {
+List_score Admin_ViewScoreBoard(string& course_file, string year_name) {
     //make path
-    string path = "./Students/Students' ScoreBoard/Import/Import Scoreboard.csv";
+    string path = ".\\Semesters\\" + year_name + "\\Scoreboard\\";
+    string library = path+ "Library.csv";
     //read file and save it to list of string
-    vector<string> courses = File_ToVector(path);
+    vector<string> courses = File_ToVector(library);
     List_score scores = init_ListScore();
     //print avalable course out, let user choose which courses
     size_t choice = Choose_Courses(courses);
@@ -93,7 +99,7 @@ List_score Admin_ViewScoreBoard(string& course_file) {
     }
     if (choice != 0) {
         string course = courses[choice - 1];
-        course_file = "./Students/Students' ScoreBoard/Import/" + course;
+        course_file = path + Extension(course, 1);
         if (File_Exist(course_file)) {
             scores = get_ListScore(course_file);
         }
@@ -200,7 +206,7 @@ void Display_ScoreList(List_score score_list) {
     else {
         cout << "No \t ID \t\t Full Name \t\t\t Total Mark \t Final Mark \t Midterm Mark \t Other Mark \t" << endl;
         for (int i = 0; i < score_list.capacity; i++) {
-            cout << score_list.data[i].number << "\t" << score_list.data[i].id << "\t\t" << score_list.data[i].name << "\t\t\t" <<
+            cout << score_list.data[i].number << "\t" << score_list.data[i].id << "\t\t" << score_list.data[i].name << "\t" <<
                 setw(2) << score_list.data[i].total_mark << "\t\t" << setw(2) << score_list.data[i].final_mark << "\t\t" <<
                 setw(2) << score_list.data[i].midterm_mark << "\t\t" << setw(2) << score_list.data[i].other_mark << endl;
         }
@@ -208,10 +214,10 @@ void Display_ScoreList(List_score score_list) {
 
 }
 //====================//
-void Admin_UpdateScore() {
+void Admin_UpdateScore(string year_name) {
     List_score subject_score;
     string course_path = "";
-    subject_score = Admin_ViewScoreBoard(course_path);
+    subject_score = Admin_ViewScoreBoard(course_path, year_name);
     if (subject_score.capacity == 0) {
         cout << "Nothing to change!" << endl;
     }
@@ -226,7 +232,7 @@ void Admin_UpdateScore() {
         while (cin.fail() || choice < 0 || choice > subject_score.capacity) {
             cin.clear();
             cin.ignore();
-            cout << "You didn't choose the right number or you chose over the limit. Try again!";
+            cout << "You didn't choose the right number or you chose over the limit. Try again: ";
             cin >> choice;
         }
         if (choice == 0) return;
@@ -238,7 +244,7 @@ void Admin_UpdateScore() {
             cout << "Update successfully!";
             //Write to file
             string new_line = Score_toString(chosen_score);
-            File_Line_Update(course_path, 1, choice, new_line);
+            File_Line_Update(course_path, 0, choice, new_line);
         }
     }
 }

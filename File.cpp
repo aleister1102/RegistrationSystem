@@ -227,6 +227,7 @@ void File_Line_Update(string path,int start,int line,string update)
 //@return Chuỗi của dòng cần tìm - Không tìm được sẽ là chuỗi null
 string File_Line_Seek(string path,int start,int line)
 {
+	line = line - 4;
 	int count=1;
 	ifstream f(path);
 	if(f.is_open())
