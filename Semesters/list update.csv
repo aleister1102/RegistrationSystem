@@ -1,0 +1,99 @@
+CSC14101,An du lieu va chia se thong tin,Tran Anh Duong,4,50,TUE,S1
+CSC15001,An ninh may tinh,Nguyen Thanh Phong,4,50,WED,S2
+BAA00011,Anh van 1,Le Xuan Thai,3,50,MON,S1 S2
+BAA00011,Anh van 1,Nguyen Dai Duong,3,50,TUE,S1 S2
+BAA00012,Anh van 2,Tran Cam Lien,3,50,MON,S1 S2
+BAA00012,Anh van 2,Ly Hoai Nam,3,50,TUE,S1 S2
+BAA00013,Anh van 3,Tran Cam Lien,3,50,MON,S3 S4
+BAA00013,Anh van 3,Le Xuan Thai,3,50,TUE,S3 S4
+BAA00014,Anh van 4,Ly Hoai Nam,3,50,MON,S3 S4
+BAA00014,Anh van 4,Nguyen Dai Duong,3,50,TUE,S3 S4
+CSC14001,Automata va ngon ngu hinh thuc,Le Quang Ha,4,50,MON,S2
+CSC15002,Bao mat co so du lieu,Le Dinh Nhi,4,50,TUE,S4
+CSC14002,Cac he co so tri thuc,Nguyen Thanh Phong,4,50,WED,S1
+CSC10004,Cau truc du lieu va giai thuat,Le Minh Quang,4,100,WED,S1
+BAA00103,Chu nghia xa hoi khoa hoc,Tran Ngoc Tram,2,50,WED,S3
+CSC00006,Co so du lieu,Le Duc Huy,4,100,WED,S2
+CSC14002,Co so tri tue nhan tao,Le Minh Quang,4,100,WED,S3
+ENV00003,Con nguoi va moi truong,Tran Nhu Ngoc,2,100,THU,S3
+MTH00030,Dai so tuyen tinh,Ly Duc Truong,3,100,THU,S3
+CSC16001,Do hoa may tinh,Nguyen Thanh Phong,4,50,WED,S2
+CSC00007,He dieu hanh,Nguyen Thanh Phong,4,100,FRI,S3
+CSC00009,He thong may tinh,Vo Ngoc Duyen,2,100,TUE,S1
+CHE00001,Hoa dai cuong 1,Vo Tram Oanh,3,100,FRI,S1
+CHE00002,Hoa dai cuong 2,Le Duc Huy,3,100,FRI,S3
+CSC15004,Hoc thong ke,Le Minh Quang,4,50,THU,S1
+CSC14004,Khai thac du lieu va ung dung,Le Minh Quang,4,50,TUE,S4
+GEO00002,Khoa hoc Trai dat,Nguyen Thanh Phong,2,100,THU,S1
+CSC10103,Khoi nghiep,Tran Anh Duong,3,50,FRI,S3
+CSC10102,Kien tap nghe nghiep,Nguyen Thanh Phong,2,50,WED,S1
+BAA00102,Kinh te chinh tri Mac - Lenin,Tran Nhu Ngoc,2,50,TUE,S2
+BAA00005,Kinh te dai cuong,Tran Nhu Ngoc,2,100,MON,S2
+CSC10101,Ky nang mem,Vo Ngoc Duyen,3,100,TUE,S3
+CSC10002,Ky thuat lap trinh,Tran Ngoc Tram,4,100,THU,S3
+CSC14120,Lap trinh song song,Dang Giang Thien,4,50,TUE,S3
+BAA00104,Lich su Dang Cong san Viet Nam,Nguyen Thanh Phong,2,50,THU,S4
+MTH00053,Ly thuyet so,Tran Ngoc Tram,4,100,THU,S1
+CSC15003,Ma hoa ung dung,Tran Nhu Ngoc,4,50,MON,S1
+CSC00008,Mang may tinh,Tran Anh Duong,4,100,FRI,S4
+ENV00001,Moi truong dai cuong,Tran Ngoc Tram,2,100,THU,S2
+CSC14006,Nhan dang,Tran Ngoc Tram,4,50,THU,S2
+CSC13002,Nhap mon cong nghe phan mem,Tran Ngoc Tram,4,100,TUE,S2
+CSC00004,Nhap mon cong nghe thong tin,Le Quang Ha,4,100,TUE,S3
+CSC14005,Nhap mon hoc may,Nguyen Thanh Phong,4,100,MON,S1
+CSC10001,Nhap mon lap trinh,Nguyen Thanh Phong,4,100,TUE,S4
+CSC15005,Nhap mon ma hoa - mat ma,Tran Anh Duong,4,100,MON,S3
+CSC15011,Nhap mon ngon ngu hoc thong ke va ung dung,Le Dinh Nhi,4,100,FRI,S3
+CSC15006,Nhap mon su ly ngon ngu tu nhien,Tran Ngoc Tram,4,100,FRI,S4
+CSC14111,Nhap mon thiet ke va phan tich giai thuat,Le Quang Ha,4,100,MON,S4
+CSC10105,Nhap mon tu duy thuat toan,Dang Giang Thien,4,100,TUE,S1
+CSC15102,Phan tich mang xa hoi,Dang Giang Thien,4,100,WED,S2
+CSC16003,Phan tich thong ke du lieu nhieu bien,Le Quang Ha,4,50,MON,S1
+BAA00004,Phap luat dai cuong,Tran Ngoc Tram,2,100,MON,S1
+MTH00054,Phep tinh vi tu,Le Minh Quang,4,100,FRI,S3
+CSC10003,Phuong phap lap trinh huong doi tuong,Dang Giang Thien,4,100,THU,S4
+BAA00007,Phuong phap luan sang tao,Vo Ngoc Duyen,2,100,MON,S4
+MTH00052,Phuong phap tinh,Tran Anh Duong,4,100,WED,S4
+CSC16002,Phuong phap tinh toan trong phan tich du lieu thi giac,Tran Anh Duong,4,50,WED,S4
+CSC10104,Quy hoach tuyen tinh,Le Minh Quang,4,50,MON,S2
+BIO00001,Sinh dai cuong 1,Nguyen Hoai Thuong,3,100,WED,S1
+BIO00002,Sinh dai cuong 2,Dang Gia Huy,3,100,TUE,S3
+BAA00006,Tam ly dai cuong,Le Minh Quang,2,100,MON,S3
+BAA00021,The duc 1,Dang Tan Phuoc,2,50,FRI,S1
+BAA00021,The duc 1,Nguyen Quoc Manh,2,50,FRI,S2
+BAA00021,The duc 1,Ly Chi Thanh,2,50,FRI,S4
+BAA00022,The duc 2,Nguyen Quoc Manh,2,50,FRI,S1
+BAA00022,The duc 2,Dang Tan Phuoc,2,50,FRI,S2
+BAA00022,The duc 2,Ly Chi Thanh,2,50,FRI,S3
+CSC16004,Thi giac may tinh,Le Minh Quang,4,50,THU,S3
+CSC15007,Thong ke may tinh va ung dung,Dang Giang Thien,4,50,WED,S1
+CSC10106,Thuat toan to hop va ung dung,Le Quang Ha,4,50,THU,S4
+MTH00083,Thuc hanh Dai so tuyen tinh,Ly Duc Truong,1,50,THU,S4
+CHE00081,Thuc hanh Hoa dai cuong 1,Vo Tram Oanh,2,50,THU,S2
+CHE00082,Thuc hanh Hoa dai cuong 2,Le Duc Huy,2,50,THU,S4
+MTH00086,Thuc hanh Toan roi rac,Vo Thao Nguyen,1,50,WED,S4
+PHY00081,Thuc hanh Vat ly dai cuong,Tran Thao Nguyen,2,50,FRI,S3
+MTH00080,Thuc hanh Vi tich phan 1A,Le Hai Dang,1,50,WED,S2
+MTH00081,Thuc hanh Vi tich phan 1B,Le Hai Dang,1,50,MON,S4
+MTH00091,Thuc hanh Vi tich phan 2A,Tran Hoang Dieu,1,50,THU,S2
+MTH00082,Thuc hanh Vi tich phan 2B,Tran Hoang Dieu,1,50,TUE,S2
+MTH00085,Thuc hanh Xac suat thong ke,Nguyen Bao An,1,50,TUE,S4
+BIO00081,Thuc tap Sinh dai cuong 1,Nguyen Hoai Thuong,1,50,WED,S2
+BIO00082,Thuc tap Sinh dai cuong 2,Dang Gia Huy,1,50,TUE,S4
+CSC10107,Thuc tap thuc te,Vo Ngoc Duyen,4,50,MON,S1
+CSC15103,Tinh toan tai chinh,Tran Anh Duong,4,100,THU,S3
+MTH00050,Toan hoc to hop,Vo Ngoc Duyen,4,100,MON,S2
+MTH00041,Toan roi rac,Vo Thao Nguyen,3,100,WED,S3
+MTH00051,Toan ung dung va thong ke,Nguyen Thanh Phong,4,100,TUE,S3
+BAA00101,Triet hoc Mac - Lenin,Tran Anh Duong,3,50,MON,S1
+BAA00003,Tu tuong Ho Chi Minh,Dang Giang Thien,2,50,FRI,S4
+PHY00001,Vat ly dai cuong 1,Nguyen Thanh Long,3,100,FRI,S2
+PHY00002,Vat ly dai cuong 2,Nguyen Thanh Long,3,100,FRI,S2
+MTH00002,Vi tich phan 1A,Le Hai Dang,3,100,WED,S1
+MTH00003,Vi tich phan 1B,Le Hai Dang,3,100,MON,S3
+MTH00013,Vi tich phan 2A,Tran Hoang Dieu,3,100,THU,S1
+MTH00004,Vi tich phan 2B,Tran Hoang Dieu,3,100,TUE,S1
+MTH00040,Xac suat thong ke,Nguyen Bao An,3,100,TUE,S3
+CSC16005,Xu ly anh so va video so,Le Dinh Nhi,4,50,FRI,S3
+CSC15008,Xu ly ngon ngu tu nhien ung dung,Nguyen Thanh Phong,4,50,MON,S2
+CSC15009,Xu ly tin hieu so,Vo Ngoc Duyen,4,50,TUE,S2
